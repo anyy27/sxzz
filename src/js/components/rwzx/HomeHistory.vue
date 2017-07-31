@@ -1,0 +1,352 @@
+<template>
+    <div>
+        <div class="rwzx-box">
+            <div class="rwzx-table">
+                <div class="rwzx-title">
+                    <p>最近转诊记录</p>
+                </div>
+                <el-table
+                        :data="zzjl"
+                        style="width: 100%"
+                >
+                    <el-table-column
+                            prop="sqsj"
+                            label="日期"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yhxm"
+                            label="姓名"
+                            width="60">
+                    </el-table-column>
+                    <el-table-column
+                            label="预约状态"
+                            width="60">
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.zzzt==0?'预约成功':'预约成功'}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="详情">
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.sqyymc }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.zdjg }}</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div class="rwzx-table">
+                <div class="rwzx-title">
+                    <p>最近受理记录</p>
+                </div>
+                <el-table
+                        :data="sljl"
+                        style="width: 100%"
+                >
+                    <el-table-column
+                            prop="sqsj"
+                            label="日期"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yhxm"
+                            label="姓名"
+                            width="60">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ywlx"
+                            label="项目"
+                            width="60">
+                    </el-table-column>
+                    <el-table-column
+                            prop="address"
+                            label="详情">
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.sqyymc }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.zdjg }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="受理状态"
+                            width="100">
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.zzzt==0?'成功受理':'成功受理'}}</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+        </div>
+        <div class="rwzx-charts">
+            <div class="rwzx-picture">
+                <el-tabs v-model="activeName">
+                    <el-tab-pane label="转出图" name="first"></el-tab-pane>
+                    <el-tab-pane label="转入图" name="second"></el-tab-pane>
+                </el-tabs>
+                <div v-show="activeName == 'first'" id="mains" class="rwzx-tj">
+                </div>
+                <div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">
+
+                </div>
+            </div>
+            <div class="rwzx-picture">
+                <el-tabs v-model="activeName1">
+                    <el-tab-pane label="转入表" name="third"></el-tab-pane>
+                    <el-tab-pane label="转出表" name="fourth"></el-tab-pane>
+                </el-tabs>
+                <div v-show="activeName1 == 'third'" class="rwzx-tj">
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="姓名"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="地址"
+                                width="100">
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                        >
+                        </el-table-column>
+
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="日期"
+                        >
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div v-show="activeName1 == 'fourth'" style="width:100px;height:100px;background: red;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<style>
+    #mains {
+        width: 100%;
+        height: 210px;
+        background: #ccc;
+        margin-top: 20px;
+    }
+</style>
+<script>
+    import echarts from 'echarts';
+    import timeformat from "lmw-time-format"
+    import axiosUtil from "../../utils/AxiosUtils.js";
+    import Vue from  "vue";
+    require('echarts/theme/macarons');
+    export default {
+        name: '',
+        data () {
+            return {
+                activeName: 'first',
+                activeName1: 'third',
+                charts: '',
+                opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+                opinionData: [
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 234, name: '联盟广告'},
+                    {value: 135, name: '视频广告'},
+                    {value: 1548, name: '搜索引擎'}
+                ],
+                zzjl: [],
+                sljl: [],
+                seriesd: [],
+                sd: [],
+                st: [],
+                tableData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区'
+                },
+                    {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    },
+                    {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    },
+                    {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    },
+                    {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    },
+                    {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    },
+                    {
+                        date: '2016-05-01',
+                        name: '王小虎',
+                        address: '上海市普陀区'
+                    }]
+            }
+        },
+        methods: {
+           async _getData(){
+             console.log("lddl");
+             let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
+             yyid: "59411511191ce23575a63218",
+             pageSize: 10,
+             pageNum: 1,
+             sqysbh: "595d05b0f19b9c898a58cc55",
+             zzzt: 0
+             });
+             this.zzjl = data.list;
+             },
+             async _getDatas(){
+             console.log("lddl");
+             let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
+             yyid: "59411511191ce23575a63218",
+             sqysbh: "595d05b0f19b9c898a58cc55",
+             pageSize: 10,
+             pageNum: 1,
+             zzzt: 1
+             });
+             this.sljl = data.list;
+             },
+            async _getDatad(){
+                console.log("lddl");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    sqysbh: "595d05b0f19b9c898a58cfb8",
+                    zzzt: 1
+                });
+                this.seriesd = data.list;
+                this._getTime();
+            },
+            _getTime(){
+                console.log("7777",this.seriesd);
+                let list = []
+                for (let i = 0; i < 20; i++) {
+                    list.push({
+                        count: Math.round(Math.random() * 100),
+                        ywlx: Math.floor(Math.random() * 4),
+                        date: timeformat(new Date().getTime() - (Math.floor(Math.random()*7)+1) * 24 * 3600 * 1000, "%Y-%m-%d")
+                    })
+                }
+                let arr0=[],arr1=[],arr2=[],arr3=[];
+                let dateArr = [];
+                for (let j = 0; j < 7; j++) {
+                    let date=timeformat(new Date().getTime() - (j + 1) * 24 * 3600 * 1000, "%Y-%m-%d")
+                    dateArr.push(date)
+                    arr0.push(this._getSeries(this.seriesd,0,date))
+                    arr1.push(this._getSeries(this.seriesd,1,date))
+                    arr2.push(this._getSeries(this.seriesd,2,date))
+                    arr3.push(this._getSeries(this.seriesd,3,date))
+                }
+                console.log("141414",this.seriesd,arr0,arr1,arr2,arr3);
+                this.drawPie("", dateArr.reverse(),[arr0.reverse(),arr1.reverse(),arr2.reverse(),arr3.reverse()]);
+                return (dateArr);
+            },
+            _getSeries(list, type, date){
+                for (let i = 0; i < list.length; i++) {
+                    if(list[i].ywrq==date&&list[i].ywlx==type){return list[i].count}
+                }
+                return 0
+            },
+            drawPie(domId, xAxisData,series){
+                this.charts = echarts.init(document.getElementById("mains"), "macarons");
+                this.charts.setOption({
+                    title: {
+                        text: '柱状图',
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['门诊', '检查', '住院', '日间手术']
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: xAxisData,
+                            axisLabel: {
+                                interval: 0
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            orient: 'vertical'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '门诊',
+                            type: 'bar',
+                            data: series[0],
+                        },
+                        {
+                            name: '住院',
+                            type: 'bar',
+                            data: series[1],
+                        },
+                        {
+                            name: '检查',
+                            type: 'bar',
+                            data: series[2],
+                        },
+                        {
+                            name: '日间手术',
+                            type: 'bar',
+                            data: series[3],
+                        }
+                    ]
+                })
+            }
+        },
+        mounted(){
+            //this._getDatad()
+            this._getData();
+             this._getDatas();
+             this._getDatad();
+        }
+    }
+</script>
