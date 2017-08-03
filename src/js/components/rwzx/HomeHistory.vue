@@ -79,13 +79,10 @@
         <div class="rwzx-charts">
             <div class="rwzx-picture">
                 <el-tabs v-model="activeName">
-                    <el-tab-pane label="转出图" name="first"></el-tab-pane>
-                    <el-tab-pane label="转入图" name="second"></el-tab-pane>
+                    <el-tab-pane label="转出图" name="first" @click="getZc"></el-tab-pane>
+                    <el-tab-pane label="转入图" @click="getZr"></el-tab-pane>
                 </el-tabs>
-                <div v-show="activeName == 'first'" id="mains" class="rwzx-tj">
-                </div>
-                <div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">
-
+                <div id="mains" class="rwzx-tj">
                 </div>
             </div>
             <div class="rwzx-picture">
@@ -157,7 +154,7 @@
 </style>
 <script>
     import echarts from 'echarts';
-    import timeformat from "lmw-time-format"
+    import timeformat from "lmw-time-format";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import Vue from  "vue";
     require('echarts/theme/macarons');
@@ -227,13 +224,20 @@
             }
         },
         methods: {
-           async _getData(){
+            getZr:function(){
+              console.log("2222")
+            },
+            getZc:function(){
+                console.log("1111");
+                _getDatad();
+            },
+             async _getData(){
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
              pageSize: 10,
              pageNum: 1,
-             sqysbh: "595d05b0f19b9c898a58cc55",
+             sqysbh: "595d05b0f19b9c898a58cc70",
              zzzt: 0
              });
              this.zzjl = data.list;
@@ -242,7 +246,7 @@
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
-             sqysbh: "595d05b0f19b9c898a58cc55",
+             sqysbh: "595d05b0f19b9c898a58cc70",
              pageSize: 10,
              pageNum: 1,
              zzzt: 1
@@ -253,7 +257,17 @@
                 console.log("lddl");
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
-                    sqysbh: "595d05b0f19b9c898a58cfb8",
+                    sqysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                this.seriesd = data.list;
+                this._getTime();
+            },
+            async _getDatadR(){
+                console.log("lddl");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    qrysbh: "595d05b0f19b9c898a58cc70",
                     zzzt: 1
                 });
                 this.seriesd = data.list;
@@ -261,7 +275,7 @@
             },
             _getTime(){
                 console.log("7777",this.seriesd);
-                let list = []
+                let list = [];
                 for (let i = 0; i < 20; i++) {
                     list.push({
                         count: Math.round(Math.random() * 100),
@@ -343,10 +357,10 @@
             }
         },
         mounted(){
-            //this._getDatad()
-            this._getData();
-             this._getDatas();
-             this._getDatad();
+              this._getData();
+              this._getDatas();
+              this._getDatad();
+
         }
     }
 </script>
