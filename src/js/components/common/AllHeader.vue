@@ -12,24 +12,24 @@
                 </div>
             </div>
             <div class="date-box" style="width:180px;">
-                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;">
+                <el-select v-model="hospital" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
                     <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
+                            v-for="item in hospitalList"
+                            :key="item.yyid"
+                            :label="item.yymc"
+                            :value="item.yyid"
+                           >
                     </el-option>
                 </el-select>
             </div>
             <div class="date-box" style="width:180px;">
-                <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
+                <el-select v-model="office" placeholder="请选择预约科室" style="width:100%;">
                     <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
+                            v-for="item in officeList"
+                            :key="item.ksid"
+                            :label="item.ksmc"
+                            :value="item.ksid"
+                           >
                     </el-option>
                 </el-select>
             </div>
@@ -53,28 +53,16 @@
 <style>
 
 </style>
-<script>
+<script type="text/ecmascript-6">
     import Vue from "vue";
+    import axiosUtil from "../../utils/AxiosUtils.js"
     export default{
        data() {
            return {
-               options2: [{
-                value: '选项1',
-                label: '黄金糕'
-             }, {
-                value: '选项2',
-                label: '双皮奶',
-                disabled: true
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
+               hospital:'',
+               hospitalList:[],
+               officeList:[],
+               office:'',
             value2:'',
             value3:'',
             value4:'',
@@ -98,6 +86,40 @@
                 address: '上海市'
             }]
         }
-    }
+    },
+        mounted(){
+            this.getHospital()
+        },
+        methods:{
+           getHospital(){
+                axiosUtil('smarthos.sxzz.hos.list',{
+                    "qyid":"0",
+                    "ywlx":"0"
+                }).then(res=>{
+                    console.log(res,9999)
+                    if(res.succ){
+                        this.$set(this.$data,'hospitalList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
+            selectHospital(id){
+                console.log(id,565656);
+                this.getOffice(id)
+            },
+            getOffice(id){
+                axiosUtil('smarthos.sxzz.dept.list',{
+                    "yyid": id,
+                }).then(res=>{
+                    console.log(res,232323)
+                    if(res.succ){
+                        this.$set(this.$data,'officeList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            }
+        }
 }
 </script>

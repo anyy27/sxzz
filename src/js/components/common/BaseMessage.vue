@@ -8,6 +8,21 @@
               <div class="base-docs" style="margin-top:10px;">
                   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                          <div class="base-con">
+                             <el-form-item label="身份证号:" prop="pid" >
+                                 <el-input
+                                         v-model="ruleForm.pid"
+                                         width="200"
+                                         size="small"
+                                         @blur="getUser(ruleForm.pid)"
+                                 ></el-input>
+                             </el-form-item>
+                             <el-form-item label="姓名:" prop="name">
+                                 <el-input
+                                         v-model="ruleForm.name"
+                                         style="width:100px;"
+                                         size="small"
+                                 ></el-input>
+                             </el-form-item>
                           <el-form-item label="就诊卡号:" prop="cid">
                               <el-input
                                       v-model="ruleForm.cid"
@@ -15,27 +30,13 @@
                                       size="small"
                               ></el-input>
                           </el-form-item>
-                          <el-form-item label="姓名:" prop="name">
-                              <el-input
-                                      v-model="ruleForm.name"
-                                      style="width:100px;"
-                                      size="small"
-                              ></el-input>
-                          </el-form-item>
-                          <el-form-item label="身份证号:" prop="pid">
-                              <el-input
-                                      v-model="ruleForm.pid"
-                                      width="200"
-                                      size="small"
-                              ></el-input>
-                          </el-form-item>
+
+
                       </div>
                          <div class="base-con">
                              <el-form-item label="性别:" prop="sex">
-                                 <el-checkbox-group v-model="ruleForm.sex">
-                                     <el-checkbox label="男" ></el-checkbox>
-                                     <el-checkbox label="女" ></el-checkbox>
-                                 </el-checkbox-group>
+                                     <el-radio class="radio" v-model="ruleForm.sex" label="男">男</el-radio>
+                                     <el-radio class="radio" v-model="ruleForm.sex" label="女">女</el-radio>
                              </el-form-item>
                              <el-form-item label="年龄:" prop="age">
                                  <el-input
@@ -62,18 +63,37 @@
                          <div class="base-con">
                              <el-form-item label="家庭住址:" prop="address">
                                  <div class="block">
-                                     <el-cascader
-                                             :options="options1"
-                                             v-model="selectedOptions"
-                                             @change="handleChange">
-                                     </el-cascader>
+                                     <el-select v-model="value1" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
+                                         <el-option
+                                                 v-for="item in provinces"
+                                                 :key="item.value"
+                                                 :label="item.label"
+                                                 :value="item.value">
+                                         </el-option>
+                                     </el-select>
+                                     <el-select v-model="value2" placeholder="请选择" @change="getEaras"  style="width: 150px">
+                                         <el-option
+                                                 v-for="item in citys"
+                                                 :key="item.value"
+                                                 :label="item.label"
+                                                 :value="item.value">
+                                         </el-option>
+                                     </el-select>
+                                     <el-select v-model="value3" placeholder="请选择"  style="width: 150px">
+                                         <el-option
+                                                 v-for="item in earas"
+                                                 :key="item.value"
+                                                 :label="item.label"
+                                                 :value="item.value">
+                                         </el-option>
+                                     </el-select>
+                                     <el-input
+                                             v-model="ruleForm.address"
+                                             style="width:200px;"
+                                             size="small"
+                                             placeholder="街道等详细地址选择填写"
+                                     ></el-input>
                                  </div>
-                                 <el-input
-                                         v-model="ruleForm.address"
-                                         style="width:200px;"
-                                         size="small"
-                                         placeholder="街道等详细地址选择填写"
-                                 ></el-input>
                              </el-form-item>
                          </div>
                   </el-form>
@@ -136,9 +156,11 @@
        </div>
 </template>
 <style>
+
 </style>
-<script>
+<script type="text/ecmascript-6">
   import Vue from "vue";
+  import axiosUtil from "../../utils/AxiosUtils.js"
   import { Form, FormItem,Button, Select, Option, DatePicker,Input, Message, Upload } from "element-ui";
   Vue.use(Form);
   Vue.use(FormItem);
@@ -151,6 +173,13 @@
   export default{
       data(){
           return{
+              userDetail:{},
+              value1:'',
+              value2:"",
+              value3:'',
+              citys:[],
+              provinces:[],
+              earas:[],
               fileList1:[],
               fileList2:[],
               options1: [{
@@ -288,7 +317,120 @@
               }
           }
       },
+      mounted(){
+        this.getData();
+      },
       methods: {
+          getUser(id){
+              console.log(id,7878787878878)
+              axiosUtil('smarthos.sxzz.user.list',{
+                  "yyid": "59411511191ce23575a63218",
+                  "sfzh": "330724199011261131"
+              }).then(res=>{
+                  if(res.succ){
+                      this.$set(this.$data,'userDetail',res.list[0])
+                      this.$set(this.$data,'value1',res.list[0].provinceId);
+                      this.getData(res.list[0].provinceId)
+                      this.getCity(res.list[0].provinceId,res.list[0].regionId)
+                      this.earasList(res.list[0].regionId,res.list[0].cityId)
+//                      this.$set(this.$data,'value2',res.list[0].cityId)
+//                      this.$set(this.$data,'value3',res.list[0].cityId)
+                      this.$set(this.$data.ruleForm,'sex',res.list[0].xb)
+                      this.$set(this.$data.ruleForm,'name',res.list[0].yhxm)
+                      this.$set(this.$data.ruleForm,'mobilephone',res.list[0].sjhm)
+                      this.$set(this.$data.ruleForm,'otherphone',res.list[0].lxdh)
+                      this.$set(this.$data.ruleForm,'age',res.list[0].klx)
+                      this.$set(this.$data.ruleForm,'address',res.list[0].lxdz)
+                  }else {
+                     alert(res.msg)
+                  }
+              })
+          },
+          getData(id){
+              axiosUtil('smarthos.sxzz.province.list',{}).then(res=>{
+                  if(res.succ){
+                      var list = res.list;
+                      if(id){
+                          function check(item) {
+                              return item.id==id
+                          }
+                          this.$set(this.$data,'value1',list.filter(check)[0].name)
+                      }else {
+                          var provincesList = [];
+                          for(var i=0;i<list.length;i++){
+                              var provinceObj = {};
+                              provinceObj.label=list[i].name;
+                              provinceObj.value=list[i].id;
+                              provincesList.push(provinceObj)
+                          }
+                          this.$set(this.$data,'provinces',provincesList)
+                      }
+
+                  }else {
+                      alert(res.msg)
+                  }
+              })
+          },
+          getProvincess(value){
+              this.getCity(value)
+          },
+          getEaras(value){
+              this.earasList(value)
+          },
+          earasList(value,id){
+              axiosUtil('smarthos.sxzz.region.list',{
+                  cityId:value
+              }).then(res=>{
+                  if(res.succ){
+                      var list = res.list;
+                      if(id){
+                          function check(item) {
+                              return item.id==id
+                          }
+                          this.$set(this.$data,'value3',list.filter(check)[0].name)
+                      }else {
+                          var earaList = [];
+                          for(var i=0;i<list.length;i++){
+                              var earaObj = {};
+                              earaObj.label=list[i].name;
+                              earaObj.value=list[i].id;
+                              earaList.push(earaObj)
+                          }
+                          this.$set(this.$data,'earas',earaList)
+                      }
+
+                  }else {
+                      alert(res.msg)
+                  }
+              })
+          },
+          getCity(value,id){
+              axiosUtil('smarthos.sxzz.city.list',{
+                  provinceId:value
+              }).then(res=>{
+                  if(res.succ){
+                      var list = res.list;
+                      if(id){
+                          function check(item) {
+                              return item.id==id
+                          }
+                          this.$set(this.$data,'value2',list.filter(check)[0].name)
+                      }else{
+                          var cityList = [];
+                          for(var i=0;i<list.length;i++){
+                              var cityObj = {};
+                              cityObj.label=list[i].name;
+                              cityObj.value=list[i].id;
+                              cityList.push(cityObj)
+                          }
+                          this.$set(this.$data,'citys',cityList)
+                      }
+
+                  }else {
+                      alert(res.msg)
+                  }
+              })
+          },
           submitForm(formName) {
               this.$refs[formName].validate((valid) => {
                   if (valid) {

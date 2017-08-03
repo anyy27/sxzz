@@ -78,24 +78,24 @@
         </div>
         <div class="rwzx-charts">
             <div class="rwzx-picture">
-                <el-tabs v-model="activeName">
+                <el-tabs v-model="activeName" @tab-click="shiftTo">
                     <el-tab-pane label="转出图" name="first"></el-tab-pane>
-                    <el-tab-pane label="转入图" name="second"></el-tab-pane>
+                    <el-tab-pane label="转入图" name="second" ></el-tab-pane>
                 </el-tabs>
-                <div v-show="activeName == 'first'" id="mains" class="rwzx-tj">
+                <div  id="mains" class="rwzx-tj">
                 </div>
-                <div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">
+                <!--<div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">-->
 
-                </div>
+                <!--</div>-->
             </div>
             <div class="rwzx-picture">
-                <el-tabs v-model="activeName1">
-                    <el-tab-pane label="转入表" name="third"></el-tab-pane>
-                    <el-tab-pane label="转出表" name="fourth"></el-tab-pane>
+                <el-tabs v-model="activeName" @tab-click="shiftTo">
+                    <el-tab-pane label="转入表" name="first"></el-tab-pane>
+                    <el-tab-pane label="转出表" name="second"></el-tab-pane>
                 </el-tabs>
                 <div v-show="activeName1 == 'third'" class="rwzx-tj">
                     <el-table
-                            :data="tableData"
+                            :data="tableArr"
                             style="width: 100%">
                         <el-table-column
                                 prop="date"
@@ -103,41 +103,27 @@
                                 width="80">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
-                                label="姓名"
+                                prop="outpatient"
+                                label="门诊"
                         >
                         </el-table-column>
                         <el-table-column
-                                prop="address"
-                                label="地址"
+                                prop="inspect"
+                                label="检查"
                                 width="100">
                         </el-table-column>
                         <el-table-column
-                                prop="date"
-                                label="日期"
+                                prop="hospital"
+                                label="住院"
                         >
                         </el-table-column>
 
                         <el-table-column
-                                prop="date"
-                                label="日期"
+                                prop="surgery"
+                                label="日间手术"
                         >
                         </el-table-column>
-                        <el-table-column
-                                prop="date"
-                                label="日期"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                                prop="date"
-                                label="日期"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                                prop="date"
-                                label="日期"
-                        >
-                        </el-table-column>
+
                     </el-table>
                 </div>
                 <div v-show="activeName1 == 'fourth'" style="width:100px;height:100px;background: red;">
@@ -155,7 +141,7 @@
         margin-top: 20px;
     }
 </style>
-<script>
+<script type="text/ecmascript-6">
     import echarts from 'echarts';
     import timeformat from "lmw-time-format"
     import axiosUtil from "../../utils/AxiosUtils.js";
@@ -165,6 +151,7 @@
         name: '',
         data () {
             return {
+                tableArr:[],
                 activeName: 'first',
                 activeName1: 'third',
                 charts: '',
@@ -233,7 +220,7 @@
              yyid: "59411511191ce23575a63218",
              pageSize: 10,
              pageNum: 1,
-             sqysbh: "595d05b0f19b9c898a58cc55",
+             sqysbh: "595d05b0f19b9c898a58cc70",
              zzzt: 0
              });
              this.zzjl = data.list;
@@ -242,22 +229,43 @@
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
-             sqysbh: "595d05b0f19b9c898a58cc55",
+             sqysbh: "595d05b0f19b9c898a58cc70",
              pageSize: 10,
              pageNum: 1,
              zzzt: 1
              });
              this.sljl = data.list;
              },
+            shiftTo(value,event){
+              console.log(value.name,event,2222);
+                if(value.name=='second'){
+                    this._getShift()
+                }else {
+                    this._getDatad();
+                }
+            },
+            async _getShift(){
+                console.log("323233434343");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    sqysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                console.log(data,999999)
+                this.seriesd = data.list;
+                this._getTime();
+            },
             async _getDatad(){
                 console.log("lddl");
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
-                    sqysbh: "595d05b0f19b9c898a58cfb8",
+                    sqysbh: "595d05b0f19b9c898a58cc70",
                     zzzt: 1
                 });
+                console.log(data,888888)
                 this.seriesd = data.list;
                 this._getTime();
+                this._setChat();
             },
             _getTime(){
                 console.log("7777",this.seriesd);
@@ -269,6 +277,7 @@
                         date: timeformat(new Date().getTime() - (Math.floor(Math.random()*7)+1) * 24 * 3600 * 1000, "%Y-%m-%d")
                     })
                 }
+                console.log(list,22222222)
                 let arr0=[],arr1=[],arr2=[],arr3=[];
                 let dateArr = [];
                 for (let j = 0; j < 7; j++) {
@@ -285,7 +294,11 @@
             },
             _getSeries(list, type, date){
                 for (let i = 0; i < list.length; i++) {
-                    if(list[i].ywrq==date&&list[i].ywlx==type){return list[i].count}
+
+                    if(list[i].ywrq==date&&list[i].ywlx==type){
+                        console.log(list[i].count,56565656)
+                        return list[i].count
+                    }
                 }
                 return 0
             },
@@ -340,13 +353,29 @@
                         }
                     ]
                 })
+            },
+            async _setChat(){
+                var chatArr = [];
+                for (let j = 0; j < 7; j++) {
+                    let date=timeformat(new Date().getTime() - (j + 1) * 24 * 3600 * 1000, "%Y-%m-%d")
+                    var chatObj = {};
+                    chatObj.date = date;
+                    chatObj.outpatient = this._getSeries(this.seriesd,0,date);
+                    chatObj.inspect = this._getSeries(this.seriesd,1,date);
+                    chatObj.hospital = this._getSeries(this.seriesd,2,date);
+                    chatObj.surgery = this._getSeries(this.seriesd,3,date);
+                    console.log(chatObj,55555555)
+                    chatArr.push(chatObj)
+                }
+                this.$set(this.$data,'tableArr',chatArr)
             }
         },
         mounted(){
             //this._getDatad()
             this._getData();
              this._getDatas();
-             this._getDatad();
+            this._getDatad();
+
         }
     }
 </script>
