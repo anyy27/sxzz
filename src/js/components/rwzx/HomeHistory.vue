@@ -92,8 +92,8 @@
             </div>
             <div class="rwzx-picture">
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
-                    <el-tab-pane label="转入表" name="first"></el-tab-pane>
-                    <el-tab-pane label="转出表" name="second"></el-tab-pane>
+                    <el-tab-pane label="转出表" name="first"></el-tab-pane>
+                    <el-tab-pane label="转入表" name="second"></el-tab-pane>
                 </el-tabs>
                 <div v-show="activeName1 == 'third'" class="rwzx-tj">
                     <el-table
@@ -157,62 +157,11 @@
                 activeName: 'first',
                 activeName1: 'third',
                 charts: '',
-                opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
-                opinionData: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'},
-                    {value: 135, name: '视频广告'},
-                    {value: 1548, name: '搜索引擎'}
-                ],
                 zzjl: [],
                 sljl: [],
                 seriesd: [],
                 sd: [],
-                st: [],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-01',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    }]
+                st: []
             }
         },
         methods: {
@@ -304,7 +253,6 @@
             },
             _getSeries(list, type, date){
                 for (let i = 0; i < list.length; i++) {
-
                     if(list[i].ywrq==date&&list[i].ywlx==type){
                         console.log(list[i].count,56565656)
                         return list[i].count
@@ -381,13 +329,10 @@
             }
         },
         mounted(){
-
             //this._getDatad()
             this._getData();
              this._getDatas();
             this._getDatad();
-
-
         }
     }
 </script>
