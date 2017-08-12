@@ -14,7 +14,6 @@ const basicParam = {//服务器交互基本参数
     "format": "JSON",
     "random": "ouws",
     "sign": "19c84baf0a1bf73d189734f3e93f9cd5",
-
 };
 const upLoadBasicParam = {
     spid: "1001",

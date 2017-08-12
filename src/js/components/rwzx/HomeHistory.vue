@@ -78,6 +78,7 @@
         </div>
         <div class="rwzx-charts">
             <div class="rwzx-picture">
+
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
                     <el-tab-pane label="转出图" name="first"></el-tab-pane>
                     <el-tab-pane label="转入图" name="second" ></el-tab-pane>
@@ -87,11 +88,12 @@
                 <!--<div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">-->
 
                 <!--</div>-->
+
             </div>
             <div class="rwzx-picture">
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
-                    <el-tab-pane label="转入表" name="first"></el-tab-pane>
-                    <el-tab-pane label="转出表" name="second"></el-tab-pane>
+                    <el-tab-pane label="转出表" name="first"></el-tab-pane>
+                    <el-tab-pane label="转入表" name="second"></el-tab-pane>
                 </el-tabs>
                 <div v-show="activeName1 == 'third'" class="rwzx-tj">
                     <el-table
@@ -143,7 +145,7 @@
 </style>
 <script type="text/ecmascript-6">
     import echarts from 'echarts';
-    import timeformat from "lmw-time-format"
+    import timeformat from "lmw-time-format";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import Vue from  "vue";
     require('echarts/theme/macarons');
@@ -155,66 +157,22 @@
                 activeName: 'first',
                 activeName1: 'third',
                 charts: '',
-                opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
-                opinionData: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'},
-                    {value: 135, name: '视频广告'},
-                    {value: 1548, name: '搜索引擎'}
-                ],
                 zzjl: [],
                 sljl: [],
                 seriesd: [],
                 sd: [],
-                st: [],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-01',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    }]
+                st: []
             }
         },
         methods: {
-           async _getData(){
+            getZr:function(){
+              console.log("2222")
+            },
+            getZc:function(){
+                console.log("1111");
+                _getDatad();
+            },
+             async _getData(){
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
@@ -260,6 +218,7 @@
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
                     sqysbh: "595d05b0f19b9c898a58cc70",
+
                     zzzt: 1
                 });
                 console.log(data,888888)
@@ -269,7 +228,7 @@
             },
             _getTime(){
                 console.log("7777",this.seriesd);
-                let list = []
+                let list = [];
                 for (let i = 0; i < 20; i++) {
                     list.push({
                         count: Math.round(Math.random() * 100),
@@ -294,7 +253,6 @@
             },
             _getSeries(list, type, date){
                 for (let i = 0; i < list.length; i++) {
-
                     if(list[i].ywrq==date&&list[i].ywlx==type){
                         console.log(list[i].count,56565656)
                         return list[i].count
@@ -375,7 +333,6 @@
             this._getData();
              this._getDatas();
             this._getDatad();
-
         }
     }
 </script>
