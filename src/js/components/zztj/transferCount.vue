@@ -57,65 +57,60 @@
                             width="50">
                     </el-table-column>
                     <el-table-column
-                            type="selection"
-                            label="选中"
-                            width="50">
-                    </el-table-column>
-                    <el-table-column
-                            prop="address"
+                            prop="yymc"
                             label="医院名称"
                             width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="one"
                             label="1月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="two"
                             label="2月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="three"
                             label="3月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="four"
                             label="4月">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="five"
                         label="5月">
                      </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="six"
                             label="6月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="seven"
                             label="7月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="eight"
                             label="8月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="nine"
                             label="9月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="ten"
                             label="10月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="eleven"
                             label="11月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="twelve"
                             label="12月">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
+                            prop="total"
                             label="全年">
                     </el-table-column>
                 </el-table>
@@ -125,11 +120,13 @@
 <style>
 
 </style>
-<script>
+<script type="text/ecmascript-6">
     import Vue from "vue";
+    import axiosUtil from "../../utils/AxiosUtils.js"
     export default {
         data() {
             return {
+                list:[],
                 options2: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -153,21 +150,53 @@
                 activeName:'first',
                 data2:[{
                     date: '1',
-                    name: '王小虎',
-                    address: '上海市'
-                }, {
-                    date: '2',
-                    name: '王小虎',
-                    address: '上海市'
-                }, {
-                    date: '3',
-                    name: '王小虎',
-                    address: '上海市'
-                }, {
-                    date: '4',
-                    name: '王小虎',
-                    address: '上海市'
-                }]
+                    yymc: '王小虎',
+                    one:1,
+                    two:2,
+                    three:3,
+                    four:4,
+                    five:5,
+                    six:6,
+                    seven:7,
+                    eight:8,
+                    nine:9,
+                    ten:10,
+                    eleven:11,
+                    twelve:12,
+                    total:10
+                },{
+                    date: '1',
+                    yymc: '王小虎',
+                    one:1,
+                    two:2,
+                    three:3,
+                    four:4,
+                    five:5,
+                    six:6,
+                    seven:7,
+                    eight:8,
+                    nine:9,
+                    ten:10,
+                    eleven:11,
+                    twelve:12,
+                    total:10
+                }, ]
+            }
+        },
+        mounted(){
+            this.getDate()
+        },
+        methods:{
+            getData(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "qrysbh": "595d05b0f19b9c898a58cc70",
+                    "zzms":"1"
+                }).then(res=>{
+                    this.$set(this.$data,'list',res.list);
+
+                })
+
             }
         }
     }

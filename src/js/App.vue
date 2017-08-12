@@ -24,7 +24,7 @@
             if (this.isLogin) {//如果已经登录则跳转到个人中心
                 this.$router.push("/main");
             } else {//如果未登录则跳转到登录页面
-                this.$router.push("/login");
+//                this.$router.push("/login");
                 //window.location = HOST_URL;
             }
             /*this.clientH = document.documentElement.clientHeight || document.body.clientHeight;*/

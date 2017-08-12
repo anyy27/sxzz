@@ -101,19 +101,50 @@
           </div>
            <p style="line-height: 40px;">病情资料</p>
            <div class="base-message">
-               <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-               <div class="base-con" style="margin-top:10px;">
-                   <span style="font-size: 14px;color: #48576a;">初步诊断:</span>
-                   <el-select v-model="value8" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
-                       <el-option
-                               v-for="item in options"
-                               :key="item.value"
-                               :label="item.label"
-                               :value="item.value">
-                       </el-option>
-                   </el-select>
-                   <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;">常用诊断</el-button>
+               <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="position: relative">
+               <div class="base-con" style="margin-top:10px;float: left;width: 40%">
+                   <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;" >初步诊断:</span>
+                   <!--<span style="font-size: 14px;color: #48576a;">初步诊断:</span>-->
+                   <!--<el-select v-model="value8" filterable placeholder="请选择" style="height:24px;margin-left:5px;">-->
+                       <!--<el-input>-->
+                       <!--</el-input>-->
+                   <!--</el-select>-->
+
+                   <el-input
+                           type="text"
+                           style="width:60%;margin-left:70px;"
+                           v-model="diagnoseValue"
+                           width="200"
+                           size="small"
+                   ></el-input>
+
+                   <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" @click="getDiagnoseList">常用诊断</el-button>
+
                </div>
+                   <div class="diagnoseList" v-show="showDiagnoseList">
+                       <p>常用诊断
+                           <span class="delete"><el-button @click="hideDiagnose"  type="primary" style="padding:5px 10px;background: white;color: grey;border: none">X</el-button>
+                               </span>
+                       </p>
+                       <ul>
+                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:5px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
+                       </ul>
+                       <div class="inputDiagnose">
+                           <el-input
+                                   type="text"
+                                   style="margin-top:10px;resize: none;"
+                                   v-model="zdxx"
+                                   size="small"
+                           ></el-input>
+                       </div>
+                       <div class="btnDiagnose">
+                           <div style="float: right">
+                               <el-button  type="primary" style="padding:5px 10px;" @click="addDiagnose" >加入常用诊断</el-button>
+                           </div>
+
+                       </div>
+
+                   </div>
                    <div class="base-con" style="height:60px;margin-top:10px;">
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
                            <el-input
@@ -156,7 +187,41 @@
        </div>
 </template>
 <style>
+.diagnoseList{
+    float: left;
+    width: 300px;
+    border: 1px solid gray;
+    margin-top: 13px;
+    position: absolute;
+    left: 40%;
+    top: 0;
+    z-index: 888;
+    background: white;
+}
+    .diagnoseList p{
+        border-bottom: 1px solid gray;
+        padding: 8px;
+    }
+    .diagnoseList ul{
+        border-bottom: 1px solid lightgrey;
+        padding-bottom: 10px;
+        max-height: 200px;
+        overflow: auto;
+    }
+    .diagnoseList li{
+        padding: 10px 8px 0 8px ;
 
+    }
+    .delete{
+        display: inline-block;
+        float: right;
+    }
+    .inputDiagnose{
+    }
+    .btnDiagnose{
+        padding: 10px 8px 10px 8px ;
+        overflow: hidden;
+    }
 </style>
 <script type="text/ecmascript-6">
   import Vue from "vue";
@@ -174,6 +239,10 @@
       data(){
           return{
               userDetail:{},
+              zdxx:'',
+              diagnoseValue:"",
+              diagnoseList:[],
+              showDiagnoseList:false,
               value1:'',
               value2:"",
               value3:'',
@@ -321,6 +390,62 @@
         this.getData();
       },
       methods: {
+          getValue(value){
+              this.$set(this.$data,'diagnoseValue',value)
+          },
+          hideDiagnose(){
+              this.$set(this.$data,'showDiagnoseList',false)
+          },
+          addDiagnose(){
+              axiosUtil('smarthos.sxzz.cbzdAdd.info',{
+                  "yyid": "59411511191ce23575a63218",
+                  "jgid": "59411511191ce23575a63218",
+                  "ysid": "595d05b0f19b9c898a58cf48",
+                  "zdxx": this.zdxx
+              }).then(res=>{
+                  console.log(res,66666);
+                  if(res.succ){
+                      this.getDiagnoseList();
+                      this.zdxx=''
+                  }else {
+                      alert(res.msg)
+                  }
+              })
+          },
+          delDiagnose(id){
+              console.log(id,212121);
+              if(confirm('确认删除？')) {
+                  axiosUtil('smarthos.sxzz.cbzdDelete.info',{
+                      "yyid": "59411511191ce23575a63218",
+                      "jgid": "59411511191ce23575a63218",
+                      "zdid":id
+                  }).then(res=>{
+                      console.log(res,66666);
+                      if(res.succ){
+                          this.getDiagnoseList()
+                      }else {
+                          alert(res.msg)
+                      }
+                  })
+              }else {
+                  return false;
+              }
+          },
+          getDiagnoseList(){
+              this.$set(this.$data,'showDiagnoseList',true)
+                  axiosUtil('smarthos.sxzz.cbzdSelect.info',{
+                      "yyid": "59411511191ce23575a63218",
+                      "jgid": "59411511191ce23575a63218",
+                      "yyr":"595d05b0f19b9c898a58cf48"
+                  }).then(res=>{
+                      console.log(res,66666);
+                      if(res.succ){
+                          this.$set(this.$data,'diagnoseList',res.list)
+                      }else {
+                          alert(res.msg)
+                      }
+                  })
+          },
           getUser(id){
               console.log(id,7878787878878)
               axiosUtil('smarthos.sxzz.user.list',{
@@ -347,6 +472,7 @@
               })
           },
           getData(id){
+              console.log(123123123)
               axiosUtil('smarthos.sxzz.province.list',{}).then(res=>{
                   if(res.succ){
                       var list = res.list;
