@@ -6,64 +6,72 @@
                <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
            </div>
               <div class="base-docs" style="margin-top:10px;">
-                  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                  <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
                          <div class="base-con">
-                             <el-form-item label="身份证号:" prop="pid" >
-                                 <el-input
-                                         v-model="ruleForm.pid"
-                                         width="200"
-                                         size="small"
-                                         @blur="getUser(ruleForm.pid)"
-                                 ></el-input>
+                             <el-form-item label="就诊卡号:"  >
+                                 <div class="base-idcard" style="width:120px;margin-left:10px;">
+                                     <el-select v-model="ruleForm.klx" placeholder="请选择卡号">
+                                         <el-option label="省医保" value="0"></el-option>
+                                         <el-option label="市医保" value="1"></el-option>
+                                         <el-option label="市民卡" value="2"></el-option>
+                                         <el-option label="就诊卡" value="3"></el-option>
+                                     </el-select>
+                                 </div>
+                                 <div class="base-idcard" style="margin-left:10px;">
+                                     <el-input
+                                             v-model="ruleForm.kh"
+                                             width="200"
+                                             size="small"
+                                             @blur="getUser(ruleForm.pid)"
+                                     ></el-input>
+                                 </div>
                              </el-form-item>
-                             <el-form-item label="姓名:" prop="name">
+                             <el-form-item label="姓名:"
                                  <el-input
-                                         v-model="ruleForm.name"
+                                         v-model="ruleForm.yhxm"
                                          style="width:100px;"
                                          size="small"
                                  ></el-input>
                              </el-form-item>
-                          <el-form-item label="就诊卡号:" prop="cid">
+                          <el-form-item label="身份证号:"  style="margin-left:150px;" @blur="getPainter">
                               <el-input
-                                      v-model="ruleForm.cid"
+                                      v-model="ruleForm.zjhm"
                                       width="200"
                                       size="small"
                               ></el-input>
                           </el-form-item>
-
-
                       </div>
                          <div class="base-con">
-                             <el-form-item label="性别:" prop="sex">
-                                     <el-radio class="radio" v-model="ruleForm.sex" label="男">男</el-radio>
-                                     <el-radio class="radio" v-model="ruleForm.sex" label="女">女</el-radio>
+                             <el-form-item label="性别:" >
+                                     <el-radio class="radio" v-model="ruleForm.xb" label="男">男</el-radio>
+                                     <el-radio class="radio" v-model="ruleForm.xb" label="女">女</el-radio>
                              </el-form-item>
-                             <el-form-item label="年龄:" prop="age">
+                             <el-form-item label="年龄:" >
                                  <el-input
                                          v-model="ruleForm.age"
                                          style="width:100px;"
                                          size="small"
                                  ></el-input>
                              </el-form-item>
-                             <el-form-item label="患者手机号:" prop="mobilephone">
+                             <el-form-item label="患者手机号:"  style="margin-left:80px;">
                                  <el-input
-                                         v-model="ruleForm.mobilephone"
+                                         v-model="ruleForm.sjhm"
                                          width="100"
                                          size="small"
                                  ></el-input>
                              </el-form-item>
-                             <el-form-item label="其他联系方式:" prop="otherphone">
+                             <el-form-item label="其他联系方式:"  style="margin-left:40px;">
                                  <el-input
-                                         v-model="ruleForm.otherphone"
+                                         v-model="ruleForm.lxdh"
                                          width="100"
                                          size="small"
                                  ></el-input>
                              </el-form-item>
                          </div>
                          <div class="base-con">
-                             <el-form-item label="家庭住址:" prop="address">
+                             <el-form-item label="家庭住址:" >
                                  <div class="block">
-                                     <el-select v-model="value1" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
+                                     <el-select v-model="ruleForm.cityId" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
                                          <el-option
                                                  v-for="item in provinces"
                                                  :key="item.value"
@@ -71,7 +79,7 @@
                                                  :value="item.value">
                                          </el-option>
                                      </el-select>
-                                     <el-select v-model="value2" placeholder="请选择" @change="getEaras"  style="width: 150px">
+                                     <el-select v-model="ruleForm.provinceId" placeholder="请选择" @change="getEaras"  style="width: 150px">
                                          <el-option
                                                  v-for="item in citys"
                                                  :key="item.value"
@@ -79,7 +87,7 @@
                                                  :value="item.value">
                                          </el-option>
                                      </el-select>
-                                     <el-select v-model="value3" placeholder="请选择"  style="width: 150px">
+                                     <el-select v-model="ruleForm.regionId" placeholder="请选择"  style="width: 150px">
                                          <el-option
                                                  v-for="item in earas"
                                                  :key="item.value"
@@ -88,7 +96,7 @@
                                          </el-option>
                                      </el-select>
                                      <el-input
-                                             v-model="ruleForm.address"
+                                             v-model="ruleForm.lxdz"
                                              style="width:200px;"
                                              size="small"
                                              placeholder="街道等详细地址选择填写"
@@ -101,10 +109,10 @@
           </div>
            <p style="line-height: 40px;">病情资料</p>
            <div class="base-message">
-               <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+               <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                <div class="base-con" style="margin-top:10px;">
                    <span style="font-size: 14px;color: #48576a;">初步诊断:</span>
-                   <el-select v-model="value8" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                   <el-select v-model="ruleForm.zdjg" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                        <el-option
                                v-for="item in options"
                                :key="item.value"
@@ -119,7 +127,7 @@
                            <el-input
                                    type="textarea"
                                    style="width:70%;margin-left:70px;resize: none;"
-                                   v-model="docsay"
+                                   v-model="ruleForm.bqms"
                                    width="200"
                                    size="small"
                            ></el-input>
@@ -128,24 +136,26 @@
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
                            <div class="add-pic-list" >
                                <el-upload
-                                       action="https://jsonplaceholder.typicode.com/posts/"
+                                       :action="uploadUrl"
                                        list-type="picture-card"
-                                       accept="image/jpg,image/png"
-                                       :on-preview="handlePictureCardPreview"
-                                       :on-remove="handleRemove"
-                                       :file-list="fileList1">
+                                       :data="uploadData"
+                                       accept="image/gif,image/jpg,image/jpeg,image/png,image/bmp"
+                                       :before-upload="beforeUpload"
+                                       :on-success="onSuccessImg"
+                                       :on-remove="onRemoveImg"
+                                       :file-list="imgUploadList">
                                    <i class="el-icon-plus"></i>
                                </el-upload>
-                               <el-dialog v-model="dialogVisible" size="tiny">
-                                   <img width="100%" :src="dialogImageUrl" alt="">
-                               </el-dialog>
                            </div>
                            <div class="ghost-btn-wrap">
                                <el-upload
-                                       class="upload-demo"
-                                       action="https://jsonplaceholder.typicode.com/posts/"
-                                       :on-change="handleChange"
-                                       :file-list="fileList2">
+                                       :action="uploadUrl"
+                                       :data="uploadData"
+                                       accept=".pdf,.xls,.xlsx,.doc,.docx,.txt,.rar,.zip"
+                                       :before-upload="beforeUploadFile"
+                                       :on-success="onSuccessFile"
+                                       :on-remove="onRemoveFile"
+                                       :file-list="fileUploadList">
                                    <el-button size="small" type="primary">点击上传</el-button>
                                </el-upload>
                            </div>
@@ -160,6 +170,8 @@
 </style>
 <script type="text/ecmascript-6">
   import Vue from "vue";
+  import { API_URL } from "../../data/Url.js";
+  import { basicParam }from "../../data/basicParam";
   import axiosUtil from "../../utils/AxiosUtils.js"
   import { Form, FormItem,Button, Select, Option, DatePicker,Input, Message, Upload } from "element-ui";
   Vue.use(Form);
@@ -170,6 +182,7 @@
   Vue.use(Option);
   Vue.use(DatePicker );
   Vue.use(Upload);
+  const upLoadFileCountMax = 9;//最大上传数量
   export default{
       data(){
           return{
@@ -182,81 +195,15 @@
               earas:[],
               fileList1:[],
               fileList2:[],
-              options1: [{
-                  value: 'zhinan',
-                  label: '指南',
-                  children: [{
-                      value: 'shejiyuanze',
-                      label: '设计原则',
-                      children: [{
-                          value: 'yizhi',
-                          label: '一致'
-                      }]
-                  }, {
-                      value: 'daohang',
-                      label: '导航',
-                      children: [{
-                          value: 'cexiangdaohang',
-                          label: '侧向导航'
-                      }]
-                  }]
-              }, {
-                  value: 'zujian',
-                  label: '组件',
-                  children: [{
-                      value: 'basic',
-                      label: 'Basic',
-                      children: [{
-                          value: 'layout',
-                          label: 'Layout 布局'
-                      }]
-                  }, {
-                      value: 'form',
-                      label: 'Form',
-                      children: [{
-                          value: 'radio',
-                          label: 'Radio 单选框'
-                      }]
-                  }, {
-                      value: 'data',
-                      label: 'Data',
-                      children: [{
-                          value: 'table',
-                          label: 'Table 表格'
-                      }]
-                  }, {
-                      value: 'notice',
-                      label: 'Notice',
-                      children: [{
-                          value: 'alert',
-                          label: 'Alert 警告'
-                      }]
-                  }, {
-                      value: 'navigation',
-                      label: 'Navigation',
-                      children: [{
-                          value: 'menu',
-                          label: 'NavMenu 导航菜单'
-                      }]
-                  }, {
-                      value: 'others',
-                      label: 'Others',
-                      children: [{
-                          value: 'dialog',
-                          label: 'Dialog 对话框'
-                      }]
-                  }]
-              }, {
-                  value: 'ziyuan',
-                  label: '资源',
-                  children: [{
-                      value: 'axure',
-                      label: 'Axure Components'
-                  }]
-              }],
+              imgSrc:'',
+              type:'',
+              uploadData: {},//up-load组件的data数据
+              attaIdList: [],//需要提交的附件列表
+              imgUploadList: [],//需上传的图片列表
+              fileUploadList: [],//需上传的文件列表
+              uploadFileCount: 0,//上传的文件数量，最大为9个
+              uploadUrl: API_URL,//上传图片action地址
               selectedOptions: [],
-              imgUploadList:[],
-              fileUploadList:[],
               options: [{
                   value: '选项1',
                   label: '黄金糕'
@@ -275,50 +222,27 @@
               }],
               value8: '',
               ruleForm: {
-                  cid: '',
-                  name: '',
-                  pid: '',
-                  region: '',
-                  sex:[],
-                  mobilephone:'',
-                  otherphone:'',
+                  klx: '',
+                  kh: '',
+                  yhxm: '',
+                  zjhm: '',
+                  xb:'',
                   age:'',
-                  address:'',
-                  begin:'',
-                  docsay:''
+                  sjhm:'',
+                  lxdz:'',
+                  zdjg:'',
+                  bqms:'',
+                  addFileIdList:[1,2,3,4],
               },
-              rules: {
-                  cid: [
-                      { required: true, message: '请输入医保卡号', trigger: 'blur' },
-                      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                  ],
-                  name: [
-                      { required: true, message: '请输入姓名', trigger: 'blur' },
-                      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                  ],
-                  pid: [
-                      { required: true, message: '请输入身份证号', trigger: 'blur' },
-                      { min: 18, max: 18, message: '长度 18 个字符', trigger: 'blur' }
-                  ],
-                  age: [
-                      { message: '请输入年龄', trigger: 'blur' },
-                  ],
-                  mobilephone: [
-                      { required: true, message: '请输入手机号', trigger: 'blur' },
-                      { min: 18, max: 18, message: '长度 11个字符', trigger: 'blur' }
-                  ],
-                  otherphone: [
-                      { message: '请输入身份证号', trigger: 'blur' },
-                      { min: 18, max: 18, message: '长度 11 个字符', trigger: 'blur' }
-                  ],
-                  sex: [
-                      { sex:"array", required: true, message: '请至少选择一个性别', trigger: 'blur' },
-                  ]
-              }
           }
       },
       mounted(){
         this.getData();
+      },
+      computed:{
+          upLoadList:function(){
+              return this.imgUploadList.concat(this.fileUploadList);
+          }
       },
       methods: {
           getUser(id){
@@ -447,15 +371,95 @@
           handleRemove(file, fileList) {
               console.log(file, fileList);
           },
-          handlePictureCardPreview(file) {
-              this.dialogImageUrl = file.url;
-              this.dialogVisible = true;
-          },
           handlePreview(file) {
               console.log(file);
           },
           handleChange(file, fileList) {
               this.fileList2 = fileList.slice(-3);
+          },
+          getPainter:function(){
+              let _this=this;
+              let options={
+
+              }
+          },
+          beforeUpload: function(file){//上传图片前钩子函数
+              let _this = this;//传递this,确保下方闭包函数this正确
+              if(typeof FileReader === 'undefined'){
+                  alert( "抱歉，你的浏览器版本过低，请升级浏览器或更换其它浏览器！");
+              }
+              if(!/image\/\w+/.test(file.type)){
+                  alert("请确保文件为图像类型");
+                  return false;
+              }
+              let type= file.name.replace(/.+\./,"");
+              let reader = new FileReader();
+              reader.readAsBinaryString(file);
+              reader.onload = function(){
+                  _this.src = this.result;
+                  _this.imgSrc = this.result;
+                  let options = {
+                      baseString: _this.src,
+                      type:type
+                  }
+                  axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
+                      console.log("444444",res);
+                  })
+              }
+          },
+          beforeUploadFile: function(file){//上传文件前钩子函数
+              let _this = this;
+              let maxsize=1024*500;
+              console.log("5555",file.size/1024);
+              if(file.size/1024>maxsize){
+                  Message({
+                      showClose: true,
+                      message:"附件大小不能大于500mb",
+                      type: "error"
+                  })
+                  return false;
+              }else{
+                  return new Promise(function (resove, reject) {
+                      _this.uploadData = Object.assign({
+                          'baseString': file,
+                          'Service': "smarthos.sxzz.blzlUpdata.info"
+                      }, basicParam);
+                      resove(true);
+                  });
+              }},
+          onRemoveImg: function(file, fileList) {//删除上传图片
+              if(this.uploadFileCount>0){
+                  this.uploadFileCount--;
+              }
+              this.imgUploadList = fileList;
+          },
+          onSuccessImg: function(response, file, fileList){//上传图片成功后钩子
+              if(response.succ){
+                  this.imgUploadList = fileList;
+              }else {
+                  Message({
+                      showClose: true,
+                      message: response.msg,
+                      type: "error"
+                  });
+              }
+          },
+          onSuccessFile: function(response, file, fileList){//上传文件成功后钩子
+              if(response.succ){
+                  this.fileUploadList = fileList;
+              }else {
+                  Message({
+                      showClose: true,
+                      message: response.msg,
+                      type: "error"
+                  });
+              }
+          },
+          onRemoveFile: function (file, fileList) {//删除上传文件
+              this.fileUploadList = fileList;
+          },
+          sendData:function(){
+              this.$emit("child-say",ruleForm);
           }
       }
   }

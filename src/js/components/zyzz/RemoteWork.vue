@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form  ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <BaseMessage></BaseMessage>
             <div class="base-appoint">
                 <p style="line-height: 40px;">预约信息</p>
@@ -25,12 +25,9 @@
                     </el-select>
                     <span style="font-size: 14px;color: #48576a;">病情等级:</span>
                     <el-select v-model="value10" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
+                        <el-option label="一般" value="0"></el-option>
+                        <el-option label="急" value="1"></el-option>
+                        <el-option label="危重" value="2"></el-option>
                     </el-select>
                 </div>
                 <div class="base-con">
