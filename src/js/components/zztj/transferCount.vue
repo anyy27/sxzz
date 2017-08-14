@@ -2,6 +2,20 @@
     <div>
         <!--时间选择-->
         <div class="date-boxs">
+
+            <div class="date-box">
+            <div class="block">
+                <span class="demonstration">转诊模式:</span>
+                <el-select v-model="out" placeholder="请选择">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
+            </div>
+        </div>
             <div class="date-box">
             <div class="block">
                 <span class="demonstration">转诊时间:</span>
@@ -12,14 +26,15 @@
                 </el-date-picker>
             </div>
         </div>
+
             <div class="date-box" style="width:180px;">
-                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;">
+                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;" >
                     <el-option
                             v-for="item in options2"
                             :key="item.value"
-                            :label="item.label"
+                            :label="item.labe"
                             :value="item.value"
-                            :disabled="item.disabled">
+                            >
                     </el-option>
                 </el-select>
             </div>
@@ -42,14 +57,19 @@
             </div>
         </div>
             <div class="hosptial-table">
-                <el-tabs v-model="activeName" >
-                    <el-tab-pane label="按医院" name="first"> </el-tab-pane>
-                    <el-tab-pane label="按科室" name="second"> </el-tab-pane>
-                    <el-tab-pane label="按业务" name="third"> </el-tab-pane>
+                <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick">
+                    <el-tab-pane label="按医院" name="1"> </el-tab-pane>
+                    <el-tab-pane label="按科室" name="2"> </el-tab-pane>
+                    <el-tab-pane label="按业务" name="3"> </el-tab-pane>
+                </el-tabs>
+                <el-tabs v-show="out==2" v-model="activeName"  @tab-click="handleClick">
+                    <el-tab-pane label="按医院" name="4"> </el-tab-pane>
+                    <el-tab-pane label="按科室" name="5"> </el-tab-pane>
+                    <el-tab-pane label="按业务" name="6"> </el-tab-pane>
                 </el-tabs>
                 <!--表格-->
-                <el-table
-                        :data="data2"
+                <el-table v-show="activeName==1"
+                        :data="list"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -63,51 +83,401 @@
                     </el-table-column>
                     <el-table-column
                             prop="one"
-                            label="1月">
+                            :label="date[0].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="two"
-                            label="2月">
+                            :label="date[1].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="three"
-                            label="3月">
+                            :label="date[2].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="four"
-                            label="4月">
+                            :label="date[3].ywrq">
                     </el-table-column>
                     <el-table-column
                         prop="five"
-                        label="5月">
+                        :label="date[4].ywrq">
                      </el-table-column>
                     <el-table-column
                             prop="six"
-                            label="6月">
+                            :label="date[5].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="seven"
-                            label="7月">
+                            :label="date[6].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="eight"
-                            label="8月">
+                            :label="date[7].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="nine"
-                            label="9月">
+                            :label="date[8].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="ten"
-                            label="10月">
+                            :label="date[9].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="eleven"
-                            label="11月">
+                            :label="date[10].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="twelve"
-                            label="12月">
+                            :label="date[11].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total"
+                            label="全年">
+                    </el-table-column>
+                </el-table>
+                <el-table v-show="activeName==4"
+                        :data="list"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="序号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yymc"
+                            label="医院名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="one"
+                            :label="date[0].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="two"
+                            :label="date[1].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="three"
+                            :label="date[2].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="four"
+                            :label="date[3].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                        prop="five"
+                        :label="date[4].ywrq">
+                     </el-table-column>
+                    <el-table-column
+                            prop="six"
+                            :label="date[5].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="seven"
+                            :label="date[6].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eight"
+                            :label="date[7].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="nine"
+                            :label="date[8].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ten"
+                            :label="date[9].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eleven"
+                            :label="date[10].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="twelve"
+                            :label="date[11].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total"
+                            label="全年">
+                    </el-table-column>
+                </el-table>
+                <el-table v-show="activeName==2"
+                        :data="list1"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="序号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yymc"
+                            label="医院名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ksmc"
+                            label="科室名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="one"
+                            :label="date[0].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="two"
+                            :label="date[1].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="three"
+                            :label="date[2].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="four"
+                            :label="date[3].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                        prop="five"
+                        :label="date[4].ywrq">
+                     </el-table-column>
+                    <el-table-column
+                            prop="six"
+                            :label="date[5].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="seven"
+                            :label="date[6].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eight"
+                            :label="date[7].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="nine"
+                            :label="date[8].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ten"
+                            :label="date[9].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eleven"
+                            :label="date[10].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="twelve"
+                            :label="date[11].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total"
+                            label="全年">
+                    </el-table-column>
+                </el-table>
+                <el-table v-show="activeName==5"
+                        :data="list1"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="序号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yymc"
+                            label="医院名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ksmc"
+                            label="科室名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="one"
+                            :label="date[0].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="two"
+                            :label="date[1].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="three"
+                            :label="date[2].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="four"
+                            :label="date[3].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                        prop="five"
+                        :label="date[4].ywrq">
+                     </el-table-column>
+                    <el-table-column
+                            prop="six"
+                            :label="date[5].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="seven"
+                            :label="date[6].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eight"
+                            :label="date[7].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="nine"
+                            :label="date[8].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ten"
+                            :label="date[9].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eleven"
+                            :label="date[10].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="twelve"
+                            :label="date[11].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total"
+                            label="全年">
+                    </el-table-column>
+                </el-table>
+                <el-table v-show="activeName==3"
+                        :data="list2"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="序号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yymc"
+                            label="医院名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ywlx"
+                            label="业务类型"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="one"
+                            :label="date[0].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="two"
+                            :label="date[1].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="three"
+                            :label="date[2].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="four"
+                            :label="date[3].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                        prop="five"
+                        :label="date[4].ywrq">
+                     </el-table-column>
+                    <el-table-column
+                            prop="six"
+                            :label="date[5].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="seven"
+                            :label="date[6].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eight"
+                            :label="date[7].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="nine"
+                            :label="date[8].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ten"
+                            :label="date[9].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eleven"
+                            :label="date[10].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="twelve"
+                            :label="date[11].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total"
+                            label="全年">
+                    </el-table-column>
+                </el-table>
+                <el-table v-show="activeName==6"
+                        :data="list2"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="序号"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="yymc"
+                            label="医院名称"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ywlx"
+                            label="业务类型"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="one"
+                            :label="date[0].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="two"
+                            :label="date[1].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="three"
+                            :label="date[2].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="four"
+                            :label="date[3].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                        prop="five"
+                        :label="date[4].ywrq">
+                     </el-table-column>
+                    <el-table-column
+                            prop="six"
+                            :label="date[5].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="seven"
+                            :label="date[6].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eight"
+                            :label="date[7].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="nine"
+                            :label="date[8].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="ten"
+                            :label="date[9].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="eleven"
+                            :label="date[10].ywrq">
+                    </el-table-column>
+                    <el-table-column
+                            prop="twelve"
+                            :label="date[11].ywrq">
                     </el-table-column>
                     <el-table-column
                             prop="total"
@@ -127,6 +497,19 @@
         data() {
             return {
                 list:[],
+                date:[],
+                out:'',
+                list1:[],
+                list2:[],
+                options:[
+                    {
+                        label:'转入',
+                        value:'1'
+                    },{
+                        label:'转出',
+                        value:'2'
+                    }
+                ],
                 options2: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -147,57 +530,285 @@
                 value2:'',
                 value3:'',
                 value6:'',
-                activeName:'first',
-                data2:[{
-                    date: '1',
-                    yymc: '王小虎',
-                    one:1,
-                    two:2,
-                    three:3,
-                    four:4,
-                    five:5,
-                    six:6,
-                    seven:7,
-                    eight:8,
-                    nine:9,
-                    ten:10,
-                    eleven:11,
-                    twelve:12,
-                    total:10
-                },{
-                    date: '1',
-                    yymc: '王小虎',
-                    one:1,
-                    two:2,
-                    three:3,
-                    four:4,
-                    five:5,
-                    six:6,
-                    seven:7,
-                    eight:8,
-                    nine:9,
-                    ten:10,
-                    eleven:11,
-                    twelve:12,
-                    total:10
-                }, ]
+                activeName:'1',
+                id:'595d05b0f19b9c898a58cc70'
+
             }
         },
         mounted(){
-            this.getDate()
+            this.getData()
         },
         methods:{
+            handleClick(value){
+                console.log(value.name,2211111);
+                if(value.name==1){
+                    this.getData()
+                }else if(value.name==2){
+                    this.getList()
+                }else if(value.name==3){
+                    this.getArr()
+                }else if(value.name==4){
+                    this.getDatas()
+                }else if(value.name==5){
+                    this.getLists()
+                }else if(value.name==6){
+                    this.getArrs()
+                }
+
+            },
             getData(){
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
-                    "qrysbh": "595d05b0f19b9c898a58cc70",
-                    "zzms":"1"
+                    "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
                 }).then(res=>{
-                    this.$set(this.$data,'list',res.list);
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list = arr;
+
+                    console.log(arr,99999)
 
                 })
 
-            }
+            },
+            getDatas(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "sqysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
+                }).then(res=>{
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list = arr;
+
+                    console.log(arr,99999)
+
+                })
+
+            },
+            getList(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "qrysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
+                }).then(res=>{
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        obj.ksmc = list[i].ksmc;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list1 = arr;
+                    console.log(this.date,99999)
+
+                })
+
+            },
+            getLists(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "sqysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
+                }).then(res=>{
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        obj.ksmc = list[i].ksmc;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list1 = arr;
+                    console.log(this.date,99999)
+
+                })
+
+            },
+            getArr(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "qrysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
+                }).then(res=>{
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        obj.ywlx = list[i].ywlx;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list2 = arr;
+                    console.log(this.date,99999)
+
+                })
+
+            },
+            getArrs(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "sqysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1
+                }).then(res=>{
+                    console.log(res,666666)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        obj.ywlx = list[i].ywlx;
+                        this.date = list[0].list;
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj.one = list[i].list[j].count;
+                            obj.two= list[i].list[j].count;
+                            obj.three= list[i].list[j].count;
+                            obj.four= list[i].list[j].count;
+                            obj.five= list[i].list[j].count;
+                            obj.six= list[i].list[j].count;
+                            obj.seven= list[i].list[j].count;
+                            obj.eight= list[i].list[j].count;
+                            obj.nine= list[i].list[j].count;
+                            obj.ten= list[i].list[j].count;
+                            obj.eleven= list[i].list[j].count;
+                            obj.twelve= list[i].list[j].count;
+                        };
+
+                        console.log(parseInt(obj.two)+obj.one,22222)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list2 = arr;
+                    console.log(this.date,99999)
+
+                })
+
+            },
+
         }
     }
 </script>
