@@ -22,22 +22,23 @@
                                              v-model="ruleForm.kh"
                                              width="200"
                                              size="small"
-                                             @blur="getUser(ruleForm.pid)"
+
                                      ></el-input>
                                  </div>
                              </el-form-item>
-                             <el-form-item label="姓名:"
+                             <el-form-item label="姓名:">
                                  <el-input
                                          v-model="ruleForm.yhxm"
                                          style="width:100px;"
                                          size="small"
                                  ></el-input>
                              </el-form-item>
-                          <el-form-item label="身份证号:"  style="margin-left:150px;" @blur="getPainter">
+                          <el-form-item label="身份证号:"  style="margin-left:150px;" >
                               <el-input
                                       v-model="ruleForm.zjhm"
                                       width="200"
                                       size="small"
+                                      @blur="getUser(ruleForm.pid)"
                               ></el-input>
                           </el-form-item>
                       </div>
@@ -122,13 +123,12 @@
                    <el-input
                            type="text"
                            style="width:60%;margin-left:70px;"
-                           v-model="diagnoseValue"
+                           v-model="ruleForm.diagnoseValue"
                            width="200"
                            size="small"
                    ></el-input>
 
                    <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" @click="getDiagnoseList">常用诊断</el-button>
-
 
                </div>
                    <div class="diagnoseList" v-show="showDiagnoseList">
@@ -253,9 +253,10 @@
   export default{
       data(){
           return{
+              num:'',
               userDetail:{},
               zdxx:'',
-              diagnoseValue:"",
+
               diagnoseList:[],
               showDiagnoseList:false,
               value1:'',
@@ -298,14 +299,25 @@
                   yhxm: '',
                   zjhm: '',
                   xb:'',
+                  cityId:'',
+                  provinceId:'',
+                  regionId:'',
                   age:'',
                   sjhm:'',
+                  diagnoseValue:"",
                   lxdz:'',
-                  zdjg:'',
+                  lxdh:'',
                   bqms:'',
                   addFileIdList:[1,2,3,4],
               },
           }
+      },
+      props:['index'],
+      watch:{
+          index:function(){
+              console.log(5656565);
+              this.$emit("getDetail",this.ruleForm);
+        }
       },
       mounted(){
         this.getData();
@@ -317,7 +329,9 @@
       },
       methods: {
           getValue(value){
-              this.$set(this.$data,'diagnoseValue',value)
+              console.log(value,8888)
+
+                            this.$set(this.$data.ruleForm,'diagnoseValue',value)
           },
           hideDiagnose(){
               this.$set(this.$data,'showDiagnoseList',false)
@@ -373,7 +387,7 @@
                   })
           },
           getUser(id){
-              console.log(id,7878787878878)
+              console.log(7878787878878)
               axiosUtil('smarthos.sxzz.user.list',{
                   "yyid": "59411511191ce23575a63218",
                   "sfzh": "330724199011261131"
@@ -586,9 +600,6 @@
           onRemoveFile: function (file, fileList) {//删除上传文件
               this.fileUploadList = fileList;
           },
-          sendData:function(){
-              this.$emit("child-say",ruleForm);
-          }
       }
   }
 </script>

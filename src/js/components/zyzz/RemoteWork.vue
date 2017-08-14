@@ -1,30 +1,31 @@
 <template>
     <div>
         <el-form  ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <BaseMessage></BaseMessage>
+            <BaseMessage :index="index" @getDetail="getDetail"></BaseMessage>
             <div class="base-appoint">
                 <p style="line-height: 40px;">预约信息</p>
                 <div class="base-con">
                     <span style="font-size: 14px;color: #48576a;">预约医院:</span>
-                    <el-select v-model="value8" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                    <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
                         <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in hospitalList"
+                                :key="item.yyid"
+                                :label="item.yymc"
+                                :value="item.yyid">
                         </el-option>
                     </el-select>
                     <span style="font-size: 14px;color: #48576a;">预约科室:</span>
-                    <el-select v-model="value9" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                    <el-select v-model="somedata.office" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in officeList"
+                                :key="item.ksid"
+                                :label="item.ksmc"
+                                :value="item.ksid"
+                        >
                         </el-option>
                     </el-select>
                     <span style="font-size: 14px;color: #48576a;">病情等级:</span>
-                    <el-select v-model="value10" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                    <el-select v-model="bqdj" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option label="一般" value="0"></el-option>
                         <el-option label="急" value="1"></el-option>
                         <el-option label="危重" value="2"></el-option>
@@ -33,32 +34,24 @@
                 <div class="base-con">
                     <span class="demonstration" style="color:#48576A;">期望手术日期:</span>
                     <el-date-picker
-                            v-model="value14"
+                            v-model="sqyyrq"
                             type="date"
                             placeholder="选择日期"
                             :picker-options="pickerOptions0">
                     </el-date-picker>
-
-                    <span style="font-size: 14px;color: #48576a;">预约科室:</span>
-                    <el-select v-model="value5" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
+                    <el-select v-model="sqyylx" filterable placeholder="上午" style="height:24px;margin-left:5px;">
+                        <el-option label="上午" value="0"></el-option>
+                        <el-option label="下午" value="1"></el-option>
                     </el-select>
                 </div>
                 <div class="base-con">
-                    <el-form-item label="是否接受调剂:" prop="sex">
-                        <el-checkbox-group v-model="sex">
-                            <el-checkbox label="是" ></el-checkbox>
-                            <el-checkbox label="否" ></el-checkbox>
-                        </el-checkbox-group>
+                    <el-form-item label="是否接受调剂:" prop="tjbz">
+                        <el-radio class="radio" v-model="tjbz" label="1">是</el-radio>
+                        <el-radio class="radio" v-model="tjbz" label="0">否</el-radio>
                     </el-form-item>
                     <span class="demonstration" style="margin-top:5px;margin-left:10px;">接受最晚时间:</span>
                     <el-date-picker
-                            v-model="value1"
+                            v-model="tjrq"
                             type="date"
                             style="margin-top:5px;"
                             placeholder="选择日期"
@@ -70,17 +63,19 @@
                 <div style="position:absolute;left:40%;top:20px;">
                     <el-button class="btn " type="primary" style="padding:5px 20px; border-color: #00b2b1;
   background-color: #00b2b1;" @click="goBack">返回</el-button>
-                    <el-button class="btn success1" type="text" style="padding:5px 20px" @click="open">确认预约</el-button>
+                    <el-button  class="btn success1" type="text" style="padding:5px 20px" @click="SendAppoint">确认预约</el-button>
                 </div>
             </div>
         </el-form>
     </div>
+
 </template>
 <style>
 </style>
 <script>
     import Vue  from  "vue";
     import  'element-ui';
+    import axiosUtil from "../../utils/AxiosUtils.js";
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover, MessageBox } from "element-ui";
     import BaseMessage from  "../common/BaseMessage.vue";
     Vue.use(Button);
@@ -98,35 +93,80 @@
                     disabledDate(time) {
                         return time.getTime() < Date.now() - 8.64e7;
                     }},
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
-                value8: '',
-                value9: '',
-                value10: '',
-                value1: '',
-                value14: '',
+                index:0,
+                somedata:{
+                    hospital:'',
+                    office:'',
+                    state:'',
+                    date:'',
+                },
+                hospitalList:[],
+                officeList:[],
+                tjbz: '',
+                bqdj: '',
+                sqyyrq: '',
+                sqyylx: '',
+                tjrq: '',
                 sex:'',
-                value5:''
+                value5:'',
             }
         },
         components:{
             BaseMessage
         },
+        mounted(){
+            this.getHospital()
+        },
         methods: {
+            getDetail(dataForm){
+                console.log(dataForm,2222);
+                var _this = this;
+                function checkAdult(hos) {
+                    return hos.yyid== _this.somedata.hospital
+                }
+                function checkAdults(hos) {
+                    return hos.ksid== _this.somedata.office
+                }
+              var hosObj = this.hospitalList.filter(checkAdult);
+              var offObj = this.officeList.filter(checkAdults);
+                console.log(hosObj,32323232333);
+                let options={
+                    yhid:136,
+                    klx:dataForm.klx,
+                    kh: dataForm.kh,
+                    yhxm: dataForm.yhxm,
+                    zjhm: dataForm.zjhm,
+                    xb:dataForm.xb,
+                    cityId:dataForm.cityId,
+                    provinceId:dataForm.provinceId,
+                    regionId:dataForm.regionId,
+                    age:dataForm.age,
+                    sjhm:dataForm.sjhm,
+                    lxdz:dataForm.lxdz,
+                    lxdh:dataForm.lxdh,
+                    sqyymc:hosObj.yymc,
+                    sqksxm:offObj.ksmc,
+                    zdjg:dataForm.diagnoseValue,
+                    bqms:dataForm.bqms,
+                    addFileIdList:dataForm.addFileIdList,
+                    yyid:this.somedata.hospital,
+                    ksid:this.somedata.office,
+                    bqdj:this.bqdj,
+                    sqyyrq:this.sqyyrq,
+                    sqyylx:this.sqyylx,
+                    tjbz:this.tjbz,
+                    tjrq:this.tjrq
+                };
+                axiosUtil('smarthos.sxzz.zyzzsq.info',options,{
+                }).then(res=>{
+                    console.log("444444",res);
+                    if(res.succ){
+                        this.$set(this.$data,'hospitalList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
             open() {
                 MessageBox.confirm('浙江大学附属第二医院   呼吸内科   ***介入手术2017-04-24    上午', '是否确认预约？', {
                     confirmButtonText: '确定',
@@ -143,7 +183,43 @@
             goBack(){
                 let _this=this;
                 _this.$router.go(-1);
-            }
+            },
+            SendAppoint:function(){
+                console.log("141414");
+                this.index++;
+            },
+            getHospital(){
+                axiosUtil('smarthos.sxzz.hos.list',{
+                    "qyid":"0",
+                    "ywlx":"0"
+                }).then(res=>{
+                    console.log(res,9999)
+                    if(res.succ){
+                        this.$set(this.$data,'hospitalList',res.list)
+                        console.log("000000",this.hospitalList);
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
+            selectHospital(id){
+                console.log(id,565656);
+                this.getOffice(id)
+            },
+            getOffice(id){
+                console.log("1212111");
+                axiosUtil('smarthos.sxzz.dept.list',{
+                    "yyid":id,
+                }).then(res=>{
+                    console.log(res,232323)
+                    if(res.succ){
+                        this.$set(this.$data,'officeList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
+
         }
     }
 </script>
