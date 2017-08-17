@@ -1,4 +1,6 @@
 import Vue from "vue";
+// import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-default/index.css'
 import VueRouter from "vue-router";
 import store from "./vuex/store.js";
 import App from "./js/App.vue";
@@ -26,9 +28,12 @@ import CommonBox from "./js/components/common/CommonBox.vue";
 import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
 /*引入样式文件*/
-import "element-ui/lib/theme-default/index.css";//element-ui 样式文件
+import 'element-ui/lib/theme-default/index.css'
+// import ElementUI from 'element-ui'
+
 import "./style/app.scss";
 Vue.use(VueRouter);
+ // Vue.use(ElementUI)
 const router =new VueRouter({
     routes: [
         { path: "/login", component: Login },//登录页路由

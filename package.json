@@ -40,7 +40,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "echarts": "^3.6.2",
-    "element-ui": "1.2.8",
+    "element-ui": "^1.2.8",
     "socket.io": "^1.7.3",
     "vue": "2.2.6",
     "vue-images": "^1.0.9",

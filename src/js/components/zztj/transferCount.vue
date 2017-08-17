@@ -2,7 +2,6 @@
     <div>
         <!--时间选择-->
         <div class="date-boxs">
-
             <div class="date-box">
             <div class="block">
                 <span class="demonstration">转诊模式:</span>
@@ -28,12 +27,12 @@
         </div>
 
             <div class="date-box" style="width:180px;">
-                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;" >
+                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
                     <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.labe"
-                            :value="item.value"
+                            v-for="item in hospitalList"
+                            :key="item.yyid"
+                            :label="item.yymc"
+                            :value="item.yyid"
                             >
                     </el-option>
                 </el-select>
@@ -41,11 +40,10 @@
             <div class="date-box" style="width:180px;">
                 <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
                     <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
+                            v-for="item in officeList"
+                            :key="item.ksid"
+                            :label="item.ksmc"
+                            :value="item.ksid">
                     </el-option>
                 </el-select>
             </div>
@@ -56,7 +54,7 @@
                 <el-button class="btn" type="primary">导出excel</el-button>
             </div>
         </div>
-            <div class="hosptial-table">
+        <div  class="hosptial-table">
                 <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick">
                     <el-tab-pane label="按医院" name="1"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="2"> </el-tab-pane>
@@ -485,22 +483,34 @@
                     </el-table-column>
                 </el-table>
             </div>
+        <!--<div id="mains">-->
+        <!--</div>-->
+
+
     </div>
 </template>
-<style>
-
+<style scoped>
+#mains{
+    width: 30%;
+    height: 200px;
+}
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
+    import echarts from 'echarts';
     export default {
         data() {
             return {
                 list:[],
                 date:[],
+                hospitalList:[],
+                officeList:[],
                 out:'',
                 list1:[],
                 list2:[],
+                histogramList:[],
+                histogramDate:[],
                 options:[
                     {
                         label:'转入',
@@ -510,23 +520,7 @@
                         value:'2'
                     }
                 ],
-                options2: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶',
-                    disabled: true
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
+                options2: [],
                 value2:'',
                 value3:'',
                 value6:'',
@@ -536,9 +530,39 @@
             }
         },
         mounted(){
-            this.getData()
+            this.getData();
+            this.getHospital()
         },
         methods:{
+            getHospital(){
+                axiosUtil('smarthos.sxzz.hos.list',{
+                    "qyid":"0",
+                    "ywlx":"0"
+                }).then(res=>{
+                    console.log(res,9999)
+                    if(res.succ){
+                        this.$set(this.$data,'hospitalList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
+            selectHospital(id){
+                console.log(id,565656);
+                this.getOffice(id)
+            },
+            getOffice(id){
+                axiosUtil('smarthos.sxzz.dept.list',{
+                    "yyid":id,
+                }).then(res=>{
+                    console.log(res,232323)
+                    if(res.succ){
+                        this.$set(this.$data,'officeList',res.list)
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
             handleClick(value){
                 console.log(value.name,2211111);
                 if(value.name==1){
