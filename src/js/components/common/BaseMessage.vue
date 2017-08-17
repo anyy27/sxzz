@@ -26,7 +26,9 @@
                                      ></el-input>
                                  </div>
                              </el-form-item>
+
                              <el-form-item label="姓名:">
+
                                  <el-input
                                          v-model="ruleForm.yhxm"
                                          style="width:100px;"
