@@ -184,7 +184,6 @@
                                <el-upload
                                        :action="uploadUrl"
                                        :data="uploadData"
-                                       accept=".pdf,.xls,.xlsx,.doc,.docx,.txt,.rar,.zip"
                                        :before-upload="beforeUploadFile"
                                        :on-success="onSuccessFile"
                                        :on-remove="onRemoveFile"
@@ -256,7 +255,6 @@
               num:'',
               userDetail:{},
               zdxx:'',
-
               diagnoseList:[],
               showDiagnoseList:false,
               value1:'',
@@ -308,7 +306,7 @@
                   lxdz:'',
                   lxdh:'',
                   bqms:'',
-                  addFileIdList:[1,2,3,4],
+                  attaIdList:[],
               },
           }
       },
@@ -316,6 +314,11 @@
       watch:{
           index:function(){
               console.log(5656565);
+              let _this=this;
+              for(let i=0; i<_this.upLoadList.length; i++){//根据上传的附件 遍历获取attaId
+                  _this.attaIdList.push(_this.upLoadList[i].response.obj.tid);
+              }
+              console.log("66666666",_this.attaIdList);
               this.$emit("getDetail",this.ruleForm);
         }
       },
@@ -330,8 +333,7 @@
       methods: {
           getValue(value){
               console.log(value,8888)
-
-                            this.$set(this.$data.ruleForm,'diagnoseValue',value)
+              this.$set(this.$data.ruleForm,'diagnoseValue',value)
           },
           hideDiagnose(){
               this.$set(this.$data,'showDiagnoseList',false)
@@ -519,12 +521,6 @@
           handleChange(file, fileList) {
               this.fileList2 = fileList.slice(-3);
           },
-          getPainter:function(){
-              let _this=this;
-              let options={
-
-              }
-          },
           beforeUpload: function(file){//上传图片前钩子函数
               let _this = this;//传递this,确保下方闭包函数this正确
               if(typeof FileReader === 'undefined'){
@@ -536,9 +532,10 @@
               }
               let type= file.name.replace(/.+\./,"");
               let reader = new FileReader();
-              reader.readAsBinaryString(file);
+              reader.readAsDataURL(file);
               reader.onload = function(){
                   _this.src = this.result;
+                  console.log("dfdfdfd", _this.src);
                   _this.imgSrc = this.result;
                   let options = {
                       baseString: _this.src,
@@ -548,6 +545,7 @@
                       console.log("444444",res);
                   })
               }
+              return false
           },
           beforeUploadFile: function(file){//上传文件前钩子函数
               let _this = this;
@@ -561,18 +559,25 @@
                   })
                   return false;
               }else{
-                  return new Promise(function (resove, reject) {
-                      _this.uploadData = Object.assign({
-                          'baseString': file,
-                          'Service': "smarthos.sxzz.blzlUpdata.info"
-                      }, basicParam);
-                      resove(true);
-                  });
+                  let type= file.name.replace(/.+\./,"");
+                  let reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = function(){
+                      _this.src = this.result;
+                      console.log("dfdfdfd", _this.src);
+                      _this.imgSrc = this.result;
+                      let options = {
+                          baseString: _this.src,
+                          type:type
+                      }
+                      axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
+                          console.log("444444",res);
+                      })
+                  }
+                  return false
               }},
           onRemoveImg: function(file, fileList) {//删除上传图片
-              if(this.uploadFileCount>0){
-                  this.uploadFileCount--;
-              }
+
               this.imgUploadList = fileList;
           },
           onSuccessImg: function(response, file, fileList){//上传图片成功后钩子

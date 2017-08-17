@@ -11,12 +11,12 @@
             </div>
             <div class="side-bar-personal h99" >
                 <div class="side-bar-personal-icon" :class="{ hidden: isToggle }">
-                    <!--<img class="personal-icon" src="../../images/doctor-pic.png" >-->
+                    <img class="personal-icon" src="../../../images/doctor-pic.png" >
                     <!--<img class="personal-icon" :src="docAvatar?docAvatar:require('../../../images/doc-default-icon.png')" >-->
                 </div>
-                <p class="side-bar-personal-info center marginT10" :class="{ hidden: isToggle }">1</p>
+                <p class="side-bar-personal-info center marginT10" :class="{ hidden: isToggle }">浙二医院</p>
                 <p class="side-bar-personal-title center marginT10 green-color" :class="{ hidden: isToggle }">主治医师</p>
-                <p class="side-bar-personal-title center marginT5 green-color" :class="{ hidden: isToggle }">2</p>
+                <p class="side-bar-personal-title center marginT5 green-color" :class="{ hidden: isToggle }">陈维善</p>
             </div>
         </div>
         <!--侧边栏列表-->

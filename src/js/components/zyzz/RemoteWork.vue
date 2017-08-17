@@ -78,6 +78,7 @@
     import axiosUtil from "../../utils/AxiosUtils.js";
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover, MessageBox } from "element-ui";
     import BaseMessage from  "../common/BaseMessage.vue";
+    import { formatUnixTime } from "../../utils/DateFormat.js";
     Vue.use(Button);
     Vue.use(Radio);
     Vue.use(RadioGroup);
@@ -127,11 +128,16 @@
                 function checkAdults(hos) {
                     return hos.ksid== _this.somedata.office
                 }
+                this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
+                this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
               var hosObj = this.hospitalList.filter(checkAdult);
+                var yymc=hosObj[0].yymc;
               var offObj = this.officeList.filter(checkAdults);
-                console.log(hosObj,32323232333);
+                var ksmc=offObj[0].ksmc;
+                console.log("11111111",offObj[0].ksmc)
                 let options={
                     yhid:136,
+                    "yyr": "595d05b0f19b9c898a58cc70",
                     klx:dataForm.klx,
                     kh: dataForm.kh,
                     yhxm: dataForm.yhxm,
@@ -144,24 +150,32 @@
                     sjhm:dataForm.sjhm,
                     lxdz:dataForm.lxdz,
                     lxdh:dataForm.lxdh,
-                    sqyymc:hosObj.yymc,
-                    sqksxm:offObj.ksmc,
+                    sqyymc:yymc,
+                    qrksmc:ksmc,
                     zdjg:dataForm.diagnoseValue,
                     bqms:dataForm.bqms,
-                    addFileIdList:dataForm.addFileIdList,
+                    wjidList:dataForm.attaIdList,
                     yyid:this.somedata.hospital,
                     ksid:this.somedata.office,
                     bqdj:this.bqdj,
                     sqyyrq:this.sqyyrq,
                     sqyylx:this.sqyylx,
                     tjbz:this.tjbz,
-                    tjrq:this.tjrq
+                    tjrq:this.tjrq,
+                    qryymc: "特扬医院",
+                    sqyymc: "特扬医院",
+                    sqysxm: "陈刚",
+                    sqysdh: "18358023268",
+                    sqksbh: "59193cddca72a7bbbbe86c1c",
+                    sqksmc: "骨科",
                 };
                 axiosUtil('smarthos.sxzz.zyzzsq.info',options,{
                 }).then(res=>{
                     console.log("444444",res);
                     if(res.succ){
-                        this.$set(this.$data,'hospitalList',res.list)
+                        MessageBox.confirm({
+
+                        })
                     }else {
                         alert(res.msg)
                     }

@@ -110,7 +110,6 @@
            </el-table>
            <el-pagination
                    @size-change="handleSizeChange"
-                   @current-change="handleCurrentChange"
                    :current-page.sync="currentPage1"
                    :page-size="5"
                    layout="total, prev, pager, next"
