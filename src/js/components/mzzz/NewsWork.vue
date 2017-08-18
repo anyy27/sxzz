@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form   label-width="100px" class="demo-ruleForm">
-            <BaseMessage></BaseMessage>
+            <BaseMessage :index="watchNum" @getDetail="getDetail"></BaseMessage>
         </el-form>
         <div class="news-con">
             <p style="line-height: 40px;">预约信息</p>
@@ -234,46 +234,63 @@
          <div style="width:90%;margin-left:5%;height:80px;">
              <div class="newsworks">
                  <span>身份证号:</span>
-                 <span>135568985967854</span>
+                 <span>{{this.totalObj.zjhm}}</span>
              </div>
              <div class="newsworks">
                  <span>姓名:</span>
-                 <span>135568985967854</span>
+                 <span>{{this.totalObj.yhxm}}</span>
              </div>
              <div class="newsworks">
                  <span>就诊时间:</span>
-                 <span>135568985967854</span>
+                 <span>{{this.hyrq}} {{this.yylx==1?'下午':'上午'}}</span>
              </div>
-             <div class="newsworks">
+             <div class="newsworks" style="width: 50%">
                  <span>预约医院:</span>
-                 <span>浙二医院</span>
+                 <span>{{this.yymc}}</span>
              </div>
              <div class="newsworks">
                  <span>预约科室:</span>
-                 <span>骨科</span>
+                 <span>{{this.ksmc}}</span>
              </div>
              <div class="newsworks">
                  <span>预约医生:</span>
-                 <span>刘进</span>
+                 <span>{{this.docName}}</span>
+             </div>
+             <div class="newsworks">
+                 <span>挂号费:</span>
+                 <span>{{this.zlf}}</span>
              </div>
              <div class="newsworks">
                  <span style="color:red;">当前剩余号源还剩:</span>
-                 <span style="color:red;">16</span>
+                 <span style="color:red;">{{this.tableData.length}}</span>
              </div>
          </div>
          <el-table
+                 ref="multipleTable"
                  :data="tableData"
+                 @current-change="handleCurrentChange"
                  height="330"
                  style="width:90%;margin-left:5%;">
              <el-table-column
-                     prop="date"
+                     type="index"
+                     width="50">
+             </el-table-column>
+             <el-table-column
+                     type="selection"
+                     width="55">
+             </el-table-column>
+             <el-table-column
+                     prop="hyxh"
                      label="就诊序号"
                      width="180">
              </el-table-column>
              <el-table-column
-                     prop="name"
+                     prop="qhsj"
                      label="就诊时间"
                      width="180">
+                 <template scope="scope">
+                     <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
+                 </template>
              </el-table-column>
              <el-table-column
                      prop="address"
@@ -285,7 +302,7 @@
              </el-table-column>
          </el-table>
          <div class="btn-con">
-         <el-button  class="btn success1" type="text" style="padding:5px 50px" >上一步</el-button>
+         <el-button  class="btn success1" @click="SureYuyue" type="text" style="padding:5px 50px" >上一步</el-button>
          <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
          </div>
          </div>
@@ -314,6 +331,16 @@
     export default{
         data(){
             return{
+                totalObj:{},
+                docName:'',
+                docId:"",
+                yyhyid:'',
+                hyDate:'',
+                qryymc:"",
+                yymc:"",
+                ksmc:'',
+                watchNum:0,
+                tableData:[],
                 dialogVisible:false,
                 dialogVisible1:false,
                 hospitalList:[],
@@ -331,8 +358,10 @@
                 },
                 arrangeList:[],
                 hyrq:'',
+                hyxh:'',
                 yylx:0,
-                pbid:''
+                pbid:'',
+                zlf:''
 
             }
         },
@@ -345,9 +374,58 @@
             this.getHospital();
         },
         methods:{
+            filterArr(arr,id){
+                function getObj (item) {
+                    return item.yyid==id;
+                }
+            return   arr.filter(getObj)
+            },
+            filterArr1(arr,id){
+                function getObj (item) {
+                    return item.ksid==id;
+                }
+            return   arr.filter(getObj)
+            },
+            getDetail(value){
+                this.$set(this.$data,'totalObj',value)
+            },
+            handleCurrentChange(val,old) {
+                this.$set(this.$data,'yyhyid',val.yyhyid)
+                this.$set(this.$data,'hyDate',val.qhsj);
+                this.$set(this.$data,'hyxh',val.qhsj)
+                this.$refs.multipleTable.toggleRowSelection(old,false);
+            },
             SureYuyue:function(){
+
+
                 this.dialogVisible=false;
                 this.dialogVisible1=false;
+                axiosUtil('smarthos.sxzz.mzzzsq.info',{
+                        ...this.totalObj,
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "yyid": this.somedata.hospital,
+                    "ksid":this.somedata.office,
+                    "yhid": "136",
+                    'qrksmc': this.ksmc,
+                    "ysid": this.docId,
+                    "ysmc": this.docName,
+                    "yypbid": this.pbid,
+                    "yylx": this.yylx,
+                    "hyid": this.yyhyid,
+                    "hyrq": this.hyrq,
+                    "hysj":this.hyDate,
+                    "hyxh":this.hyxh,
+                    "zlf":this.zlf,
+                    "sqysxm": "陈刚",
+                    "sqksmc": "预防保健科",
+                    "sqksbh": "59193cddca72a7bbbbe86c1c",
+                    "sqyymc": "特杨医院",
+                    "qryymc": this.yymc,
+                }).then(res=>{
+                    console.log(res,66666666)
+                })
+
             },
             open:function(){
                 this.dialogVisible=true;
@@ -363,7 +441,6 @@
                     "qyid":"0",
                     "ywlx":"0"
                 }).then(res=>{
-                    console.log(res,555565656)
                     if(res.succ){
                         this.$set(this.$data,'hospitalList',res.list)
                     }else {
@@ -394,10 +471,12 @@
                 }).then(res=>{
                     if(res.succ){
                         var list = res.list;
+                        console.log(res,26262626)
                         var arr = [];
                         for(var i=0;i<list.length;i++){
                             var obj = {};
                             obj.name = list[i].ysxm;
+                            obj.ysid = list[i].ysid
 //                            obj.pbid = list[i].pbid;
                             var dayList = [];
                             for(var j=0;j<list[i].pb.length;j++){
@@ -406,6 +485,7 @@
                                 dateObj.pm = list[i].pb[j].xwsyhy;
                                 dateObj.pbid = list[i].pb[j].pbid;
                                 dateObj.pmpbid = list[i].pb[j].pmpbid;
+                                dateObj.zlf = list[i].pb[j].ghf;
                                 dayList.push(dateObj);
                             }
                             obj.monday = dayList[0];
@@ -465,6 +545,10 @@
 
             },
             and(row, column, cell){
+                this.yymc = this.filterArr(this.hospitalList,this.somedata.hospital)[0].yymc;
+                this.ksmc = this.filterArr1(this.officeList,this.somedata.office)[0].ksmc;
+                row.name?this.docName=row.name:'普通医生';
+                this.docId = row.ysid;
                 this.$set(this.$data,'pbid',row.pbid)
                 if(column.property.split('.')[1]=='am'){
                     this.$set(this.$data,'yylx',0)
@@ -475,64 +559,79 @@
                     case 'monday.am':
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pbid)
+                        this.$set(this.$data,'zlf',row.monday.zlf)
                     break;
                     case 'monday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pmpbid)
+                        this.$set(this.$data,'zlf',row.monday.zlf)
                     break;
                     case 'tuesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pbid)
+                        this.$set(this.$data,'zlf',row.tuesday.zlf)
                     break;
                     case 'tuesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pmpbid)
+                        this.$set(this.$data,'zlf',row.tuesday.zlf)
                     break;
                     case 'wednesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pbid)
+                        this.$set(this.$data,'zlf',row.wednesday.zlf)
                     break;
                     case 'wednesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pmpbid)
+                        this.$set(this.$data,'zlf',row.wednesday.zlf)
                     break;
                     case 'thursday.am':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pbid)
+                        this.$set(this.$data,'zlf',row.thursday.zlf)
                     break;
                     case 'thursday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pmpbid)
+                        this.$set(this.$data,'zlf',row.thursday.zlf)
                     break;
                     case 'friday.am':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pbid)
+                        this.$set(this.$data,'zlf',row.friday.zlf)
                     break;
                     case 'friday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pmpbid)
+                        this.$set(this.$data,'zlf',row.friday.zlf)
                     break;
                     case 'saturday.am':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pbid)
+                        this.$set(this.$data,'zlf',row.saturday.zlf)
                     break;
                     case 'saturday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pmpbid)
+                        this.$set(this.$data,'zlf',row.saturday.zlf)
                     break;
                     case 'sunday.am':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pbid)
+                        this.$set(this.$data,'zlf',row.sunday.zlf)
                     break;
                     case 'sunday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pmpbid)
+                        this.$set(this.$data,'zlf',row.sunday.zlf)
                     break;
                 }
                 this.sourceList();
                 this.$set(this.$data,'dialogTableVisible',true)
             },
             sourceList(){
+                this.watchNum++
                 if(this.pbid){
                     axiosUtil('smarthos.sxzz.outorder.list',{
                         "jgid": "59411511191ce23575a63218",
@@ -543,7 +642,10 @@
                         "yhid":"1",
                         "yyr": "595d05b0f19b9c898a58cc70"
                     }).then(res=>{
-                        console.log(res,7777777777755555555)
+                        if(res.succ){
+                            this.$set(this.$data,'tableData',res.list);
+                            this.open()
+                        }
                     })
                 }else {
                   alert('号源列表为空！')

@@ -70,6 +70,7 @@
                                          size="small"
                                  ></el-input>
                              </el-form-item>
+
                          </div>
                          <div class="base-con">
                              <el-form-item label="家庭住址:" >
@@ -106,6 +107,13 @@
                                      ></el-input>
                                  </div>
                              </el-form-item>
+                             <el-form-item label="医生电话:"  style="margin-left:40px;">
+                                 <el-input
+                                         v-model="ruleForm.sqysdh"
+                                         width="100"
+                                         size="small"
+                                 ></el-input>
+                             </el-form-item>
                          </div>
                   </el-form>
               </div>
@@ -125,7 +133,7 @@
                    <el-input
                            type="text"
                            style="width:60%;margin-left:70px;"
-                           v-model="ruleForm.diagnoseValue"
+                           v-model="ruleForm.zdjg"
                            width="200"
                            size="small"
                    ></el-input>
@@ -360,11 +368,12 @@
                   regionId:'',
                   age:'',
                   sjhm:'',
-                  diagnoseValue:"",
+                  zdjg:"",
                   lxdz:'',
                   lxdh:'',
                   bqms:'',
-                  attaIdList:[],
+                  wjidList:[],
+                  sqysdh:''
               },
           }
       },
@@ -373,11 +382,15 @@
           index:function(){
               console.log(5656565);
               let _this=this;
+              console.log(this.ruleForm.wjidList,_this.imgIdList,_this.textIdList)
+               var arr = _this.ruleForm.wjidList.concat(_this.imgIdList);
+              var arr1= arr.concat(_this.textIdList);
               for(let i=0; i<_this.upLoadList.length; i++){//根据上传的附件 遍历获取attaId
                   _this.attaIdList.push(_this.upLoadList[i].response.obj.tid);
               }
-              console.log("66666666",_this.attaIdList);
-              this.$emit("getDetail",this.ruleForm);
+              _this.ruleForm.wjidList = arr1;
+              console.log("66666666",_this.ruleForm.wjidList);
+              _this.$emit("getDetail",_this.ruleForm);
         }
       },
       mounted(){
@@ -391,7 +404,7 @@
       methods: {
           getValue(value){
               console.log(value,8888)
-              this.$set(this.$data.ruleForm,'diagnoseValue',value)
+              this.$set(this.$data.ruleForm,'zdjg',value)
           },
           hideDiagnose(){
               this.$set(this.$data,'showDiagnoseList',false)
