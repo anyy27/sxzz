@@ -176,7 +176,7 @@
                                        :data="uploadData"
                                        accept="image/gif,image/jpg,image/jpeg,image/png,image/bmp"
                                        :before-upload="beforeUpload"
-                                       :on-success="onSuccessImg"
+                                       :on-success="onSuccessimg"
                                        :on-remove="onRemoveImg"
                                        :file-list="imgUploadList">
                                    <i class="el-icon-plus"></i>
@@ -537,7 +537,6 @@
               reader.readAsDataURL(file);
               reader.onload = function(){
                   _this.src = this.result;
-                  console.log("dfdfdfd", _this.src);
                   _this.imgSrc = this.result;
                   let options = {
                       baseString: _this.src,
@@ -566,7 +565,6 @@
                   reader.readAsDataURL(file);
                   reader.onload = function(){
                       _this.src = this.result;
-                      console.log("dfdfdfd", _this.src);
                       _this.imgSrc = this.result;
                       let options = {
                           baseString: _this.src,
@@ -579,10 +577,10 @@
                   return false
               }},
           onRemoveImg: function(file, fileList) {//删除上传图片
-
               this.imgUploadList = fileList;
           },
-          onSuccessImg: function(response, file, fileList){//上传图片成功后钩子
+          onSuccessimg: function(response, file, fileList){//上传图片成功后钩子
+              console.log("222223",this.imgUploadList);
               if(response.succ){
                   this.imgUploadList = fileList;
               }else {

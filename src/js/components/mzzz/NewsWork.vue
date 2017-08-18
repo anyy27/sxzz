@@ -226,19 +226,70 @@
                 </el-table>
             </div>
         </div>
-        <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
-
-        <el-dialog
-                title="提示"
-                :visible.sync="dialogVisible"
-                size="tiny"
-               >
-            <span>这是一段信息</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-              </span>
-        </el-dialog>
+        <span @click="open">打开</span>
+     <div class="dialog" v-show="dialogVisible">
+         <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
+             <p>预约信息</p>
+         </div>
+         <div style="width:90%;margin-left:5%;height:80px;">
+             <div class="newsworks">
+                 <span>身份证号:</span>
+                 <span>135568985967854</span>
+             </div>
+             <div class="newsworks">
+                 <span>姓名:</span>
+                 <span>135568985967854</span>
+             </div>
+             <div class="newsworks">
+                 <span>就诊时间:</span>
+                 <span>135568985967854</span>
+             </div>
+             <div class="newsworks">
+                 <span>预约医院:</span>
+                 <span>浙二医院</span>
+             </div>
+             <div class="newsworks">
+                 <span>预约科室:</span>
+                 <span>骨科</span>
+             </div>
+             <div class="newsworks">
+                 <span>预约医生:</span>
+                 <span>刘进</span>
+             </div>
+             <div class="newsworks">
+                 <span style="color:red;">当前剩余号源还剩:</span>
+                 <span style="color:red;">16</span>
+             </div>
+         </div>
+         <el-table
+                 :data="tableData"
+                 height="330"
+                 style="width:90%;margin-left:5%;">
+             <el-table-column
+                     prop="date"
+                     label="就诊序号"
+                     width="180">
+             </el-table-column>
+             <el-table-column
+                     prop="name"
+                     label="就诊时间"
+                     width="180">
+             </el-table-column>
+             <el-table-column
+                     prop="address"
+                     label="挂号费">
+             </el-table-column>
+             <el-table-column
+                     prop="address"
+                     label="诊疗费">
+             </el-table-column>
+         </el-table>
+         <div class="btn-con">
+         <el-button  class="btn success1" type="text" style="padding:5px 50px" >上一步</el-button>
+         <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
+         </div>
+         </div>
+        <div class="BigBox" v-show="dialogVisible1"></div>
     </div>
 </template>
 <style>
@@ -264,6 +315,7 @@
         data(){
             return{
                 dialogVisible:false,
+                dialogVisible1:false,
                 hospitalList:[],
                 officeList:[],
                 index:0,
@@ -293,6 +345,14 @@
             this.getHospital();
         },
         methods:{
+            SureYuyue:function(){
+                this.dialogVisible=false;
+                this.dialogVisible1=false;
+            },
+            open:function(){
+                this.dialogVisible=true;
+                this.dialogVisible1=true;
+            },
             handleEdit(index, row) {
             },
             getDocList(val){
