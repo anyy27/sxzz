@@ -70,6 +70,7 @@
                                          size="small"
                                  ></el-input>
                              </el-form-item>
+
                          </div>
                          <div class="base-con">
                              <el-form-item label="家庭住址:" >
@@ -106,6 +107,13 @@
                                      ></el-input>
                                  </div>
                              </el-form-item>
+                             <el-form-item label="医生电话:"  style="margin-left:40px;">
+                                 <el-input
+                                         v-model="ruleForm.sqysdh"
+                                         width="100"
+                                         size="small"
+                                 ></el-input>
+                             </el-form-item>
                          </div>
                   </el-form>
               </div>
@@ -125,7 +133,7 @@
                    <el-input
                            type="text"
                            style="width:60%;margin-left:70px;"
-                           v-model="ruleForm.diagnoseValue"
+                           v-model="ruleForm.zdjg"
                            width="200"
                            size="small"
                    ></el-input>
@@ -170,6 +178,12 @@
                    <div  style="margin-top:10px;position:relative;">
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
                            <div class="add-pic-list" >
+                               <span class="showImg" v-for="(item,index) of imgList">
+                                   <span class="showImgSon">
+                                       <img @click="delImg(index)" style="width: 50%;height: 50%;margin-left: 15px;margin-top: 15px" src="../../../static/img/del.png" alt="">
+                                   </span>
+                                <img :src="item" alt="">
+                               </span>
                                <el-upload
                                        :action="uploadUrl"
                                        list-type="picture-card"
@@ -183,6 +197,7 @@
                                </el-upload>
                            </div>
                            <div class="ghost-btn-wrap">
+
                                <el-upload
                                        :action="uploadUrl"
                                        :data="uploadData"
@@ -190,6 +205,11 @@
                                        :on-success="onSuccessFile"
                                        :on-remove="onRemoveFile"
                                        :file-list="fileUploadList">
+                                   <span  class="showText" v-for="(item,index) of nameList">
+                                       <span @click.stop="delText(index)" class="showTextSon">X</span>
+                                       {{item}}
+                                   </span>
+                                   <span v-show="flag" style="font-size: 14px;color: grey">上传中.....</span>
                                    <el-button size="small" type="primary">点击上传</el-button>
                                </el-upload>
                            </div>
@@ -200,6 +220,60 @@
        </div>
 </template>
 <style>
+    .showImg{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        position: relative;
+    }
+    .showImg:hover .showImgSon{
+        display: block;
+    }
+    .showImgSon{
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        vertical-align: middle;
+        background: black;
+        opacity: .7;
+        color: white;
+        display: none;
+        cursor: pointer;
+    }
+    .showImg   img{
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+    }
+    .showText{
+        display: inline-block;
+        min-width: 150px;
+        height: 30px;
+        width: auto;
+        line-height: 1px;
+        text-align: center;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+        background: white;
+        padding: 15px 40px;
+        font-size: 14px;
+        color: grey;
+        margin-right: 5px;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .showText:hover .showTextSon{
+        display: block;
+    }
+    .showTextSon{
+        position: absolute;
+        display: none;
+        top:10px;
+        right: 5px;
+    }
 .diagnoseList{
     float: left;
     width: 300px;
@@ -254,7 +328,12 @@
   export default{
       data(){
           return{
+              flag:false,
               num:'',
+              imgList:[],
+              nameList:[],
+              imgIdList:[],
+              textIdList:[],
               userDetail:{},
               zdxx:'',
               diagnoseList:[],
@@ -276,22 +355,7 @@
               uploadFileCount: 0,//上传的文件数量，最大为9个
               uploadUrl: API_URL,//上传图片action地址
               selectedOptions: [],
-              options: [{
-                  value: '选项1',
-                  label: '黄金糕'
-              }, {
-                  value: '选项2',
-                  label: '双皮奶'
-              }, {
-                  value: '选项3',
-                  label: '蚵仔煎'
-              }, {
-                  value: '选项4',
-                  label: '龙须面'
-              }, {
-                  value: '选项5',
-                  label: '北京烤鸭'
-              }],
+              options: [],
               value8: '',
               ruleForm: {
                   klx: '',
@@ -304,11 +368,12 @@
                   regionId:'',
                   age:'',
                   sjhm:'',
-                  diagnoseValue:"",
+                  zdjg:"",
                   lxdz:'',
                   lxdh:'',
                   bqms:'',
-                  attaIdList:[],
+                  wjidList:[],
+                  sqysdh:''
               },
           }
       },
@@ -317,11 +382,15 @@
           index:function(){
               console.log(5656565);
               let _this=this;
+              console.log(this.ruleForm.wjidList,_this.imgIdList,_this.textIdList)
+               var arr = _this.ruleForm.wjidList.concat(_this.imgIdList);
+              var arr1= arr.concat(_this.textIdList);
               for(let i=0; i<_this.upLoadList.length; i++){//根据上传的附件 遍历获取attaId
                   _this.attaIdList.push(_this.upLoadList[i].response.obj.tid);
               }
-              console.log("66666666",_this.attaIdList);
-              this.$emit("getDetail",this.ruleForm);
+              _this.ruleForm.wjidList = arr1;
+              console.log("66666666",_this.ruleForm.wjidList);
+              _this.$emit("getDetail",_this.ruleForm);
         }
       },
       mounted(){
@@ -335,7 +404,7 @@
       methods: {
           getValue(value){
               console.log(value,8888)
-              this.$set(this.$data.ruleForm,'diagnoseValue',value)
+              this.$set(this.$data.ruleForm,'zdjg',value)
           },
           hideDiagnose(){
               this.$set(this.$data,'showDiagnoseList',false)
@@ -524,6 +593,7 @@
               this.fileList2 = fileList.slice(-3);
           },
           beforeUpload: function(file){//上传图片前钩子函数
+              console.log('656565')
               let _this = this;//传递this,确保下方闭包函数this正确
               if(typeof FileReader === 'undefined'){
                   alert( "抱歉，你的浏览器版本过低，请升级浏览器或更换其它浏览器！");
@@ -532,11 +602,14 @@
                   alert("请确保文件为图像类型");
                   return false;
               }
+              console.log(file,88888)
               let type= file.name.replace(/.+\./,"");
               let reader = new FileReader();
               reader.readAsDataURL(file);
               reader.onload = function(){
                   _this.src = this.result;
+                  console.log("dfdfdfd", this.result);
+
                   _this.imgSrc = this.result;
                   let options = {
                       baseString: _this.src,
@@ -544,9 +617,30 @@
                   }
                   axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
                       console.log("444444",res);
+                      if(res.succ){
+                          _this.imgList.push(_this.src);
+                          _this.imgIdList.push(res.obj.tid);
+
+
+                      }
                   })
               }
-              return false
+             return false
+          },
+          delImg(index){
+              if(confirm('确认删除')){
+                  this.imgList.splice(index,1)
+                  this.imgIdList.splice(index,1);
+                  console.log(this.imgIdList,36363663)
+              }
+
+          },
+          delText(index){
+              if(confirm('确认删除')){
+                  this.nameList.splice(index,1)
+                  this.textIdList.splice(index,1);
+                  console.log(this.textIdList,36363663)
+              }
           },
           beforeUploadFile: function(file){//上传文件前钩子函数
               let _this = this;
@@ -560,6 +654,9 @@
                   })
                   return false;
               }else{
+                  console.log(file,3333);
+                  _this.flag = true;
+                  let name = file.name;
                   let type= file.name.replace(/.+\./,"");
                   let reader = new FileReader();
                   reader.readAsDataURL(file);
@@ -572,6 +669,11 @@
                       }
                       axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
                           console.log("444444",res);
+                          if(res.succ){
+                              _this.flag = false;
+                              _this.nameList.push(name)
+                             _this.textIdList.push(res.obj.tid)
+                          }
                       })
                   }
                   return false
@@ -579,6 +681,7 @@
           onRemoveImg: function(file, fileList) {//删除上传图片
               this.imgUploadList = fileList;
           },
+
           onSuccessimg: function(response, file, fileList){//上传图片成功后钩子
               console.log("222223",this.imgUploadList);
               if(response.succ){
@@ -592,6 +695,7 @@
               }
           },
           onSuccessFile: function(response, file, fileList){//上传文件成功后钩子
+              console.log(898989898)
               if(response.succ){
                   this.fileUploadList = fileList;
               }else {

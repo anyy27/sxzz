@@ -1,6 +1,6 @@
 <template>
     <div >
-        <AllHeader></AllHeader>
+        <AllHeader @getSelect="getSelect"></AllHeader>
         <div class="Header-add">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                 <use xlink:href="#icon-xinzeng"></use>
@@ -323,7 +323,14 @@
             return{
                 activeName:"4",
                 tableData: [],
-                dialogVisible:false
+                dialogVisible:false,
+                selectObj:{
+                    starttime:"",
+                    endtime:"",
+                    ksid:'',
+                    cxyyid:"",
+                    zzzt:''
+                }
             }
         },
         components:{
@@ -333,15 +340,21 @@
             this.getData()
         },
         methods:{
+            getSelect(val){
+                console.log(val,1414141414);
+                this.$set(this.$data,'selectObj',val);
+                this.getData('4',val)
+            },
             arranges:function(){
                 this.$router.push("pictureConsulting/newswork");
             },
             changeTab(val){
                 console.log(val.name,6666);
-                this.getData(val.name)
+                this.getData(val.name,this.selectObj)
             },
-            getData(val){
+            getData(val,selectObj){
                 axiosUtil('smarthos.sxzz.order.list',{
+                        ...selectObj,
                     "jgid": "59411511191ce23575a63218",
                     "yyid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",

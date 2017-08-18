@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="date-box" style="width:180px;">
-                <el-select v-model="somedata.hospital" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
+                <el-select v-model="somedata.cxyyid" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
                     <el-option
                             v-for="item in hospitalList"
                             :key="item.yyid"
@@ -23,7 +23,7 @@
                 </el-select>
             </div>
             <div class="date-box" style="width:180px;">
-                <el-select v-model="somedata.office" placeholder="请选择预约科室" style="width:100%;">
+                <el-select v-model="somedata.ksid" placeholder="请选择预约科室" style="width:100%;">
                     <el-option
                             v-for="item in officeList"
                             :key="item.ksid"
@@ -34,12 +34,15 @@
                 </el-select>
             </div>
             <div class="date-box" style="width:180px;">
-                <el-select v-model="somedata.state" placeholder="请选择预约状态" @change="searchData">
+                <el-select v-model="somedata.zzzt" placeholder="请选择预约状态" @change="searchData">
                     <el-option label="待审核" value="0"></el-option>
                     <el-option label="成功" value="1"></el-option>
                     <el-option label="失败" value="2"></el-option>
                     <el-option label="取消" value="3"></el-option>
                 </el-select>
+            </div>
+            <div >
+                <el-button style="margin-left: 30px" type="primary" @click="searchData">查询</el-button>
             </div>
            <slot name="btn"></slot>
         </div>
@@ -51,14 +54,15 @@
 <script type="text/ecmascript-6">
     import Vue from "vue";
     import axiosUtil from "../../utils/AxiosUtils.js";
+    import {formatUnixTime} from '../../utils/DateFormat'
     export default{
        data() {
            return {
                somedata:{
-                   hospital:'',
-                   office:'',
-                   state:'',
+                   cxyyid:'',
+                   ksid:'',
                    date:'',
+                   zzzt:Number
                },
                hospitalList:[],
                officeList:[],
@@ -78,7 +82,7 @@
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){
-                        this.$set(this.$data,'hospitalList',res.list)
+                        this.$set(this.$data,'hospitalList',res.list);
                     }else {
                         alert(res.msg)
                     }
@@ -100,8 +104,17 @@
                     }
                 })
             },
-            searchData:function(){
-                this.$emit("child-pop",this.somedata);
+            searchData(){
+                console.log(this.somedata,77777);
+                console.log(formatUnixTime(this.somedata.date[0],"yyyy-MM-dd"))
+                console.log(formatUnixTime(this.somedata.date[1],"yyyy-MM-dd"));
+                var val  = {
+                        ...this.somedata,
+                    starttime:formatUnixTime(this.somedata.date[0],"yyyy-MM-dd"),
+                    endtime:formatUnixTime(this.somedata.date[1],"yyyy-MM-dd")
+                };
+                delete val.date;
+               this.$emit("getSelect",val);
             }
         }
 }

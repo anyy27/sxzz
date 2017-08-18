@@ -1,9 +1,9 @@
 <template>
    <div>
        <AllHeader   v-on:child-pop="listenToMyBoy">
-               <div class="date-box" slot="btn">
-                   <el-button class="btn" type="primary"  @click="sendAll" style="padding:5px 20px;">查询</el-button>
-               </div>
+               <!--<div class="date-box" slot="btn">-->
+                   <!--<el-button class="btn" type="primary"  @click="sendAll" style="padding:5px 20px;">查询</el-button>-->
+               <!--</div>-->
        </AllHeader>
        <div class="Header-add">
            <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
