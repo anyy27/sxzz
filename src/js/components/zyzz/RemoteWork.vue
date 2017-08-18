@@ -126,7 +126,7 @@
                     return hos.yyid== _this.somedata.hospital
                 }
                 function checkAdults(hos) {
-                    return hos.ksid== _this.somedata.office
+                    return hos.ksid== _this.somedata.office;
                 }
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
