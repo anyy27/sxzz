@@ -51,7 +51,12 @@
     export default{
         data(){
              return {
+                 zyzzList:[]
              }
+        },
+        mounted:function(){
+            this.zyzzList=this.$route.params.zyzzList;
+            console.log("zzzzzz",this.zyzzList);
         },
         methods:{
             open(){

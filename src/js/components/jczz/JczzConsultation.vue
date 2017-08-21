@@ -156,25 +156,31 @@
                 function checkAdults(hos) {
                     return hos.iTEMCODE== _this.somedata.jcid
                 }
-                var hosObj= _this.bigList.filter((hos)=>{
+                var hos1Obj= _this.bigList.filter((hos)=>{
                     console.log(hos,_this.somedata.flid,99999);
                    return hos.dEPTCODE== _this.somedata.flid
                 });
                 var offObj= _this.checkList.filter((hos)=>{
                     console.log(hos,_this.somedata.jcid,99999);
-                    return hos.dEPTCODE== _this.somedata.jcid
+                    return hos.iTEMCODE== _this.somedata.jcid
                 });
+                function checkAdult(hos) {
+                    return hos.yyid== _this.somedata.hospital
+                }
+                var hosObj = this.hospitalList.filter(checkAdult);
+                var yymc=hosObj[0].yymc;
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
-                var flmc=hosObj[0].dEPTNAME;
+                var flmc=hos1Obj[0].dEPTNAME;
+                console.log("88888",flmc)
                 var jcmc=offObj[0].iTEMNAME;
                 let options={
                     yhid:136,
                     "yyr": "595d05b0f19b9c898a58cc70",
                     flid:_this.somedata.flid,
-                    flmc:_this.flmc,
+                    flmc:flmc,
                     jcid:_this.somedata.jcid,
-                    jcmc:_this.jcmc,
+                    jcmc:jcmc,
                     klx:dataForm.klx,
                     kh: dataForm.kh,
                     yhxm: dataForm.yhxm,
@@ -188,17 +194,15 @@
                     lxdz:dataForm.lxdz,
                     lxdh:dataForm.lxdh,
                     sqyymc:yymc,
-                    qrksmc:ksmc,
-                    zdjg:dataForm.diagnoseValue,
+                    zdjg:dataForm.zdjg,
                     bqms:dataForm.bqms,
-                    wjidList:dataForm.attaIdList,
+                    wjidList:dataForm.wjidList,
                     yyid:this.somedata.hospital,
                     ksid:this.somedata.office,
-                    bqdj:this.bqdj,
                     sqyyrq:this.sqyyrq,
                     sqyylx:this.sqyylx,
-                    tjbz:this.tjbz,
-                    tjrq:this.tjrq,
+                    djzt:_this.tjbz,
+                    djrq:this.tjrq,
                     qryymc: "特扬医院",
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",
@@ -206,17 +210,18 @@
                     sqksbh: "59193cddca72a7bbbbe86c1c",
                     sqksmc: "骨科",
                 };
-                axiosUtil('smarthos.sxzz.zyzzsq.info',options,{
+                MessageBox.confirm('是否确认预约?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axiosUtil('smarthos.sxzz.jczzsq.info',options,{
                 }).then(res=>{
-                    console.log("444444",res);
-                    if(res.succ){
-                        MessageBox.confirm({
-
-                        })
-                    }else {
-                        alert(res.msg)
-                    }
+                    _this.$router.push("/main/commonBox");
                 })
+            }).catch(() => {
+                    _this.$router.go(-1);
+            });
             },
             open() {
                 MessageBox.confirm('浙江大学附属第二医院   呼吸内科   ***介入手术2017-04-24    上午', '是否确认预约？', {

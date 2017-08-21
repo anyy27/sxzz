@@ -7,7 +7,7 @@
                     <img src="../../images/tylogo.png" alt="">
                 </div>
                 <form class="login-form clearfix">
-                    <div class="login-tit marginT20"><h1 style="font-size: 32px;color:#01abac;text-align: center;">双向转诊管理平台</h1></div>
+                    <div class="login-tit marginT20"><h1 style="font-size: 32px;color:#01abac;text-align: center;">双向转管理平台</h1></div>
                     <!--<div class="login-tit"><p style="font-size: 20px;color:#c6c6c6;text-align: center;">Welcome  Login</p></div>-->
                     <div class="clearfix login-tit  login-item-wrap " style="margin-top:50px;">
                         <label class="login-icon-label login-icon-id w30 h34 fl"></label>

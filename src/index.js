@@ -27,6 +27,10 @@ import NewsWork from "./js/components/mzzz/NewsWork.vue";
 import CommonBox from "./js/components/common/CommonBox.vue";
 import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
+import RemoteBox from "./js/components/zyzz/RemoteBox.vue";
+import MzzzBox from "./js/components/mzzz/MzzzBox.vue";
+import ArrangeBox from "./js/components/rjss/ArrangeBox.vue";
+import JczzBox from "./js/components/jczz/JczzBox.vue";
 /*引入样式文件*/
 import 'element-ui/lib/theme-default/index.css'
 // import ElementUI from 'element-ui'
@@ -72,6 +76,18 @@ const router =new VueRouter({
                  },
                 {//公共问诊单
                     path:"commonBox",component:CommonBox
+                },
+                {//住院转诊问诊单
+                    path:"remotebox",name:"remotebox",component:RemoteBox
+                },
+                {//门诊转诊问诊单
+                    path:"mzzzbox",component:MzzzBox
+                },
+                {//手术转诊问诊单
+                    path:"arrangebox",component:ArrangeBox
+                },
+                {//检查转诊问诊单
+                    path:"jczzbox",component:JczzBox
                 },
                 /*qkfz*/
                 { path: "pictureConsulting", component: PictureConsulting },
@@ -124,6 +140,10 @@ new Vue({
         NewsWork,
         CommonBox,
         JczzConsultation,
-        RemoteWork
+        RemoteWork,
+        RemoteBox,
+        MzzzBox,
+        ArrangeBox,
+        JczzBox
     }
 });
