@@ -17,11 +17,10 @@
                     <el-table-column
                             prop="yhxm"
                             label="姓名"
-                            width="60">
+                            width="100">
                     </el-table-column>
                     <el-table-column
-                            label="预约状态"
-                            width="60">
+                            label="预约状态">
                         <template scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.zzzt==0?'预约成功':'预约成功'}}</span>
                         </template>

@@ -72,7 +72,7 @@
 </template>
 <style>
 </style>
-<script>
+<script type="text/ecmascript-6">
     import Vue  from  "vue";
     import  'element-ui';
     import axiosUtil from "../../utils/AxiosUtils.js";
@@ -110,6 +110,7 @@
                 tjrq: '',
                 sex:'',
                 value5:'',
+                zyzzList:''
             }
         },
         components:{
@@ -126,7 +127,7 @@
                     return hos.yyid== _this.somedata.hospital
                 }
                 function checkAdults(hos) {
-                    return hos.ksid== _this.somedata.office
+                    return hos.ksid== _this.somedata.office;
                 }
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
@@ -152,7 +153,7 @@
                     lxdh:dataForm.lxdh,
                     sqyymc:yymc,
                     qrksmc:ksmc,
-                    zdjg:dataForm.diagnoseValue,
+                    zdjg:dataForm.zdjg,
                     bqms:dataForm.bqms,
                     wjidList:dataForm.attaIdList,
                     yyid:this.somedata.hospital,
@@ -169,31 +170,27 @@
                     sqksbh: "59193cddca72a7bbbbe86c1c",
                     sqksmc: "骨科",
                 };
-                axiosUtil('smarthos.sxzz.zyzzsq.info',options,{
-                }).then(res=>{
-                    console.log("444444",res);
-                    if(res.succ){
-                        MessageBox.confirm({
-
-                        })
-                    }else {
-                        alert(res.msg)
-                    }
-                })
-            },
-            open() {
-                MessageBox.confirm('浙江大学附属第二医院   呼吸内科   ***介入手术2017-04-24    上午', '是否确认预约？', {
+                MessageBox.confirm('是否确认预约？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     closeOnPressEscape:true,
                     type: 'warning'
                 }).then(() => {
                     let _this=this;
-                    _this.$router.push("/main/commonBox");
-                }).catch(() => {
+                    axiosUtil('smarthos.sxzz.zyzzsq.info',options,{
+                    }).then(res=>{
+                        console.log(res,9999)
+                        if(res.succ){
+                            console.log("999999",res);
+                            _this.$router.push({path:"/main/remotebox",name:"remotebox",params:{zyzzList:res}});
+                        }else {
+                            alert(res.msg)
+                        }
+                    })
+                    }).catch(() => {
                     console.log("2");
-                });
-            },
+                    });
+                    },
             goBack(){
                 let _this=this;
                 _this.$router.go(-1);
