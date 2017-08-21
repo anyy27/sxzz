@@ -81,7 +81,7 @@
 </template>
 <style>
 </style>
-<script>
+<script type="text/ecmascript-6">
     import Vue  from  "vue";
     import  'element-ui';
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover, MessageBox } from "element-ui";

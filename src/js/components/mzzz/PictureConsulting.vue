@@ -323,6 +323,7 @@
             return{
                 activeName:"4",
                 tableData: [],
+                ddid:"",
                 dialogVisible:false,
                 selectObj:{
                     starttime:"",
@@ -340,6 +341,23 @@
             this.getData()
         },
         methods:{
+            handleEdit(index,row){
+                this.$set(this.$data,'ddid',row.ddid);
+//                console.log(res,55555)
+                if(row.zzzt==1){
+                    axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ysmc":"陈升华",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,55555)
+                    });
+                }else {
+                    return false;
+                }
+
+            },
             getSelect(val){
                 console.log(val,1414141414);
                 this.$set(this.$data,'selectObj',val);

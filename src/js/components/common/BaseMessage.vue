@@ -40,7 +40,7 @@
                                       v-model="ruleForm.zjhm"
                                       width="200"
                                       size="small"
-                                      @blur="getUser(ruleForm.pid)"
+                                      @blur="getUser(ruleForm.zjhm)"
                               ></el-input>
                           </el-form-item>
                       </div>
@@ -463,7 +463,7 @@
               console.log(7878787878878)
               axiosUtil('smarthos.sxzz.user.list',{
                   "yyid": "59411511191ce23575a63218",
-                  "sfzh": "330724199011261131"
+                  "sfzh": id
               }).then(res=>{
                   if(res.succ){
                       this.$set(this.$data,'userDetail',res.list[0])
@@ -473,12 +473,12 @@
                       this.earasList(res.list[0].regionId,res.list[0].cityId)
 //                      this.$set(this.$data,'value2',res.list[0].cityId)
 //                      this.$set(this.$data,'value3',res.list[0].cityId)
-                      this.$set(this.$data.ruleForm,'sex',res.list[0].xb)
-                      this.$set(this.$data.ruleForm,'name',res.list[0].yhxm)
-                      this.$set(this.$data.ruleForm,'mobilephone',res.list[0].sjhm)
-                      this.$set(this.$data.ruleForm,'otherphone',res.list[0].lxdh)
-                      this.$set(this.$data.ruleForm,'age',res.list[0].klx)
-                      this.$set(this.$data.ruleForm,'address',res.list[0].lxdz)
+                      this.$set(this.$data.ruleForm,'xb',res.list[0].xb)
+                      this.$set(this.$data.ruleForm,'yhxm',res.list[0].yhxm)
+                      this.$set(this.$data.ruleForm,'sjhm',res.list[0].sjhm)
+                      this.$set(this.$data.ruleForm,'lxdh',res.list[0].lxdh)
+                      this.$set(this.$data.ruleForm,'klx',res.list[0].klx)
+                      this.$set(this.$data.ruleForm,'lxdz',res.list[0].lxdz)
                   }else {
                      alert(res.msg)
                   }
@@ -665,7 +665,8 @@
                       _this.imgSrc = this.result;
                       let options = {
                           baseString: _this.src,
-                          type:type
+                          type:type,
+                          name:name
                       }
                       axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
                           console.log("444444",res);

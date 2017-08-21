@@ -226,7 +226,6 @@
                 </el-table>
             </div>
         </div>
-        <span @click="open">打开</span>
      <div class="dialog" v-show="dialogVisible">
          <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
              <p>预约信息</p>
@@ -273,32 +272,24 @@
                  style="width:90%;margin-left:5%;">
              <el-table-column
                      type="index"
-                     width="50">
+                    >
              </el-table-column>
              <el-table-column
                      type="selection"
-                     width="55">
+                    >
              </el-table-column>
              <el-table-column
                      prop="hyxh"
                      label="就诊序号"
-                     width="180">
+                    >
              </el-table-column>
              <el-table-column
                      prop="qhsj"
                      label="就诊时间"
-                     width="180">
+                    >
                  <template scope="scope">
                      <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
                  </template>
-             </el-table-column>
-             <el-table-column
-                     prop="address"
-                     label="挂号费">
-             </el-table-column>
-             <el-table-column
-                     prop="address"
-                     label="诊疗费">
              </el-table-column>
          </el-table>
          <div class="btn-con">
@@ -315,9 +306,10 @@
 <script type="text/ecmascript-6">
     import Vue from "vue";
 //    import  'element-ui';
+
     import BaseMessage from  "../common/BaseMessage.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
-    import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover, MessageBox , Dialog } from "element-ui";
+    import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover , Dialog,MessageBox } from "element-ui";
 
     Vue.use(Button);
     Vue.use(Radio);
@@ -328,6 +320,7 @@
     Vue.use(Loading);
     Vue.use(Popover);
     Vue.use(Dialog);
+    Vue.use(MessageBox);
     export default{
         data(){
             return{
@@ -392,39 +385,51 @@
             handleCurrentChange(val,old) {
                 this.$set(this.$data,'yyhyid',val.yyhyid)
                 this.$set(this.$data,'hyDate',val.qhsj);
-                this.$set(this.$data,'hyxh',val.qhsj)
+                this.$set(this.$data,'hyxh',val.hyxh)
                 this.$refs.multipleTable.toggleRowSelection(old,false);
             },
-            SureYuyue:function(){
-
-
+            SureYuyue(){
+//               this.yymc + ',' +this.ksmc +','+this.docName+','
+//                        +this.hyrq+','+this.hyxh+','+this.hyDate.substr(0,2)+':'+this.hyDate.substr(2,4)
+                MessageBox.confirm( '是否确认预约？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    closeOnPressEscape:true,
+                    type: 'warning'
+                }).then(() => {
+                    let _this=this;
+                    axiosUtil('smarthos.sxzz.mzzzsq.info',{
+                        ..._this.totalObj,
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "yyid": this.somedata.hospital,
+                        "ksid":this.somedata.office,
+                        "yhid": "136",
+                        'qrksmc': this.ksmc,
+                        "ysid": this.docId,
+                        "ysmc": this.docName,
+                        "yypbid": this.pbid,
+                        "yylx": this.yylx,
+                        "hyid": this.yyhyid,
+                        "hyrq": this.hyrq,
+                        "hysj":this.hyDate,
+                        "hyxh":this.hyxh,
+                        "zlf":this.zlf,
+                        "sqysxm": "陈刚",
+                        "sqksmc": "预防保健科",
+                        "sqksbh": "59193cddca72a7bbbbe86c1c",
+                        "sqyymc": "特杨医院",
+                        "qryymc": this.yymc,
+                    }).then(res=>{
+                        console.log(res,66666666)
+                    })
+//                    _this.$router.push("/main/commonBox");
+                }).catch(() => {
+                    console.log("2");
+                });
                 this.dialogVisible=false;
                 this.dialogVisible1=false;
-                axiosUtil('smarthos.sxzz.mzzzsq.info',{
-                        ...this.totalObj,
-                    "jgid": "59411511191ce23575a63218",
-                    "yyr": "595d05b0f19b9c898a58cc70",
-                    "yyid": this.somedata.hospital,
-                    "ksid":this.somedata.office,
-                    "yhid": "136",
-                    'qrksmc': this.ksmc,
-                    "ysid": this.docId,
-                    "ysmc": this.docName,
-                    "yypbid": this.pbid,
-                    "yylx": this.yylx,
-                    "hyid": this.yyhyid,
-                    "hyrq": this.hyrq,
-                    "hysj":this.hyDate,
-                    "hyxh":this.hyxh,
-                    "zlf":this.zlf,
-                    "sqysxm": "陈刚",
-                    "sqksmc": "预防保健科",
-                    "sqksbh": "59193cddca72a7bbbbe86c1c",
-                    "sqyymc": "特杨医院",
-                    "qryymc": this.yymc,
-                }).then(res=>{
-                    console.log(res,66666666)
-                })
+
 
             },
             open:function(){
@@ -547,7 +552,7 @@
             and(row, column, cell){
                 this.yymc = this.filterArr(this.hospitalList,this.somedata.hospital)[0].yymc;
                 this.ksmc = this.filterArr1(this.officeList,this.somedata.office)[0].ksmc;
-                row.name?this.docName=row.name:'普通医生';
+                row.name?this.docName=row.name:this.docName='普通医生';
                 this.docId = row.ysid;
                 this.$set(this.$data,'pbid',row.pbid)
                 if(column.property.split('.')[1]=='am'){
