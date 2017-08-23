@@ -24,13 +24,13 @@
                     <template scope="scope">
                         <el-button
                                 size="small"
-                                @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
+                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
                                 @click="handleEdit(scope.$index, scope.row)">{{scope.row.zzzt=='1'?'撤销':'重新预约'}}</el-button>
                         <el-button
                                 size="small"
-                                @click="handleDelete(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -122,10 +122,10 @@
                     <template scope="scope">
                         <el-button
                                 size="small"
-                                @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
+                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="handleDelete(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -222,10 +222,10 @@
 
                         <el-button
                                 size="small"
-                                @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
+                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="handleDelete(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -341,6 +341,38 @@
             this.getData()
         },
         methods:{
+            goTransferBill(index,row){
+                axiosUtil('smarthos.sxzz.byddid.list',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ywlx": "0",
+                    "ddid":row.ddid,
+                }).then(res=>{
+                    console.log(res,7777)
+                    this.$router.push({
+                        name:"transferBill",
+                        params:{
+                            zyzzList:res.obj
+                        }
+                    })
+                });
+            },
+            examineBill(index,row){
+                axiosUtil('smarthos.sxzz.byddid.list',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ywlx": "0",
+                    "ddid":row.ddid,
+                }).then(res=>{
+                    console.log(res,66666)
+                    this.$router.push({
+                        name:"examineBill",
+                        params:{
+                            applyDetail:res.obj
+                        }
+                    })
+                });
+            },
             handleEdit(index,row){
                 this.$set(this.$data,'ddid',row.ddid);
 //                console.log(res,55555)
@@ -360,7 +392,7 @@
                         "ywlx": "0",
                         "ddid":row.ddid,
                     }).then(res=>{
-                        console.log(res,55555)
+                        console.log(res,66666)
                         this.$router.push({
                             name:"reappointment",
                             params:{

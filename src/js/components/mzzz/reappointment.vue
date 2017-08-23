@@ -320,7 +320,6 @@
     Vue.use(Loading);
     Vue.use(Popover);
     Vue.use(Dialog);
-    Vue.use(MessageBox);
     export default{
         data(){
             return{
@@ -367,6 +366,7 @@
 //            this.getData();
             this.getHospital();
          this.applyDetail = this.$route.params.applyDetail;
+
         },
         methods:{
             filterArr(arr,id){
@@ -450,7 +450,7 @@
                 this.getData(val)
             },
             getHospital(){
-                axiosUtil('smarthos.sxzz.hos.list',{
+                axiosUtil('smarthos.sxzz.mzhos.list',{
                     "qyid":"0",
                     "ywlx":"0"
                 }).then(res=>{

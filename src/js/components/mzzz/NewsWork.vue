@@ -293,7 +293,7 @@
              </el-table-column>
          </el-table>
          <div class="btn-con">
-         <el-button  class="btn success1" @click="SureYuyue" type="text" style="padding:5px 50px" >上一步</el-button>
+         <el-button  class="btn success1" @click="close" type="text" style="padding:5px 50px" >上一步</el-button>
          <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
          </div>
          </div>
@@ -386,6 +386,10 @@
                 this.$set(this.$data,'hyxh',val.hyxh)
                 this.$refs.multipleTable.toggleRowSelection(old,false);
             },
+            close(){
+                this.dialogVisible=false;
+                this.dialogVisible1=false;
+            },
             SureYuyue(){
 //               this.yymc + ',' +this.ksmc +','+this.docName+','
 //                        +this.hyrq+','+this.hyxh+','+this.hyDate.substr(0,2)+':'+this.hyDate.substr(2,4)
@@ -446,7 +450,7 @@
                 this.getData(val)
             },
             getHospital(){
-                axiosUtil('smarthos.sxzz.hos.list',{
+                axiosUtil('smarthos.sxzz.mzhos.list',{
                     "qyid":"0",
                     "ywlx":"0"
                 }).then(res=>{

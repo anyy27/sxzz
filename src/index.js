@@ -30,6 +30,8 @@ import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
 import RemoteBox from "./js/components/zyzz/RemoteBox.vue";
 import MzzzBox from "./js/components/mzzz/MzzzBox.vue";
+import transferBill from "./js/components/mzzz/transferBill.vue";
+import examineBill from "./js/components/mzzz/examineBill.vue";
 import ArrangeBox from "./js/components/rjss/ArrangeBox.vue";
 import JczzBox from "./js/components/jczz/JczzBox.vue";
 /*引入样式文件*/
@@ -77,6 +79,10 @@ const router =new VueRouter({
                  },
                 {//公共问诊单
                     path:"commonBox",name:'commonBox',   component:CommonBox
+                },{//公共问诊单
+                    path:"transferBill",name:'transferBill',   component:transferBill
+                },{//公共问诊单
+                    path:"examineBill",name:'examineBill',   component:examineBill
                 },
                 {//住院转诊问诊单
                     path:"remotebox",name:"remotebox",component:RemoteBox
