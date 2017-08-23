@@ -12,26 +12,26 @@
             </div>
             <div class="commonbox-con">
                 <div class="commonbox-news">
-                    <div><span>预约号码:</span><span> 2</span></div>
-                    <div><span>预约医院:</span><span> 2</span></div>
-                    <div><span>检查项目:</span><span> 2</span></div>
-                    <div><span>检查地点:</span><span> 2</span></div>
-                    <div><span>申请科室:</span><span> 2</span></div>
-                    <div><span>门办电话:</span><span> 2</span></div>
-                    <div><span>患者姓名:</span><span> 2</span></div>
-                    <div><span>身份证号:</span><span> 2</span></div>
-                    <div><span>联系方式:</span><span> 2</span></div>
+                    <div><span>预约号码:</span><span> {{zyzzList.ddid}}</span></div>
+                    <div><span>预约医院:</span><span> {{zyzzList.qryymc}}</span></div>
+                    <div><span>检查项目:</span><span> {{zyzzList.jcmc}}</span></div>
+                    <div><span>检查地点:</span><span> {{zyzzList.cityId}}</span></div>
+                    <div><span>申请科室:</span><span> {{zyzzList.sqksmc}}</span></div>
+                    <div><span>门办电话:</span><span> {{zyzzList.ddid}}</span></div>
+                    <div><span>患者姓名:</span><span> {{zyzzList.yhxm}}</span></div>
+                    <div><span>身份证号:</span><span> {{zyzzList.zjhm}}</span></div>
+                    <div><span>联系方式:</span><span> {{zyzzList.lxdh}}</span></div>
                 </div>
                 <div class="commonbox-news" style="margin-left:1%;">
-                    <div><span>挂号费用:</span><span> 2</span></div>
-                    <div><span>检查大类:</span><span> 2</span></div>
-                    <div><span>就诊时间:</span><span> 2</span></div>
-                    <div><span>申请医院:</span><span> 2</span></div>
-                    <div><span>申请人电话:</span><span> 2</span></div>
-                    <div><span>门办地址:</span><span> 2</span></div>
-                    <div><span>患者性别:</span><span> 2</span></div>
-                    <div><span>患者年龄:</span><span> 2</span></div>
-                    <div><span>联系地址:</span><span> 2</span></div>
+                    <div><span>挂号费用:</span><span> {{zyzzList.ddid}}</span></div>
+                    <div><span>检查大类:</span><span> {{zyzzList.flmc}}</span></div>
+                    <div><span>就诊时间:</span><span> {{zyzzList.sqyyrq}}</span></div>
+                    <div><span>申请医院:</span><span> {{zyzzList.sqyymc}}</span></div>
+                    <div><span>申请人电话:</span><span> {{zyzzList.sqysdh}}</span></div>
+                    <div><span>门办地址:</span><span> {{zyzzList.ddid}}</span></div>
+                    <div><span>患者性别:</span><span> {{zyzzList.xb}}</span></div>
+                    <div><span>患者年龄:</span><span> {{zyzzList.age}}</span></div>
+                    <div><span>联系地址:</span><span> {{zyzzList.cityId}}</span></div>
                 </div>
             </div>
             <div class="commonbox-btn">
@@ -51,11 +51,11 @@
     export default{
         data(){
             return {
-                zyzzList:[]
+                zyzzList:{}
             }
         },
         mounted:function(){
-            this.zyzzList=this.$route.params.zyzzList;
+            this.zyzzList=this.$route.params.zyzzList.obj;
             console.log("zzzzzz",this.zyzzList);
         },
         methods:{

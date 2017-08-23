@@ -147,21 +147,17 @@
                 })
             },
             getDetail(dataForm){
-                console.log(dataForm,2222);
-                var _this = this;
+                var _this = this
                 function checkAdult(hos) {
-                    console.log(hos,_this.somedata.flid,99999)
                     return hos.dEPTCODE== _this.somedata.flid
                 }
                 function checkAdults(hos) {
                     return hos.iTEMCODE== _this.somedata.jcid
                 }
                 var hos1Obj= _this.bigList.filter((hos)=>{
-                    console.log(hos,_this.somedata.flid,99999);
                    return hos.dEPTCODE== _this.somedata.flid
                 });
                 var offObj= _this.checkList.filter((hos)=>{
-                    console.log(hos,_this.somedata.jcid,99999);
                     return hos.iTEMCODE== _this.somedata.jcid
                 });
                 function checkAdult(hos) {
@@ -172,7 +168,6 @@
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
                 var flmc=hos1Obj[0].dEPTNAME;
-                console.log("88888",flmc)
                 var jcmc=offObj[0].iTEMNAME;
                 let options={
                     yhid:136,
@@ -210,18 +205,26 @@
                     sqksbh: "59193cddca72a7bbbbe86c1c",
                     sqksmc: "骨科",
                 };
-                MessageBox.confirm('是否确认预约?', '提示', {
+                MessageBox.confirm('是否确认预约？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
+                    closeOnPressEscape:true,
                     type: 'warning'
                 }).then(() => {
+                    let _this=this;
                     axiosUtil('smarthos.sxzz.jczzsq.info',options,{
-                }).then(res=>{
-                    _this.$router.push("/main/commonBox");
-                })
-            }).catch(() => {
-                    _this.$router.go(-1);
-            });
+                    }).then(res=>{
+                        console.log(res,9999)
+                        if(res.succ){
+                            console.log("999999",res);
+                            _this.$router.push({path:"/main/jczzbox",name:"jczzbox",params:{zyzzList:res}});
+                        }else {
+                            alert(res.msg)
+                        }
+                    })
+                }).catch(() => {
+                    console.log("2");
+                });
             },
             open() {
                 MessageBox.confirm('浙江大学附属第二医院   呼吸内科   ***介入手术2017-04-24    上午', '是否确认预约？', {
