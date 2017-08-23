@@ -4,7 +4,7 @@
         <div class="Header-add">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                 <use xlink:href="#icon-xinzeng"></use>
-            </svg> 新增日间手术转诊</el-button>
+            </svg> 新增检查转诊</el-button>
         </div>
         <div class="arrange-tab">
             <el-tabs v-model="activeName" @tab-click="changeTab">
@@ -207,9 +207,8 @@
                 </el-table-column>
             </el-table>
         </div>
-
+        <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
     </div>
-
 </template>
 <style>
 
@@ -218,18 +217,22 @@
     import Vue from "vue";
     import AllHeader from "../common/AllHeader.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
+    import FooterCmp from "../common/FooterCmp.vue";
     export default{
         data (){
             return{
                 activeName:"4",
-                tableData: []
+                tableData: [],
+                propsTotalCols:0,
+                type:'4'
             }
         },
         components:{
-            AllHeader
+            AllHeader,
+            FooterCmp
         },
         mounted(){
-            this.getData()
+            this.getData(1,4);
         },
         methods:{
             arranges:function(){
@@ -237,26 +240,33 @@
             },
             changeTab(val){
                 console.log(val.name,6666);
-                this.getData(val.name)
+                this.type=val.name?val.name:4;
+                this.getData(1,this.type)
             },
-            getData(val){
+            getData(pageNum,type){
+                let _this=this;
                 axiosUtil('smarthos.sxzz.order.list',{
                     "jgid": "59411511191ce23575a63218",
                     "yyid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",
                     "ywlx": "1",
-                    "czlx": val?val:4,
-                    "pageNum":"1",
-                    "pageSize":"10"
+                    "czlx": type,
+                    "pageNum":pageNum,
+                    "pageSize":5
                 }).then(res=>{
                     console.log(res,33333);
                 if(res.succ){
+                    _this.propsTotalCols=res.page.total;
+                    console.log("55/5555",_this.propsTotalCols)
                     this.$set(this.$data,'tableData',res.list)
                 }else {
                     alert(res.msg)
                 }
             })
             },
+            changePage1(pageNum){
+                this.getData(pageNum,this.type);
+            }
         }
     }
 

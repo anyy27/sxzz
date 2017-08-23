@@ -29,7 +29,7 @@
                 required: true
             },
             propsPageSize: {
-                default: 7
+                default: true
             },
             fixedHeight: {//fixedHeight表示除去底部外其他固定高度，默认高度596，设置中的我的收入不一样。用来计算底部高度
                 default: 547
@@ -39,8 +39,8 @@
             PaginationCmp
         },*/
         methods: {
-            CurrentPageChange: function(pageNo) {
-                this.$emit("changePage", pageNo);
+            CurrentPageChange: function(pageName) {
+                this.$emit("changePage", pageName);
             }
         }
     }

@@ -306,7 +306,6 @@
 <script type="text/ecmascript-6">
     import Vue from "vue";
 //    import  'element-ui';
-
     import BaseMessage from  "../common/BaseMessage.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover , Dialog,MessageBox } from "element-ui";
@@ -320,7 +319,6 @@
     Vue.use(Loading);
     Vue.use(Popover);
     Vue.use(Dialog);
-    Vue.use(MessageBox);
     export default{
         data(){
             return{

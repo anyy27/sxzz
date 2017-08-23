@@ -81,13 +81,13 @@ const router =new VueRouter({
                     path:"remotebox",name:"remotebox",component:RemoteBox
                 },
                 {//门诊转诊问诊单
-                    path:"mzzzbox",component:MzzzBox
+                    path:"mzzzbox",name:"mzzzbox",component:MzzzBox
                 },
                 {//手术转诊问诊单
-                    path:"arrangebox",component:ArrangeBox
+                    path:"arrangebox",name:"arrangebox",component:ArrangeBox
                 },
                 {//检查转诊问诊单
-                    path:"jczzbox",component:JczzBox
+                    path:"jczzbox",name:"jczzbox",component:JczzBox
                 },
                 /*qkfz*/
                 { path: "pictureConsulting", component: PictureConsulting },

@@ -603,17 +603,18 @@
                   return false;
               }
               console.log(file,88888)
+              let name=file.name;
               let type= file.name.replace(/.+\./,"");
               let reader = new FileReader();
               reader.readAsDataURL(file);
               reader.onload = function(){
                   _this.src = this.result;
                   console.log("dfdfdfd", this.result);
-
                   _this.imgSrc = this.result;
                   let options = {
                       baseString: _this.src,
-                      type:type
+                      type:type,
+                      fileName:name
                   }
                   axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
                       console.log("444444",res);
@@ -666,7 +667,7 @@
                       let options = {
                           baseString: _this.src,
                           type:type,
-                          name:name
+                          fileName:name
                       }
                       axiosUtil("smarthos.sxzz.blzlUpdata.info",options).then(function(res){
                           console.log("444444",res);

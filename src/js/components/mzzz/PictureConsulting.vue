@@ -4,7 +4,7 @@
         <div class="Header-add">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                 <use xlink:href="#icon-xinzeng"></use>
-            </svg> 新增日间手术转诊</el-button>
+            </svg> 新增门诊转诊</el-button>
         </div>
         <div class="arrange-tab">
             <el-tabs v-model="activeName" @tab-click="changeTab">
