@@ -377,7 +377,7 @@
               },
           }
       },
-      props:['index'],
+      props:['index','applyDetail'],
       watch:{
           index:function(){
               console.log(5656565);
@@ -395,6 +395,10 @@
       },
       mounted(){
         this.getData();
+          if(this.applyDetail){
+            this.ruleForm = this.applyDetail;
+              console.log(this.ruleForm,9999999999999999888888888)
+          }
       },
       computed:{
           upLoadList:function(){
@@ -620,8 +624,6 @@
                       if(res.succ){
                           _this.imgList.push(_this.src);
                           _this.imgIdList.push(res.obj.tid);
-
-
                       }
                   })
               }

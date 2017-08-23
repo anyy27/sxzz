@@ -354,7 +354,21 @@
                         console.log(res,55555)
                     });
                 }else {
-                    return false;
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "0",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,55555)
+                        this.$router.push({
+                            name:"reappointment",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+
                 }
 
             },
