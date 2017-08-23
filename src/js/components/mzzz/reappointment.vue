@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form   label-width="100px" class="demo-ruleForm">
-            <BaseMessage :index="watchNum" @getDetail="getDetail"></BaseMessage>
+            <BaseMessage :applyDetail="applyDetail" :index="watchNum" @getDetail="getDetail"></BaseMessage>
         </el-form>
         <div class="news-con">
             <p style="line-height: 40px;">预约信息</p>
@@ -51,7 +51,7 @@
                     <el-table-column :label="dateList[0].date" prop="monday">
                         <el-table-column
                                 :label="dateList[0].week"
-                                >
+                        >
                             <el-table-column
                                     prop="monday.am"
                                     label="上午"
@@ -75,7 +75,7 @@
                     <el-table-column :label="dateList[1].date" props="tuesday">
                         <el-table-column
                                 :label="dateList[1].week"
-                                >
+                        >
                             <el-table-column
                                     prop="tuesday.am"
                                     label="上午"
@@ -100,7 +100,7 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[2].week"
-                                >
+                        >
                             <el-table-column
                                     prop="wednesday.am"
                                     label="上午"
@@ -125,7 +125,7 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[3].week"
-                                >
+                        >
                             <el-table-column
                                     prop="thursday.am"
                                     label="上午"
@@ -150,7 +150,7 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[4].week"
-                                >
+                        >
                             <el-table-column
                                     prop="friday.am"
                                     label="上午"
@@ -176,7 +176,7 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[5].week"
-                                >
+                        >
                             <el-table-column
                                     prop="saturday.am"
                                     label="上午"
@@ -202,7 +202,7 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[6].week"
-                                >
+                        >
                             <el-table-column
                                     prop="sunday.am"
                                     label="上午"
@@ -226,77 +226,77 @@
                 </el-table>
             </div>
         </div>
-     <div class="dialog" v-show="dialogVisible">
-         <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
-             <p>预约信息</p>
-         </div>
-         <div style="width:90%;margin-left:5%;height:80px;">
-             <div class="newsworks">
-                 <span>身份证号:</span>
-                 <span>{{this.totalObj.zjhm}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>姓名:</span>
-                 <span>{{this.totalObj.yhxm}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>就诊时间:</span>
-                 <span>{{this.hyrq}} {{this.yylx==1?'下午':'上午'}}</span>
-             </div>
-             <div class="newsworks" style="width: 50%">
-                 <span>预约医院:</span>
-                 <span>{{this.yymc}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>预约科室:</span>
-                 <span>{{this.ksmc}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>预约医生:</span>
-                 <span>{{this.docName}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>挂号费:</span>
-                 <span>{{this.zlf}}</span>
-             </div>
-             <div class="newsworks">
-                 <span style="color:red;">当前剩余号源还剩:</span>
-                 <span style="color:red;">{{this.tableData.length}}</span>
-             </div>
-         </div>
-         <el-table
-                 ref="multipleTable"
-                 :data="tableData"
-                 @current-change="handleCurrentChange"
-                 height="330"
-                 style="width:90%;margin-left:5%;">
-             <el-table-column
-                     type="index"
-                    >
-             </el-table-column>
-             <el-table-column
-                     type="selection"
-                    >
-             </el-table-column>
-             <el-table-column
-                     prop="hyxh"
-                     label="就诊序号"
-                    >
-             </el-table-column>
-             <el-table-column
-                     prop="qhsj"
-                     label="就诊时间"
-                    >
-                 <template scope="scope">
-                     <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
-                 </template>
-             </el-table-column>
-         </el-table>
-         <div class="btn-con">
-         <el-button  class="btn success1" @click="close" type="text" style="padding:5px 50px" >上一步</el-button>
-         <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
-         </div>
-         </div>
+        <div class="dialog" v-show="dialogVisible">
+            <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
+                <p>预约信息</p>
+            </div>
+            <div style="width:90%;margin-left:5%;height:80px;">
+                <div class="newsworks">
+                    <span>身份证号:</span>
+                    <span>{{this.totalObj.zjhm}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>姓名:</span>
+                    <span>{{this.totalObj.yhxm}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>就诊时间:</span>
+                    <span>{{this.hyrq}} {{this.yylx==1?'下午':'上午'}}</span>
+                </div>
+                <div class="newsworks" style="width: 50%">
+                    <span>预约医院:</span>
+                    <span>{{this.yymc}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>预约科室:</span>
+                    <span>{{this.ksmc}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>预约医生:</span>
+                    <span>{{this.docName}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>挂号费:</span>
+                    <span>{{this.zlf}}</span>
+                </div>
+                <div class="newsworks">
+                    <span style="color:red;">当前剩余号源还剩:</span>
+                    <span style="color:red;">{{this.tableData.length}}</span>
+                </div>
+            </div>
+            <el-table
+                    ref="multipleTable"
+                    :data="tableData"
+                    @current-change="handleCurrentChange"
+                    height="330"
+                    style="width:90%;margin-left:5%;">
+                <el-table-column
+                        type="index"
+                >
+                </el-table-column>
+                <el-table-column
+                        type="selection"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="hyxh"
+                        label="就诊序号"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="qhsj"
+                        label="就诊时间"
+                >
+                    <template scope="scope">
+                        <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="btn-con">
+                <el-button  class="btn success1" @click="SureYuyue" type="text" style="padding:5px 50px" >上一步</el-button>
+                <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
+            </div>
+        </div>
         <div class="BigBox" v-show="dialogVisible1"></div>
     </div>
 </template>
@@ -305,7 +305,8 @@
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
-//    import  'element-ui';
+    //    import  'element-ui';
+
     import BaseMessage from  "../common/BaseMessage.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover , Dialog,MessageBox } from "element-ui";
@@ -322,6 +323,7 @@
     export default{
         data(){
             return{
+                applyDetail:{},
                 totalObj:{},
                 docName:'',
                 docId:"",
@@ -360,22 +362,24 @@
             BaseMessage
         },
         mounted(){
-           this.setDate(new Date());
+            this.setDate(new Date());
 //            this.getData();
             this.getHospital();
+         this.applyDetail = this.$route.params.applyDetail;
+
         },
         methods:{
             filterArr(arr,id){
                 function getObj (item) {
                     return item.yyid==id;
                 }
-            return   arr.filter(getObj)
+                return   arr.filter(getObj)
             },
             filterArr1(arr,id){
                 function getObj (item) {
                     return item.ksid==id;
                 }
-            return   arr.filter(getObj)
+                return   arr.filter(getObj)
             },
             getDetail(value){
                 this.$set(this.$data,'totalObj',value)
@@ -385,10 +389,6 @@
                 this.$set(this.$data,'hyDate',val.qhsj);
                 this.$set(this.$data,'hyxh',val.hyxh)
                 this.$refs.multipleTable.toggleRowSelection(old,false);
-            },
-            close(){
-                this.dialogVisible=false;
-                this.dialogVisible1=false;
             },
             SureYuyue(){
 //               this.yymc + ',' +this.ksmc +','+this.docName+','
@@ -512,7 +512,7 @@
                         };
                         this.$set(this.$data,'arrangeList',arr)
                     }else{
-                       alert(res.msg)
+                        alert(res.msg)
                     }
                 })
             },
@@ -573,72 +573,72 @@
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pbid)
                         this.$set(this.$data,'zlf',row.monday.zlf)
-                    break;
+                        break;
                     case 'monday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pmpbid)
                         this.$set(this.$data,'zlf',row.monday.zlf)
-                    break;
+                        break;
                     case 'tuesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pbid)
                         this.$set(this.$data,'zlf',row.tuesday.zlf)
-                    break;
+                        break;
                     case 'tuesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pmpbid)
                         this.$set(this.$data,'zlf',row.tuesday.zlf)
-                    break;
+                        break;
                     case 'wednesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pbid)
                         this.$set(this.$data,'zlf',row.wednesday.zlf)
-                    break;
+                        break;
                     case 'wednesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pmpbid)
                         this.$set(this.$data,'zlf',row.wednesday.zlf)
-                    break;
+                        break;
                     case 'thursday.am':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pbid)
                         this.$set(this.$data,'zlf',row.thursday.zlf)
-                    break;
+                        break;
                     case 'thursday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pmpbid)
                         this.$set(this.$data,'zlf',row.thursday.zlf)
-                    break;
+                        break;
                     case 'friday.am':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pbid)
                         this.$set(this.$data,'zlf',row.friday.zlf)
-                    break;
+                        break;
                     case 'friday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pmpbid)
                         this.$set(this.$data,'zlf',row.friday.zlf)
-                    break;
+                        break;
                     case 'saturday.am':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pbid)
                         this.$set(this.$data,'zlf',row.saturday.zlf)
-                    break;
+                        break;
                     case 'saturday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pmpbid)
                         this.$set(this.$data,'zlf',row.saturday.zlf)
-                    break;
+                        break;
                     case 'sunday.am':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pbid)
                         this.$set(this.$data,'zlf',row.sunday.zlf)
-                    break;
+                        break;
                     case 'sunday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pmpbid)
                         this.$set(this.$data,'zlf',row.sunday.zlf)
-                    break;
+                        break;
                 }
                 this.sourceList();
                 this.$set(this.$data,'dialogTableVisible',true)
@@ -661,7 +661,7 @@
                         }
                     })
                 }else {
-                  alert('号源列表为空！')
+                    alert('号源列表为空！')
                 }
 
 

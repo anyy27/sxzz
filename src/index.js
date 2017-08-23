@@ -15,6 +15,7 @@ import Home from "./js/components/rwzx/Home.vue";
 import VideoConsultation from "./js/components/jczz/VideoConsultation.vue";
 import RemoteConsultation from "./js/components/zyzz/RemoteConsultation.vue";
 import PictureConsulting from "./js/components/mzzz/PictureConsulting.vue";//图文咨询首页
+import reappointment from "./js/components/mzzz/reappointment.vue";//图文咨询首页
 import SetUp from "./js/components/setting/SetUp.vue";
 import SetUpInfo from "./js/components/setting/SetUpMyInfo.vue";
 import SetUpChangePwd from "./js/components/setting/SetUpChangePwd.vue";
@@ -29,6 +30,8 @@ import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
 import RemoteBox from "./js/components/zyzz/RemoteBox.vue";
 import MzzzBox from "./js/components/mzzz/MzzzBox.vue";
+import transferBill from "./js/components/mzzz/transferBill.vue";
+import examineBill from "./js/components/mzzz/examineBill.vue";
 import ArrangeBox from "./js/components/rjss/ArrangeBox.vue";
 import JczzBox from "./js/components/jczz/JczzBox.vue";
 /*引入样式文件*/
@@ -75,7 +78,11 @@ const router =new VueRouter({
                     path:"arrange/newsTransfer",component:NewsTransfer
                  },
                 {//公共问诊单
-                    path:"commonBox",component:CommonBox
+                    path:"commonBox",name:'commonBox',   component:CommonBox
+                },{//公共问诊单
+                    path:"transferBill",name:'transferBill',   component:transferBill
+                },{//公共问诊单
+                    path:"examineBill",name:'examineBill',   component:examineBill
                 },
                 {//住院转诊问诊单
                     path:"remotebox",name:"remotebox",component:RemoteBox
@@ -92,6 +99,7 @@ const router =new VueRouter({
                 /*qkfz*/
                 { path: "pictureConsulting", component: PictureConsulting },
                 { path: "pictureConsulting/newswork", component: NewsWork },
+                { path: "pictureConsulting/reappointment",name:'reappointment', component: reappointment },
             ]
         },
         {//设置页路由

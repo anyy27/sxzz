@@ -75,28 +75,28 @@
                          <div class="base-con">
                              <el-form-item label="家庭住址:" >
                                  <div class="block">
-                                     <el-select v-model="ruleForm.cityId" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
+                                     <el-select v-model="ruleForm.provinceId" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
                                          <el-option
                                                  v-for="item in provinces"
-                                                 :key="item.value"
-                                                 :label="item.label"
-                                                 :value="item.value">
+                                                 :key="item.id"
+                                                 :label="item.name"
+                                                 :value="item.id">
                                          </el-option>
                                      </el-select>
-                                     <el-select v-model="ruleForm.provinceId" placeholder="请选择" @change="getEaras"  style="width: 150px">
+                                     <el-select v-model="ruleForm.cityId" placeholder="请选择" @change="getEaras"  style="width: 150px">
                                          <el-option
                                                  v-for="item in citys"
-                                                 :key="item.value"
-                                                 :label="item.label"
-                                                 :value="item.value">
+                                                 :key="item.id"
+                                                 :label="item.name"
+                                                 :value="item.id">
                                          </el-option>
                                      </el-select>
                                      <el-select v-model="ruleForm.regionId" placeholder="请选择"  style="width: 150px">
                                          <el-option
                                                  v-for="item in earas"
-                                                 :key="item.value"
-                                                 :label="item.label"
-                                                 :value="item.value">
+                                                 :key="item.id"
+                                                 :label="item.name"
+                                                 :value="item.id">
                                          </el-option>
                                      </el-select>
                                      <el-input
@@ -178,6 +178,9 @@
                    <div  style="margin-top:10px;position:relative;">
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
                            <div class="add-pic-list" >
+                               <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList">
+                                <img :src="item.wjdz" alt="">
+                               </span>
                                <span class="showImg" v-for="(item,index) of imgList">
                                    <span class="showImgSon">
                                        <img @click="delImg(index)" style="width: 50%;height: 50%;margin-left: 15px;margin-top: 15px" src="../../../static/img/del.png" alt="">
@@ -205,6 +208,9 @@
                                        :on-success="onSuccessFile"
                                        :on-remove="onRemoveFile"
                                        :file-list="fileUploadList">
+                                   <span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
+                                       {{item.name}}
+                                   </span>
                                    <span  class="showText" v-for="(item,index) of nameList">
                                        <span @click.stop="delText(index)" class="showTextSon">X</span>
                                        {{item}}
@@ -243,7 +249,7 @@
         display: none;
         cursor: pointer;
     }
-    .showImg   img{
+    .showImg  img{
         width: 60px;
         height: 60px;
         margin-right: 10px;
@@ -330,6 +336,8 @@
           return{
               flag:false,
               num:'',
+              oldImgList:[],
+              oldNameList:[],
               imgList:[],
               nameList:[],
               imgIdList:[],
@@ -377,17 +385,15 @@
               },
           }
       },
-      props:['index'],
+      props:['index','applyDetail'],
       watch:{
           index:function(){
               console.log(5656565);
               let _this=this;
-              console.log(this.ruleForm.wjidList,_this.imgIdList,_this.textIdList)
+              console.log(_this.ruleForm.wjidList,_this.imgIdList,_this.textIdList)
                var arr = _this.ruleForm.wjidList.concat(_this.imgIdList);
               var arr1= arr.concat(_this.textIdList);
-              for(let i=0; i<_this.upLoadList.length; i++){//根据上传的附件 遍历获取attaId
-                  _this.attaIdList.push(_this.upLoadList[i].response.obj.tid);
-              }
+
               _this.ruleForm.wjidList = arr1;
               console.log("66666666",_this.ruleForm.wjidList);
               _this.$emit("getDetail",_this.ruleForm);
@@ -395,6 +401,18 @@
       },
       mounted(){
         this.getData();
+          if(this.applyDetail){
+              this.ruleForm = {
+                      ...this.ruleForm,
+                      ...this.applyDetail
+              }
+              console.log(this.ruleForm,9999999999999999888888888);
+              this.oldImgList = this.applyDetail.tpwjdzs
+              this.oldNameList = this.applyDetail.fjwjdzs
+              this.ruleForm.provinceId =parseInt(this.applyDetail.provinceId)
+              this.ruleForm.cityId =parseInt(this.applyDetail.cityId)
+              this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
+          }
       },
       computed:{
           upLoadList:function(){
@@ -467,12 +485,9 @@
               }).then(res=>{
                   if(res.succ){
                       this.$set(this.$data,'userDetail',res.list[0])
-                      this.$set(this.$data,'value1',res.list[0].provinceId);
-                      this.getData(res.list[0].provinceId)
-                      this.getCity(res.list[0].provinceId,res.list[0].regionId)
-                      this.earasList(res.list[0].regionId,res.list[0].cityId)
-//                      this.$set(this.$data,'value2',res.list[0].cityId)
-//                      this.$set(this.$data,'value3',res.list[0].cityId)
+                      this.ruleForm.provinceId =parseInt(res.list[0].provinceId)
+                      this.ruleForm.cityId =parseInt(res.list[0].cityId)
+                      this.ruleForm.regionId =parseInt(res.list[0].regionId)
                       this.$set(this.$data.ruleForm,'xb',res.list[0].xb)
                       this.$set(this.$data.ruleForm,'yhxm',res.list[0].yhxm)
                       this.$set(this.$data.ruleForm,'sjhm',res.list[0].sjhm)
@@ -485,25 +500,13 @@
               })
           },
           getData(id){
-              console.log(123123123)
+
               axiosUtil('smarthos.sxzz.province.list',{}).then(res=>{
                   if(res.succ){
+                      console.log(res,123123123)
                       var list = res.list;
-                      if(id){
-                          function check(item) {
-                              return item.id==id
-                          }
-                          this.$set(this.$data,'value1',list.filter(check)[0].name)
-                      }else {
-                          var provincesList = [];
-                          for(var i=0;i<list.length;i++){
-                              var provinceObj = {};
-                              provinceObj.label=list[i].name;
-                              provinceObj.value=list[i].id;
-                              provincesList.push(provinceObj)
-                          }
-                          this.$set(this.$data,'provinces',provincesList)
-                      }
+                        this.provinces = list;
+
 
                   }else {
                       alert(res.msg)
@@ -522,21 +525,7 @@
               }).then(res=>{
                   if(res.succ){
                       var list = res.list;
-                      if(id){
-                          function check(item) {
-                              return item.id==id
-                          }
-                          this.$set(this.$data,'value3',list.filter(check)[0].name)
-                      }else {
-                          var earaList = [];
-                          for(var i=0;i<list.length;i++){
-                              var earaObj = {};
-                              earaObj.label=list[i].name;
-                              earaObj.value=list[i].id;
-                              earaList.push(earaObj)
-                          }
-                          this.$set(this.$data,'earas',earaList)
-                      }
+                        this.earas = list;
 
                   }else {
                       alert(res.msg)
@@ -549,22 +538,7 @@
               }).then(res=>{
                   if(res.succ){
                       var list = res.list;
-                      if(id){
-                          function check(item) {
-                              return item.id==id
-                          }
-                          this.$set(this.$data,'value2',list.filter(check)[0].name)
-                      }else{
-                          var cityList = [];
-                          for(var i=0;i<list.length;i++){
-                              var cityObj = {};
-                              cityObj.label=list[i].name;
-                              cityObj.value=list[i].id;
-                              cityList.push(cityObj)
-                          }
-                          this.$set(this.$data,'citys',cityList)
-                      }
-
+                      this.citys = list;
                   }else {
                       alert(res.msg)
                   }
@@ -621,8 +595,6 @@
                       if(res.succ){
                           _this.imgList.push(_this.src);
                           _this.imgIdList.push(res.obj.tid);
-
-
                       }
                   })
               }
