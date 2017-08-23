@@ -310,6 +310,7 @@
                 </el-table-column>
             </el-table>
         </div>
+        <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
     </div>
 </template>
 <style>
@@ -317,12 +318,16 @@
 <script type="text/ecmascript-6">
     import Vue from "vue";
     import AllHeader from "../common/AllHeader.vue";
-    import axiosUtil from "../../utils/AxiosUtils.js"
+    import axiosUtil from "../../utils/AxiosUtils.js";
+    import FooterCmp from "../common/FooterCmp.vue";
+
     export default{
         data (){
             return{
                 activeName:"4",
                 tableData: [],
+                propsTotalCols:0,
+                type:"4",
                 ddid:"",
                 dialogVisible:false,
                 selectObj:{
@@ -336,9 +341,10 @@
         },
         components:{
             AllHeader,
+            FooterCmp
         },
         mounted(){
-            this.getData()
+            this.getData(1,4)
         },
         methods:{
             handleEdit(index,row){
@@ -368,27 +374,33 @@
             },
             changeTab(val){
                 console.log(val.name,6666);
-                this.getData(val.name,this.selectObj)
+                this.type=val.name?val.name:4;
+                this.getData(1,this.type)
             },
-            getData(val,selectObj){
+            getData(pageNum,type,selectObj){
+                let _this=this
                 axiosUtil('smarthos.sxzz.order.list',{
                         ...selectObj,
                     "jgid": "59411511191ce23575a63218",
                     "yyid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",
                     "ywlx": "0",
-                    "czlx": val?val:4,
-                    "pageNum":"1",
-                    "pageSize":"10"
+                    "czlx": type,
+                    "pageNum":pageNum,
+                    "pageSize":5
                 }).then(res=>{
                     console.log(res,33333);
                     if(res.succ){
+                        _this.propsTotalCols=res.page.total;
                         this.$set(this.$data,'tableData',res.list)
                     }else {
                         alert(res.msg)
                     }
                 })
             },
+            changePage1(pageNum){
+                this.getData(pageNum,this.type);
+            }
         },
 
     }

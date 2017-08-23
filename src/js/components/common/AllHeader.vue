@@ -42,7 +42,7 @@
                 </el-select>
             </div>
             <div >
-                <el-button style="margin-left: 30px" type="primary" @click="searchData">查询</el-button>
+                <el-button style="margin-left: 30px" size="small" type="primary" @click="searchData">查询</el-button>
             </div>
            <slot name="btn"></slot>
         </div>

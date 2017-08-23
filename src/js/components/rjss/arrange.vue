@@ -15,7 +15,7 @@
     <div v-show="activeName=='4'" class="arrange-table" >
         <el-table
                 :data="tableData"
-                style="width:100%;overflow: auto;">
+                style="width:100%;">
             <el-table-column
                     prop="date"
                     label="操作"
@@ -122,7 +122,7 @@
     <div v-show="activeName=='5'" class="arrange-table" >
         <el-table
                 :data="tableData"
-                style="width:100%;overflow: auto;">
+                style="width:100%;">
             <el-table-column
                     prop="date"
                     label="操作"
@@ -227,7 +227,7 @@
     import AllHeader from "../common/AllHeader.vue";
     import { Badge, Button,Input,Tabs,TabPane, Loading, Message} from "element-ui";
     import allOrder from "../common/allOrderTable.vue";
-    import axiosUtil from "../../utils/AxiosUtils.js"
+    import axiosUtil from "../../utils/AxiosUtils.js";
     import FooterCmp from "../common/FooterCmp.vue";
 
     Vue.use(Tabs);
