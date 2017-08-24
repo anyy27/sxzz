@@ -66,7 +66,14 @@
                 }
             },
             login: function(){//点击按钮登录
-                this.$router.push("/main");
+                let _this=this;
+                let options={
+                    oauthKey:0
+                }
+                axiosUtil("smarthos.sxzz.userExist.info",options).then(function(res){
+                    console.log("77/7777",res);
+                    _this.$router.push("/main");
+                })
             },
         }
     }

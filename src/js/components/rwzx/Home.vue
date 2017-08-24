@@ -7,7 +7,7 @@
                     <div class="home-top-item-content home-top-item-twzx fl" >
                         <p class="home-top-item-title">门诊转诊</p>
                         <el-badge :value="listDetail.picConsultNeedHandleCount" class="item" :max="99">
-                            <p class="home-top-item-num">待处理</p>
+                            <p class="home-top-item-num">待处理 <span>0</span></p>
                         </el-badge>
                     </div>
                     <div class="home-top-item-icon bg-twzx-big fr"></div>
@@ -18,7 +18,7 @@
                     <div class="home-top-item-content home-top-item-spwz fl" >
                         <p class="home-top-item-title">检查转诊</p>
                         <el-badge :value="listDetail.videoConsultNeedHandleCount" class="item" :max="99">
-                            <p class="home-top-item-num">待处理</p>
+                            <p class="home-top-item-num">待处理 <span style="font-size:16px;color:#AD9EED;font-weight:bold;">{{jczz}}</span></p>
                         </el-badge>
                     </div>
                     <div class="home-top-item-icon bg-spwz-big fr"></div>
@@ -29,7 +29,7 @@
                     <div class="home-top-item-content home-top-item-ychz fl">
                         <p class="home-top-item-title">住院转诊</p>
                         <el-badge :value="listDetail.consultGroupNeedHandleCount" class="item" :max="99">
-                            <p class="home-top-item-num">待处理</p>
+                            <p class="home-top-item-num">待处理 <span style="font-size:16px;font-weight:bold;color:#FFBF34;">{{zyzz}}</span></p>
                         </el-badge>
                     </div>
                     <div class="home-top-item-icon bg-ychz-big fr"></div>
@@ -40,7 +40,7 @@
                     <div class="home-top-item-content home-top-item-spwz fl">
                         <p class="home-top-item-title">日间手术转诊</p>
                         <el-badge :value="listDetail.videoConsultNeedHandleCount" class="item" :max="99">
-                            <p class="home-top-item-num">待处理</p>
+                            <p class="home-top-item-num">待处理 <span style="font-size:16px;font-weight:bold;color:#34ABFF;">{{rjss}}</span></p>
                         </el-badge>
                     </div>
                     <div class="home-top-item-icon bg-rjzz-big fr"></div>
@@ -58,7 +58,7 @@
 <style>
 
 </style>
-<script>
+<script type="text/ecmascript-6">
     import { Badge, Loading, Message } from "element-ui";
     import FooterCmp from "../common/FooterCmp.vue";
     import axiosUtil from "../../utils/AxiosUtils.js";
@@ -74,6 +74,9 @@
                 isSuccess: false,//是否加载成功
                 listDetail: "",//列表详情
                 contentData: [],//需要展示的列表内容
+                jczz:"",
+                zyzz:"",
+                rjss:""
             }
         },
         props: ["clientH"],
@@ -85,6 +88,23 @@
         created: function () {
             this.getData();
             this.$store.dispatch("changeSideItem", "rwzx");
+        },
+        mounted:function(){
+            let _this=this;
+            let options={
+                docId:"595d05b0f19b9c898a58cc70",
+            }
+            axiosUtil("smarthos.sxzz.pending.list",options).then(res=>{
+                if(res.succ){
+                    console.log("88/888",res);
+                        _this.jczz=res.list[0].count;
+                        _this.zyzz=res.list[1].count;
+                        _this.rjss=res.list[2].count;
+
+                }else{
+                    console.log("66/666");
+                }
+            })
         },
         computed: {
             contentDataArr: function(){
