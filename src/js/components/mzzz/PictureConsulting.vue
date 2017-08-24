@@ -244,21 +244,16 @@
                         prop="sqsj"
                         label="转诊日期">
                 </el-table-column>
+
                 <el-table-column
-                        width="10px"
-                >
+                        prop="yyrq"
+                        label="就诊日期">
                 </el-table-column>
 
-                <slot name="newDate">
-                    <el-table-column
-                            prop="qrsi"
-                            label="就诊日期">
-                    </el-table-column>
-                    <el-table-column
-                            prop="yymc"
-                            label="就诊序号">
-                    </el-table-column>
-                </slot>
+                <el-table-column
+                        prop="yymc"
+                        label="就诊序号">
+                </el-table-column>
 
                 <el-table-column
                         prop="yhxm"
@@ -295,10 +290,6 @@
                 <el-table-column
                         prop="yymc"
                         label="预约医院">
-                </el-table-column>
-                <el-table-column
-                        width="10px"
-                >
                 </el-table-column>
                 <el-table-column
                         prop="qrksmc"
