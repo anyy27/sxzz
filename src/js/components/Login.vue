@@ -15,7 +15,7 @@
                     </div>
                     <div class="clearfix login-tit  login-item-wrap" style="margin-top:30px;">
                         <label class="login-icon-label login-icon-pwd w30 h34 fl"></label>
-                        <input type="password" v-model="docPassword" style="width:90%;" class="login-input h34  fl" placeholder="请输入密码" required>
+                        <input type="password" v-model="oauthKey" style="width:90%;" class="login-input h34  fl" placeholder="请输入密码" required>
                     </div>
                     <!--<div class="clearfix marginT25">-->
                         <!--<div class="fl login-item-wrap">-->
@@ -46,6 +46,7 @@
                 docPassword: "123456zxc",//用户密码
                 captcha: "", //验证码
                 isSuccess: false,
+                oauthKey:Number
             }
         },
         mounted: function(){
@@ -68,11 +69,18 @@
             login: function(){//点击按钮登录
                 let _this=this;
                 let options={
-                    oauthKey:0
+                    oauthKey:this.oauthKey
                 }
                 axiosUtil("smarthos.sxzz.userExist.info",options).then(function(res){
                     console.log("77/7777",res);
-                    _this.$router.push("/main");
+                    if(res.succ){
+                        localStorage.setItem('docObj',JSON.stringify(res.obj));
+                        localStorage.setItem('shzt',JSON.stringify(res.obj.shzt));
+                        _this.$router.push("/main");
+                    }else {
+                        alert(res.msg)
+                    }
+
                 })
             },
         }

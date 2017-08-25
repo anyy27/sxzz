@@ -484,7 +484,6 @@
                 }).then(res=>{
                     if(res.succ){
                         var list = res.list;
-                        console.log(res,26262626)
                         var arr = [];
                         for(var i=0;i<list.length;i++){
                             var obj = {};

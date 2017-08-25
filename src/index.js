@@ -12,6 +12,7 @@ import PwdStep2Cmp from "./js/components/PwdStep2Cmp.vue";
 import PwdStep3Cmp from "./js/components/PwdStep3Cmp.vue";
 import MainCmp from "./js/components/MainCmp.vue";
 import Home from "./js/components/rwzx/Home.vue";
+import confrimBill from "./js/components/common/confrimBill.vue";
 import VideoConsultation from "./js/components/jczz/VideoConsultation.vue";
 import RemoteConsultation from "./js/components/zyzz/RemoteConsultation.vue";
 import PictureConsulting from "./js/components/mzzz/PictureConsulting.vue";//图文咨询首页
@@ -59,12 +60,14 @@ const router =new VueRouter({
             component: MainCmp,
             children: [
                 { path: "", component: Home },
+              //确认单
+                { path: "confrimBill",name:'confrimBill', component: confrimBill },
                 /*检查转诊首页*/
                 { path: "videoConsultation/jczz", component:JczzConsultation},
                 /*远程会诊*/
                 { path: "remoteConsultation", component: RemoteConsultation },
                 /*名医视频*/
-                { path: "videoConsultation", component: VideoConsultation },
+                { path: "videoConsultation", name:"videoConsultation", component: VideoConsultation },
                 {//转诊统计路由
                   path:"transferCount",component:TransferCount
                 },
