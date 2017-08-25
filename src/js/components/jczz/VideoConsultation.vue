@@ -723,7 +723,8 @@
                     this.$router.push({
                         name:"examineBill",
                         params:{
-                            applyDetail:res.obj
+                            applyDetail:res.obj,
+                            type:'1'
                         }
                     })
                 });

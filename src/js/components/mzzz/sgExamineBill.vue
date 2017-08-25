@@ -12,7 +12,7 @@
                             <div class="base-idcard" style="width:120px;margin-left:10px;">
                                 <el-select v-model="ruleForm.klx" placeholder="请选择卡号">
                                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                        </el-option>
+                                    </el-option>
                                 </el-select>
                             </div>
                             <div class="base-idcard" style="margin-left:10px;">
@@ -159,27 +159,27 @@
                 </div>
             </el-form>
         </div>
-       <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 30px">
-           <div class="base-appoint" style="padding: 0">
-               <p style="line-height: 40px;">预约信息</p>
-               <div class="base-con">
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
+        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 30px">
+            <div class="base-appoint" style="padding: 0">
+                <p style="line-height: 40px;">预约信息</p>
+                <div class="base-con">
+                    <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
 
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.jcmc}}</span>
+                    <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.jcmc}}</span>
 
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.flmc}}</span>
+                    <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.flmc}}</span>
 
-               </div>
-               <div class="base-con">
-                   <span class="demonstration" style="color:#48576A;margin-right: 50px">期望手术日期 : {{this.ruleForm.sqsj}}</span>
+                </div>
+                <div class="base-con">
+                    <span class="demonstration" style="color:#48576A;margin-right: 50px">期望手术日期 : {{this.ruleForm.sqsj}}</span>
 
-               </div>
-               <div class="base-con">
-                   <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.dizt==1?'是':'否'}}</span>
-                   <span v-show="this.ruleForm.dizt==1" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
-               </div>
-           </div>
-       </div>
+                </div>
+                <div class="base-con">
+                    <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.dizt==1?'是':'否'}}</span>
+                    <span v-show="this.ruleForm.dizt==1" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
+                </div>
+            </div>
+        </div>
         <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'&&this.type!='1'" style="margin-top: 30px;margin-bottom: 20px">
             <div class="base-appoint" style="padding: 0">
                 <p style="line-height: 40px;">安排信息</p>
@@ -231,243 +231,6 @@
                 </div>
             </div>
         </div>
-        <div v-show="this.projectId&&this.radio=='1'">
-            <el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>
-            <el-button :disabled="!disabled"  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>
-        </div>
-        <div v-show="this.projectId&&this.radio=='1'">
-            <div class="news-table">
-                <el-table
-                        :data="arrangeList"
-                        height="280"
-                        border
-                        @cell-click="and"
-                >
-                    <el-table-column :label="dateList[0].date" prop="monday">
-                        <el-table-column
-                                :label="dateList[0].week"
-                        >
-                            <el-table-column
-                                    prop="monday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="monday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                    <el-table-column :label="dateList[1].date" props="tuesday">
-                        <el-table-column
-                                :label="dateList[1].week"
-                        >
-                            <el-table-column
-                                    prop="tuesday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.tuesday.am=='0'?'':scope.row.tuesday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="tuesday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.tuesday.pm=='0'?'':scope.row.tuesday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                    <el-table-column :label="dateList[2].date" props="wednesday">
-                        <el-table-column
-                                prop="name"
-                                :label="dateList[2].week"
-                        >
-                            <el-table-column
-                                    prop="wednesday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.wednesday.am=='0'?'':scope.row.wednesday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="wednesday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.wednesday.pm=='0'?'':scope.row.wednesday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                    <el-table-column :label="dateList[3].date" props="thursday">
-                        <el-table-column
-                                prop="name"
-                                :label="dateList[3].week"
-                        >
-                            <el-table-column
-                                    prop="thursday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.thursday.am=='0'?'':scope.row.thursday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="thursday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.thursday.pm=='0'?'':scope.row.thursday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                    <el-table-column :label="dateList[4].date" props="friday">
-                        <el-table-column
-                                prop="name"
-                                :label="dateList[4].week"
-                        >
-                            <el-table-column
-                                    prop="friday.am"
-                                    label="上午"
-                                    :data="dateList[4].date"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.friday.am=='0'?'':scope.row.friday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="friday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.friday.pm=='0'?'':scope.row.friday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                    <el-table-column :label="dateList[5].date" props="saturday">
-                        <el-table-column
-                                prop="name"
-                                :label="dateList[5].week"
-                        >
-                            <el-table-column
-                                    prop="saturday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.saturday.am=='0'?'':scope.row.saturday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="saturday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.saturday.pm=='0'?'':scope.row.saturday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-
-                    <el-table-column :label="dateList[6].date" props="sunday">
-                        <el-table-column
-                                prop="name"
-                                :label="dateList[6].week"
-                        >
-                            <el-table-column
-                                    prop="sunday.am"
-                                    label="上午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.sunday.am=='0'?'':scope.row.sunday.am}}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    prop="sunday.pm"
-                                    label="下午"
-                                    width="60"
-                            >
-                                <template scope="scope">
-                                    <div>{{scope.row.sunday.pm=='0'?'':scope.row.sunday.pm}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table-column>
-                    </el-table-column>
-                </el-table>
-            </div>
-        </div>
-        <div style="background: white" v-show="this.tableData.length&&this.radio=='1'">
-            <div style="margin-top: 20px;margin-bottom: 20px">
-                <span>当前剩余号源数:{{this.tableData.length}}</span>
-            </div>
-            <div>
-                <el-table
-                        ref="multipleTable"
-                        :data="tableData"
-                        @current-change="handleCurrentChange"
-                        height="330"
-                        style="width:90%;margin-left:5%;">
-                    <el-table-column
-                            type="index"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            type="selection"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="nUMNO"
-                            label="就诊序号"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="nUMDATE"
-                            label="检查时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="dEPTCODE"
-                            label="检查设备代号"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="aDDRESS"
-                            label="检查地点"
-                    >
-
-                    </el-table-column>
-                </el-table>
-            </div>
-            <div style="width: 100%;text-align: center;margin-top: 20px">
-                <el-button type="primary" @click="SureYuyue">确认预约</el-button>
-            </div>
-        </div>
-
     </div>
 
 </template>
@@ -586,18 +349,11 @@
                 nUMID:"",
                 nUMDATE:'',
                 nUMTIME:"",
-                tableData:[],
-                deptcode:'',
-                ampm:'',
-                equipid:'',
-                schdate:'',
                 shzt:JSON.parse(localStorage.getItem('shzt')),
                 radio:'',
                 currentFirstDate:'',
                 index:0,
                 disabled:true,
-                dateList:[],
-                arrangeList:[],
                 hosId:'',
                 hosList:[{
                     yymc:'浙二医院',
@@ -648,18 +404,18 @@
 
         mounted(){
             this.setDate(new Date());
-           this.applyDetail  = this.$route.params.applyDetail;
+            this.applyDetail  = this.$route.params.applyDetail;
             this.type = this.$route.params.type
-                this.ruleForm = {
-                    ...this.ruleForm,
-                    ...this.applyDetail
-                }
-                console.log(this.ruleForm,9999999999999999888888888);
-                this.oldImgList = this.applyDetail.tpwjdzs
-                this.oldNameList = this.applyDetail.fjwjdzs
-                this.ruleForm.provinceId =parseInt(this.applyDetail.provinceId)
-                this.ruleForm.cityId =parseInt(this.applyDetail.cityId)
-                this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
+            this.ruleForm = {
+                ...this.ruleForm,
+                ...this.applyDetail
+            }
+            console.log(this.ruleForm,9999999999999999888888888);
+            this.oldImgList = this.applyDetail.tpwjdzs
+            this.oldNameList = this.applyDetail.fjwjdzs
+            this.ruleForm.provinceId =parseInt(this.applyDetail.provinceId)
+            this.ruleForm.cityId =parseInt(this.applyDetail.cityId)
+            this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
             this.getData();
 //            this.getHosList();
             this.typeLists();
@@ -747,202 +503,12 @@
                 }
                 return   arr.filter(getObj)
             },
-            //获取检查号源
-            handleCurrentChange(val,old) {
-                console.log(val,'好远数据');
-                this.nUMID = val.nUMID;
-                this.nUMDATE = val.nUMDATE;
-                this.nUMTIME = val.nUMTIME;
-                this.jcdd = val.aDDRESS;
-                this.$refs.multipleTable.toggleRowSelection(old,false);
-            },
-            //获取号源原始数据
-                getMarkNum(id,date){
-                    axiosUtil('smarthos.sxzz.jczzsspb.info',{
-                        "jgid": "59411511191ce23575a63218",
-                        "checkid":id,
-                       'date':date
-                    }).then(res=>{
-                        if(res.succ){
-                            var list = res.list;
-                            var arr = [];
-                            var obj = {};
-                            var dayList = [];
-                            for(var i=0;i<list.length;i++){
-                                var dateObj = {};
-                                console.log(list[i])
-                                dateObj.am = list[i].nUMREMAIN;
-                                dateObj.pm = list[i].pMNUMREMAIN;
-                                dateObj.eQUIPID = list[i].eQUIPID;//上午排班编号
-                                dateObj.pMEQUIPID = list[i].pMEQUIPID;　　//下午排班编号
-                                dateObj.dEPTCODE = list[i].dEPTCODE;//上午科室编号
-                                dateObj.pMDEPTCODE = list[i].pMDEPTCODE;//上午科室编号
-                                console.log(dateObj)
-                                console.log(dayList)
-                                dayList.push(dateObj);
-                            };
-                            obj.monday = dayList[0];
-                            obj.tuesday = dayList[1];
-                            obj.wednesday = dayList[2];
-                            obj.thursday = dayList[3];
-                            obj.friday = dayList[4];
-                            obj.saturday = dayList[5];
-                            obj.sunday = dayList[6];
-                            arr.push(obj);
-                            console.log(arr,'看看是不是我想要的')
-                            this.$set(this.$data,'arrangeList',arr)
-                        }else {
-                            alert(res.msg)
-                        }
-                    })
-                },
-            getProjectId(id){
-                this.getMarkNum(id,'')
-            },
-            //获取号源数据改造
-            and(row, column, cell){
-                console.log(row,'行')
-                this.flmc = this.filterArr1(this.typeList,this.typeId)[0].dEPTNAME;
-                this.jcmc = this.filterArr2(this.projectList,this.projectId)[0].iTEMNAME;
-                if(column.property.split('.')[1]=='am'){
-                    this.$set(this.$data,'ampm',1)
-                }else {
-                    this.$set(this.$data,'ampm',2)
-                }
-                switch (column.property){
-                    case 'monday.am':
-                        this.$set(this.$data,'schdate',this.dateList[0].date);
-                        this.$set(this.$data,'deptcode',row.monday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.monday.eQUIPID)
-                        break;
-                    case 'monday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[0].date);
-                        this.$set(this.$data,'deptcode',row.monday.pmdeptcode)
-                        this.$set(this.$data,'equipid',row.monday.pMEQUIPID)
-                        break;
-                    case 'tuesday.am':
-                        this.$set(this.$data,'schdate',this.dateList[1].date)
-                        this.$set(this.$data,'deptcode',row.tuesday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.tuesday.eQUIPID)
-                        break;
-                    case 'tuesday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[1].date)
-                        this.$set(this.$data,'deptcode',row.tuesday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.tuesday.pMEQUIPID)
-                        break;
-                    case 'wednesday.am':
-                        this.$set(this.$data,'schdate',this.dateList[2].date)
-                        this.$set(this.$data,'deptcode',row.wednesday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.wednesday.eQUIPID)
-                        break;
-                    case 'wednesday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[2].date)
-                        this.$set(this.$data,'deptcode',row.wednesday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.wednesday.pMEQUIPID)
-                        break;
-                    case 'thursday.am':
-                        this.$set(this.$data,'schdate',this.dateList[3].date)
-                        this.$set(this.$data,'deptcode',row.thursday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.thursday.eQUIPID)
-                        break;
-                    case 'thursday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[3].date)
-                        this.$set(this.$data,'deptcode',row.thursday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.thursday.pMEQUIPID)
-                        break;
-                    case 'friday.am':
-                        this.$set(this.$data,'schdate',this.dateList[4].date)
-                        this.$set(this.$data,'deptcode',row.friday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.friday.eQUIPID)
-                        break;
-                    case 'friday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[4].date)
-                        this.$set(this.$data,'deptcode',row.friday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.friday.pMEQUIPID)
-                        break;
-                    case 'saturday.am':
-                        this.$set(this.$data,'schdate',this.dateList[5].date)
-                        this.$set(this.$data,'deptcode',row.saturday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.saturday.eQUIPID)
-                        break;
-                    case 'saturday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[5].date)
-                        this.$set(this.$data,'deptcode',row.saturday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.saturday.pMEQUIPID)
-                        break;
-                    case 'sunday.am':
-                        this.$set(this.$data,'schdate',this.dateList[6].date)
-                        this.$set(this.$data,'deptcode',row.sunday.dEPTCODE)
-                        this.$set(this.$data,'equipid',row.sunday.eQUIPID)
-                        break;
-                    case 'sunday.pm':
-                        this.$set(this.$data,'schdate',this.dateList[6].date)
-                        this.$set(this.$data,'deptcode',row.sunday.pMDEPTCODE)
-                        this.$set(this.$data,'equipid',row.sunday.pMEQUIPID)
-                        break;
-                }
-                this.sourceList();
-            },
-            sourceList(){
-                if(this.deptcode){
-                    axiosUtil('smarthos.sxzz.jczzsshy.info',{
-                        deptcode:this.deptcode,
-                        ampm:this.ampm,
-                        equipid:this.equipid,
-                        schdate:this.schdate,
-
-                    }).then(res=>{
-                        if(res.succ){
-                            this.$set(this.$data,'tableData',res.list);
-                        }
-                    })
-                }else {
-                    alert('号源列表为空！')
-                }
 
 
-            },
-            //表格的时间设置
-            formatDate(date){
-                var year = date.getFullYear()+'-';
-                var month = (date.getMonth()+1>9?date.getMonth()+1:'0'+(date.getMonth()+1))+'-';
-                var day = (date.getDate()>9?date.getDate():'0'+(date.getDate()))
-                var week = ['星期天','星期一','星期二','星期三','星期四','星期五','星期六'][date.getDay()];
-                return {
-                    date:year+month+day,
-                    week:week
-                }
-            },
-            setDate(date){
-                console.log(date)
-                var week = date.getDay()-1;
-//                date = this.addDate(date,week*-1);
-                this.currentFirstDate = new Date(date);
-                var arr = [];
-                for(var i = 0;i<7;i++){
-                    arr.push(this.formatDate(i==0 ? date : this.addDate(date,1)))
-                };
-                console.log(arr,'时间泪白哦')
-                this.$set(this.$data,'dateList',arr)
-            },
-            addDate(date,n){
-                date.setDate(date.getDate()+n);
-                return date;
-            },
-            nextDate(){
-                if(this.projectId){
-                    this.getMarkNum(this.projectId,this.dateList[0].date);
-                    this.$set(this.$data,'disabled',false);
-                    this.setDate(this.addDate(this.currentFirstDate,7));
-                }else {
-                    alert('请选择检查项目')
-                }
-            },
-            lastDate(){
-                this.getMarkNum(this.projectId,"");
-                this.$set(this.$data,'disabled',true);
-                    this.setDate(this.addDate(this.currentFirstDate,-7));
-            },
+
+
+
+
             //获取检查项目
             projectLists(id){
                 axiosUtil('smarthos.sxzz.jcxmlb.info',{

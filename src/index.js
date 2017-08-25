@@ -26,6 +26,7 @@ import TransferCount from "./js/components/zztj/transferCount.vue";
 import Arrange from "./js/components/rjss/arrange.vue";
 import NewsTransfer from "./js/components/rjss/newsTransfer.vue";
 import NewsWork from "./js/components/mzzz/NewsWork.vue";
+import sgExamineBill from "./js/components/mzzz/sgExamineBill.vue";
 import CommonBox from "./js/components/common/CommonBox.vue";
 import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
@@ -62,6 +63,8 @@ const router =new VueRouter({
                 { path: "", component: Home },
               //确认单
                 { path: "confrimBill",name:'confrimBill', component: confrimBill },
+              //手工模式
+                { path: "sgExamineBill",name:'sgExamineBill', component: sgExamineBill },
                 /*检查转诊首页*/
                 { path: "videoConsultation/jczz", component:JczzConsultation},
                 /*远程会诊*/
