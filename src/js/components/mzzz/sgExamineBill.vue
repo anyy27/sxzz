@@ -403,7 +403,6 @@
         },
 
         mounted(){
-            this.setDate(new Date());
             this.applyDetail  = this.$route.params.applyDetail;
             this.type = this.$route.params.type
             this.ruleForm = {
@@ -503,12 +502,6 @@
                 }
                 return   arr.filter(getObj)
             },
-
-
-
-
-
-
             //获取检查项目
             projectLists(id){
                 axiosUtil('smarthos.sxzz.jcxmlb.info',{
