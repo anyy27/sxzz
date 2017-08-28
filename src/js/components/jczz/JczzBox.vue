@@ -12,7 +12,7 @@
             </div>
             <div class="commonbox-con">
                 <div class="commonbox-news">
-                    <div><span>预约号码:</span><span> {{zyzzList.ddid}}</span></div>
+                    <div><span>预约号码:</span><span> {{zyzzList.yyh}}</span></div>
                     <div><span>预约医院:</span><span> {{zyzzList.qryymc}}</span></div>
                     <div><span>检查项目:</span><span> {{zyzzList.jcmc}}</span></div>
                     <div><span>检查地点:</span><span> {{zyzzList.cityId}}</span></div>

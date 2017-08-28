@@ -7,9 +7,15 @@
             </svg> 新增日间手术转诊</el-button>
     </div>
     <div class="arrange-tab">
-        <el-tabs v-model="activeName" @tab-click="changeTab" >
+        <el-tabs v-show="shzt=='0'" v-model="activeName" @tab-click="changeTab">
             <el-tab-pane label="我发起的" name="4"></el-tab-pane>
             <el-tab-pane label="已取消的" name="5"></el-tab-pane>
+        </el-tabs>
+        <el-tabs v-show="shzt=='1'||shzt=='2'" v-model="activeName" @tab-click="changeTab">
+            <el-tab-pane label="待审核" name="0"></el-tab-pane>
+            <el-tab-pane label="已审核" name="1"></el-tab-pane>
+            <el-tab-pane label="转入" name="2"></el-tab-pane>
+            <el-tab-pane label="转出" name="3"></el-tab-pane>
         </el-tabs>
     </div>
     <div v-show="activeName=='4'" class="arrange-table" >
@@ -216,6 +222,396 @@
             </el-table-column>
         </el-table>
     </div>
+    <div v-show="activeName==0&&shzt=='1'" class="arrange-table" >
+        <el-table
+                :data="tableData"
+                style="width:100%;">
+            <el-table-column
+                    prop="date"
+                    label="操作"
+                    width="200">
+                <template scope="scope">
+                    <el-button
+                            size="small"
+                            @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
+                    <el-button
+                            size="small"
+                            @click="audit(scope.$index, scope.row)">审核</el-button>
+                    <el-button
+                            size="small"
+                            @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="zzzt"
+                    label="预约状态">
+                <template scope="scope">
+                    <div>待审核</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="kh"
+                    label="预约号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqsj"
+                    label="转诊日期">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="yyrq"
+                    label="期望住院日期">
+            </el-table-column>
+            <el-table-column
+                    prop="djrq"
+                    label="接受最晚时间">
+            </el-table-column>
+
+            <el-table-column
+                    prop="yhxm"
+                    label="姓名">
+            </el-table-column>
+            <el-table-column
+                    prop="xb"
+                    label="性别">
+            </el-table-column>
+            <el-table-column
+                    prop="age"
+                    label="年龄">
+            </el-table-column>
+            <el-table-column
+                    prop="lxdh"
+                    label="联系方式">
+            </el-table-column>
+            <el-table-column
+                    prop="zjhm"
+                    label="身份证号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqyymc"
+                    label="申请医院">
+            </el-table-column>
+            <el-table-column
+                    prop="sqksmc"
+                    label="申请科室">
+            </el-table-column>
+            <el-table-column
+                    prop="sqysxm"
+                    label="申请医生">
+            </el-table-column>
+            <el-table-column
+                    prop="yymc"
+                    label="预约医院">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="qrksmc"
+                    label="预约科室">
+            </el-table-column>
+            <el-table-column
+                    prop="ssmc"
+                    label="手术名称">
+            </el-table-column>
+        </el-table>
+    </div>
+    <div v-show="activeName==1&&shzt=='1'" class="arrange-table" >
+        <el-table
+                :data="tableData"
+                style="width:100%;">
+            <el-table-column
+                    prop="date"
+                    label="操作"
+                    width="200">
+                <template scope="scope">
+                    <el-button
+                            size="small"
+                            @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
+                    <el-button
+                            size="small"
+                            @click="handleEdit(scope.$index, scope.row)">{{scope.row.zzzt=='1'?'确认单':'改约'}}</el-button>
+                    <el-button
+                            size="small"
+                            @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="zzzt"
+                    label="预约状态">
+                <template scope="scope">
+                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="kh"
+                    label="预约号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqsj"
+                    label="转诊日期">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="yyrq"
+                    label="期望住院日期">
+            </el-table-column>
+            <el-table-column
+                    prop="djrq"
+                    label="接受最晚时间">
+            </el-table-column>
+
+            <el-table-column
+                    prop="yhxm"
+                    label="姓名">
+            </el-table-column>
+            <el-table-column
+                    prop="xb"
+                    label="性别">
+            </el-table-column>
+            <el-table-column
+                    prop="age"
+                    label="年龄">
+            </el-table-column>
+            <el-table-column
+                    prop="lxdh"
+                    label="联系方式">
+            </el-table-column>
+            <el-table-column
+                    prop="zjhm"
+                    label="身份证号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqyymc"
+                    label="申请医院">
+            </el-table-column>
+            <el-table-column
+                    prop="sqksmc"
+                    label="申请科室">
+            </el-table-column>
+            <el-table-column
+                    prop="sqysxm"
+                    label="申请医生">
+            </el-table-column>
+            <el-table-column
+                    prop="yymc"
+                    label="预约医院">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="qrksmc"
+                    label="预约科室">
+            </el-table-column>
+            <el-table-column
+                    prop="ssmc"
+                    label="手术名称">
+            </el-table-column>
+        </el-table>
+    </div>
+    <div v-show="activeName==2&&shzt=='1'" class="arrange-table" >
+        <el-table
+                :data="tableData"
+                style="width:100%;">
+            <el-table-column
+                    prop="date"
+                    label="操作"
+                    width="150">
+                <template scope="scope">
+                    <el-button
+                            size="small"
+                            @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
+                    <el-button
+                            size="small"
+                            @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="zzzt"
+                    label="预约状态">
+                <template scope="scope">
+                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="kh"
+                    label="预约号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqsj"
+                    label="转诊日期">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="yyrq"
+                    label="期望住院日期">
+            </el-table-column>
+            <el-table-column
+                    prop="djrq"
+                    label="接受最晚时间">
+            </el-table-column>
+
+            <el-table-column
+                    prop="yhxm"
+                    label="姓名">
+            </el-table-column>
+            <el-table-column
+                    prop="xb"
+                    label="性别">
+            </el-table-column>
+            <el-table-column
+                    prop="age"
+                    label="年龄">
+            </el-table-column>
+            <el-table-column
+                    prop="lxdh"
+                    label="联系方式">
+            </el-table-column>
+            <el-table-column
+                    prop="zjhm"
+                    label="身份证号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqyymc"
+                    label="申请医院">
+            </el-table-column>
+            <el-table-column
+                    prop="sqksmc"
+                    label="申请科室">
+            </el-table-column>
+            <el-table-column
+                    prop="sqysxm"
+                    label="申请医生">
+            </el-table-column>
+            <el-table-column
+                    prop="yymc"
+                    label="预约医院">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="qrksmc"
+                    label="预约科室">
+            </el-table-column>
+            <el-table-column
+                    prop="ssmc"
+                    label="手术名称">
+            </el-table-column>
+        </el-table>
+    </div>
+    <div v-show="activeName==3&&shzt=='1'" class="arrange-table" >
+        <el-table
+                :data="tableData"
+                style="width:100%;">
+            <el-table-column
+                    prop="date"
+                    label="操作"
+                    width="150">
+                <template scope="scope">
+                    <el-button
+                            size="small"
+                            @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
+                    <el-button
+                            size="small"
+                            @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="zzzt"
+                    label="预约状态">
+                <template scope="scope">
+                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="kh"
+                    label="预约号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqsj"
+                    label="转诊日期">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    prop="yyrq"
+                    label="期望住院日期">
+            </el-table-column>
+            <el-table-column
+                    prop="djrq"
+                    label="接受最晚时间">
+            </el-table-column>
+
+            <el-table-column
+                    prop="yhxm"
+                    label="姓名">
+            </el-table-column>
+            <el-table-column
+                    prop="xb"
+                    label="性别">
+            </el-table-column>
+            <el-table-column
+                    prop="age"
+                    label="年龄">
+            </el-table-column>
+            <el-table-column
+                    prop="lxdh"
+                    label="联系方式">
+            </el-table-column>
+            <el-table-column
+                    prop="zjhm"
+                    label="身份证号">
+            </el-table-column>
+            <el-table-column
+                    prop="sqyymc"
+                    label="申请医院">
+            </el-table-column>
+            <el-table-column
+                    prop="sqksmc"
+                    label="申请科室">
+            </el-table-column>
+            <el-table-column
+                    prop="sqysxm"
+                    label="申请医生">
+            </el-table-column>
+            <el-table-column
+                    prop="yymc"
+                    label="预约医院">
+            </el-table-column>
+            <el-table-column
+                    width="10px"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="qrksmc"
+                    label="预约科室">
+            </el-table-column>
+            <el-table-column
+                    prop="ssmc"
+                    label="手术名称">
+            </el-table-column>
+        </el-table>
+    </div>
     <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
 </div>
 </template>
@@ -235,10 +631,12 @@
     export default{
         data (){
             return{
-                activeName:"4",
+                shzt:JSON.parse(localStorage.getItem('shzt')),
+                docObj:JSON.parse(localStorage.getItem('docObj')),
+                activeName:"",
                 tableData: [],
                 propsTotalCols:0,
-                type:"4"
+                type:""
             }
         },
         components:{
@@ -246,9 +644,114 @@
             FooterCmp
         },
         mounted(){
-            this.getData(1,4)
+            this.activeName = this.shzt==0?"4":"0";
+            this.type = this.shzt=='0'?'4':'0';
+            this.getData(1,this.type)
         },
         methods:{
+            //审核
+            audit(index,row){
+                //手工模式
+                axiosUtil('smarthos.sxzz.byddid.list',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ywlx": "3",
+                    "ddid":row.ddid,
+                }).then(res=>{
+                    console.log(res,'住院审核')
+                    this.$router.push({
+                        name:"rjExamineBill",
+                        params:{
+                            applyDetail:res.obj
+                        }
+                    })
+                });
+            },
+            goTransferBill(index,row){
+                //转诊单
+                axiosUtil('smarthos.sxzz.byddid.list',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ywlx": "3",
+                    "ddid":row.ddid,
+                }).then(res=>{
+                    console.log(res,7777)
+                    this.$router.push({
+                        name:"transferBill",
+                        params:{
+                            zyzzList:res.obj
+                        }
+                    })
+                });
+            },
+            handleEdit(index,row){
+                console.log(row.zzzt,'改约111')
+                this.$set(this.$data,'ddid',row.ddid);
+                if(row.zzzt==0){
+                    //取消转诊
+                    axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ysmc":"陈升华",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,55555)
+                    });
+                }else if(row.zzzt==2){
+                    //重新预约
+                    console.log('改约')
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "3",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"examineBill",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+                }else {
+                    //确认单
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "3",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"confrimBill",
+                            params:{
+                                zyzzList:res.obj,
+
+                            }
+                        })
+                    });
+                }
+            },
+            examineBill(index,row){
+                //查看
+                axiosUtil('smarthos.sxzz.byddid.list',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ywlx": "3",
+                    "ddid":row.ddid,
+                }).then(res=>{
+                    console.log(res,66666)
+                    this.$router.push({
+                        name:"examineBill",
+                        params:{
+                            applyDetail:res.obj,
+                            type:'1'
+
+                        }
+                    })
+                });
+            },
             arranges:function(){
                 this.$router.push("arrange/newsTransfer");
             },

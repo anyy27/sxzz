@@ -95,7 +95,7 @@
         data (){
             return {
                 pickerOptions0: {
-                    disabledDate(time) {
+                    pickerOptions0(time) {
                         return time.getTime() < Date.now() - 8.64e7;
                     }},
                 index:0,

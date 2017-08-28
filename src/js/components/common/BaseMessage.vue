@@ -381,7 +381,8 @@
                   lxdh:'',
                   bqms:'',
                   wjidList:[],
-                  sqysdh:''
+                  sqysdh:'',
+                  yhid:''
               },
           }
       },
@@ -494,6 +495,7 @@
                       this.$set(this.$data.ruleForm,'lxdh',res.list[0].lxdh)
                       this.$set(this.$data.ruleForm,'klx',res.list[0].klx)
                       this.$set(this.$data.ruleForm,'lxdz',res.list[0].lxdz)
+                      this.$set(this.$data.ruleForm,'yhid',res.list[0].yhid)
                   }else {
                      alert(res.msg)
                   }

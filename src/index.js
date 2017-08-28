@@ -31,11 +31,13 @@ import CommonBox from "./js/components/common/CommonBox.vue";
 import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
 import RemoteBox from "./js/components/zyzz/RemoteBox.vue";
+import zyExamineBill from "./js/components/zyzz/zyExamineBill.vue";
 import MzzzBox from "./js/components/mzzz/MzzzBox.vue";
 import transferBill from "./js/components/mzzz/transferBill.vue";
 import examineBill from "./js/components/mzzz/examineBill.vue";
 import ArrangeBox from "./js/components/rjss/ArrangeBox.vue";
 import JczzBox from "./js/components/jczz/JczzBox.vue";
+import rjExamineBill from "./js/components/rjss/rjExamineBill.vue";
 /*引入样式文件*/
 import 'element-ui/lib/theme-default/index.css'
 // import ElementUI from 'element-ui'
@@ -63,6 +65,10 @@ const router =new VueRouter({
                 { path: "", component: Home },
               //确认单
                 { path: "confrimBill",name:'confrimBill', component: confrimBill },
+              //住院转诊审核
+                { path: "zyExamineBill",name:'zyExamineBill', component: zyExamineBill },
+                //日间转诊审核
+                { path: "rjExamineBill",name:'rjExamineBill', component: rjExamineBill },
               //手工模式
                 { path: "sgExamineBill",name:'sgExamineBill', component: sgExamineBill },
                 /*检查转诊首页*/
