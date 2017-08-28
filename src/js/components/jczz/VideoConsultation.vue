@@ -644,6 +644,23 @@
             //审核
             audit(index,row){
                 if(this.docObj.jczt=='1'){
+                    //手工模式
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "1",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"sgExamineBill",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+                }else{
+                  //  对接模式
                     axiosUtil('smarthos.sxzz.byddid.list',{
                         "jgid": "59411511191ce23575a63218",
                         "yyr": "595d05b0f19b9c898a58cc70",
@@ -658,8 +675,6 @@
                             }
                         })
                     });
-                }else{
-
                 }
 
             },
