@@ -586,7 +586,7 @@
                     "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
                     "zzms":this.activeName?this.activeName:1
                 }).then(res=>{
-                    console.log(res,666666)
+                    console.log(res,676767)
 //                    this.$set(this.$data,'list',res.list);
                     var list = res.list;
                     var arr = [];
@@ -595,22 +595,11 @@
                         obj.date = i;
                         obj.yymc = list[i].yymc;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)
@@ -637,22 +626,11 @@
                         obj.date = i;
                         obj.yymc = list[i].yymc;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)
@@ -678,24 +656,12 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
-                        obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)
@@ -720,24 +686,12 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
-                        obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)
@@ -762,24 +716,12 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
-                        obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)
@@ -804,24 +746,12 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
-                        obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
-                            obj.one = list[i].list[j].count;
-                            obj.two= list[i].list[j].count;
-                            obj.three= list[i].list[j].count;
-                            obj.four= list[i].list[j].count;
-                            obj.five= list[i].list[j].count;
-                            obj.six= list[i].list[j].count;
-                            obj.seven= list[i].list[j].count;
-                            obj.eight= list[i].list[j].count;
-                            obj.nine= list[i].list[j].count;
-                            obj.ten= list[i].list[j].count;
-                            obj.eleven= list[i].list[j].count;
-                            obj.twelve= list[i].list[j].count;
+                            obj[nodes[j]] = list[i].list[j].count;
                         };
-
-                        console.log(parseInt(obj.two)+obj.one,22222)
+                        console.log(obj,2323232)
                         obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
                         arr.push(obj);
                         console.log(arr,77777)

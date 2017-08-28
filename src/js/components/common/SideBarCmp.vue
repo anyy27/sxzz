@@ -31,7 +31,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='rwzx'?'item-title-click': 'side-bar-item-title'], 'fl']">任务中心</span>
                 </router-link>
             </div>
-            <div
+            <div v-show="docObj.mzzt"
                     @click="clickItem('twzx')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx', { 'item-click': clickName=='twzx' }]">
                 <router-link to="/main/pictureConsulting" class="side-bar-link">
@@ -41,7 +41,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='twzx'?'item-title-click': 'side-bar-item-title'], 'fl']">门诊转诊</span><el-badge is-dot :hidden="!isGetNewMsg_qkfz"/>
                 </router-link>
             </div>
-            <div
+            <div v-show="docObj.jczt"
                     @click="clickItem('spwz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='spwz' }]">
                 <router-link to="/main/videoConsultation" class="side-bar-link">
@@ -51,7 +51,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='spwz'?'item-title-click': 'side-bar-item-title'], 'fl']">检查转诊</span><el-badge is-dot :hidden="!isGetNewMsg_mysp"/>
                 </router-link>
             </div>
-            <div
+            <div v-show="docObj.zyzt"
                     @click="clickItem('ychz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='ychz' }]">
                 <router-link to="/main/remoteConsultation" class="side-bar-link">
@@ -61,7 +61,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='ychz'?'item-title-click': 'side-bar-item-title'], 'fl']">住院转诊</span><el-badge is-dot :hidden="!isGetNewMsg_ychz"/>
                 </router-link>
             </div>
-            <div
+            <div v-show="docObj.sszt"
                     @click="clickItem('sszz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='sszz' }]">
                 <router-link to="/main/arrange" class="side-bar-link">
@@ -99,6 +99,7 @@
 //                //userName: JSON.parse(localStorage.getItem("userInfo")).docName,
 //                docAvatar: JSON.parse(localStorage.getItem("userInfo")).docAvatar?JSON.parse(localStorage.getItem("userInfo")).docAvatar:require('../../../images/doc-default-icon.png'),
 //                show3: true
+                docObj:JSON.parse(localStorage.getItem('docObj'))
             }
         },    computed: {
             clickName: function(){
