@@ -330,8 +330,9 @@
                                 size="small"
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
+                                v-show="scope.row.zzzt=='1'"
                                 size="small"
-                                @click="handleEdit(scope.$index, scope.row)">{{scope.row.zzzt=='1'?'确认单':'改约'}}</el-button>
+                                @click="handleEdit(scope.$index, scope.row)">'确认单</el-button>
                         <el-button
                                 size="small"
                                 @click="examineBill(scope.$index, scope.row)">查看</el-button>
@@ -690,7 +691,13 @@
                         "ysmc":"陈升华",
                         "ddid":row.ddid,
                     }).then(res=>{
-                        console.log(res,55555)
+                        console.log(res,55555);
+                        if(res.succ){
+                            alert('撤销成功');
+                            this.getData(1,this.type);
+                        }else {
+                            alert(res.msg)
+                        }
                     });
                 }else if(row.zzzt==2){
                     //重新预约

@@ -358,6 +358,10 @@
                             prop="ywlx"
                             label="业务类型"
                             width="100">
+                        <template scope="scope">
+                            <div v-show="scope.row.ywlx=='0'||scope.row.ywlx=='1'">{{scope.row.ywlx=='0'?'门诊':'检查'}}</div>
+                            <div v-show="scope.row.ywlx=='2'||scope.row.ywlx=='3'">{{scope.row.ywlx=='2'?'住院':'手术'}}</div>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="one"
@@ -429,6 +433,10 @@
                             prop="ywlx"
                             label="业务类型"
                             width="100">
+                        <template scope="scope">
+                            <div v-show="scope.row.ywlx=='0'||scope.row.ywlx=='1'">{{scope.row.ywlx=='0'?'门诊':'检查'}}</div>
+                            <div v-show="scope.row.ywlx=='2'||scope.row.ywlx=='3'">{{scope.row.ywlx=='2'?'住院':'手术'}}</div>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="one"
@@ -659,6 +667,7 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
+                        obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
@@ -689,6 +698,7 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
+                        obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
@@ -719,6 +729,7 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
+                        obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){
@@ -749,6 +760,7 @@
                         var obj = {};
                         obj.date = i;
                         obj.yymc = list[i].yymc;
+                        obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
                         for(var j=0;j<list[i].list.length;j++){

@@ -1,12 +1,12 @@
 <template>
    <div>
        <div class="deal-content marginP remote-consultation-wrap content-bg-color">
-       <AllHeader   v-on:child-pop="listenToMyBoy">
+       <AllHeader @getSelect="getSelect">
                <!--<div class="date-box" slot="btn">-->
                    <!--<el-button class="btn" type="primary"  @click="sendAll" style="padding:5px 20px;">查询</el-button>-->
                <!--</div>-->
        </AllHeader>
-       <div class="Header-add">
+       <div class="Header-add" v-show="shzt=='0'">
            <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                <use xlink:href="#icon-xinzeng"></use>
            </svg> 新增住院转诊</el-button>
@@ -34,7 +34,7 @@
                    <template scope="scope">
                        <el-button
                                size="small"
-                               @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
+                               @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                        <el-button
                                size="small"
                                @click="handleEdit(scope.$index, scope.row)">
@@ -48,7 +48,7 @@
                        </el-button>
                        <el-button
                                size="small"
-                               @click="handleDelete(scope.$index, scope.row)">查看</el-button>
+                               @click="examineBill(scope.$index, scope.row)">查看</el-button>
                    </template>
                </el-table-column>
                <el-table-column
@@ -143,10 +143,10 @@
                    <template scope="scope">
                        <el-button
                                size="small"
-                               @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
+                               @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                        <el-button
                                size="small"
-                               @click="handleDelete(scope.$index, scope.row)">查看</el-button>
+                               @click="examineBill(scope.$index, scope.row)">查看</el-button>
                    </template>
                </el-table-column>
                <el-table-column
@@ -342,8 +342,9 @@
                                size="small"
                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                        <el-button
+                               v-show="scope.row.zzzt=='1'"
                                size="small"
-                               @click="handleEdit(scope.$index, scope.row)">{{scope.row.zzzt=='1'?'确认单':'改约'}}</el-button>
+                               @click="handleEdit(scope.$index, scope.row)">确认单</el-button>
                        <el-button
                                size="small"
                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
@@ -649,7 +650,8 @@
                 state:'',
                 tableData: [],
                 propsTotalCols:0,
-                type:''
+                type:'',
+                selectObj:''
             }
         },
         components:{
@@ -662,6 +664,12 @@
           this.getData(1,this.type)
         },
         methods:{
+            //筛选
+            getSelect(val){
+                console.log(val,1414141414);
+                this.$set(this.$data,'selectObj',val);
+                this.getData(1,this.type,val)
+            },
             //审核
             audit(index,row){
                     //手工模式
@@ -708,7 +716,13 @@
                         "ysmc":"陈升华",
                         "ddid":row.ddid,
                     }).then(res=>{
-                        console.log(res,55555)
+                        console.log(res,55555);
+                        if(res.succ){
+                            alert('撤销成功');
+                            this.getData(1,this.type);
+                        }else {
+                            alert(res.msg)
+                        }
                     });
                 }else if(row.zzzt==2){
                     //重新预约
@@ -768,15 +782,6 @@
             arranges:function(){
                 this.$router.push("remoteConsultation/remoteWork");
             },
-            listenToMyBoy:function(somedata){
-                this.childWords = somedata
-                console.log( "11111",this.childWords);
-                 this.starttime=formatUnixTime( this.childWords.date[0]).substring(0,10);
-                 this.endtime=formatUnixTime( this.childWords.date[0]).substring(0,10);
-                 this.hospital=this.childWords.hospital;
-                 this.office=this.childWords.office;
-                 this.state=this.childWords.state;
-            },
             sendAll:function(){
                 let _this=this;
                 console.log(_this.starttime)
@@ -802,9 +807,10 @@
                 this.type=val.name?val.name:4;
                 this.getData(1,this.type)
             },
-            getData(pageNum,type){
+            getData(pageNum,type,selectObj){
                 let _this=this;
                 axiosUtil('smarthos.sxzz.order.list',{
+                        ...selectObj,
                     "jgid": "59411511191ce23575a63218",
                     "yyid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",

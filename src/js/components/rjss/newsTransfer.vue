@@ -170,7 +170,7 @@
                     qrksmc:ksmc,
                     zdjg:dataForm.zdjg,
                     bqms:dataForm.bqms,
-                    wjidList:dataForm.attaIdList,
+                    wjidList:dataForm.wjidList,
                     yyid:this.somedata.hospital,
                     ksid:this.somedata.office,
                     sqyyrq:this.sqyyrq,

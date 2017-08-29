@@ -570,7 +570,13 @@
                         "ysmc":"陈升华",
                         "ddid":row.ddid,
                     }).then(res=>{
-                        console.log(res,55555)
+                        console.log(res,55555);
+                        if(res.succ){
+                            alert('撤销成功');
+                            this.getData(1,this.type);
+                        }else {
+                            alert(res.msg)
+                        }
                     });
                 }else {
                     axiosUtil('smarthos.sxzz.byddid.list',{
@@ -592,7 +598,7 @@
             getSelect(val){
                 console.log(val,1414141414);
                 this.$set(this.$data,'selectObj',val);
-                this.getData('4',val)
+                this.getData(1,this.type,val)
             },
             arranges:function(){
                 this.$router.push("pictureConsulting/newswork");
