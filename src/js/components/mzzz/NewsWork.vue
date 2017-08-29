@@ -8,7 +8,7 @@
             <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
             <p style="line-height: 40px;font-size: 14px;">预约信息</p>
             </div>
-            <div class="base-con">
+            <div class="base-con" style="padding:20px 20px 0px 20px;">
                 <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
                 <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
                     <el-option
@@ -31,21 +31,21 @@
                 </el-select>
 
             </div>
-            <div>
-                <el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>
-                <el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>
-            </div>
-            <div class="news-table">
+            <!--<div style="margin-left:20px;">-->
+                <!--<el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>-->
+                <!--<el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>-->
+            <!--</div>-->
+            <div class="news-table" style="width:98%;">
                 <el-table
                         :data="arrangeList"
+                        style="width:100%;"
                         height="280"
                         border
                         @cell-click="and"
                 >
                     <el-table-column
                             prop="name"
-                            label="医生"
-                            width="130">
+                            label="医生">
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>
                         </template>
@@ -58,7 +58,6 @@
                             <el-table-column
                                     prop="monday.am"
                                     label="上午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
@@ -67,7 +66,6 @@
                             <el-table-column
                                     prop="monday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
@@ -82,7 +80,6 @@
                             <el-table-column
                                     prop="tuesday.am"
                                     label="上午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.am=='0'?'':scope.row.tuesday.am}}</div>
@@ -91,7 +88,6 @@
                             <el-table-column
                                     prop="tuesday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.pm=='0'?'':scope.row.tuesday.pm}}</div>
@@ -107,7 +103,6 @@
                             <el-table-column
                                     prop="wednesday.am"
                                     label="上午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.am=='0'?'':scope.row.wednesday.am}}</div>
@@ -116,7 +111,6 @@
                             <el-table-column
                                     prop="wednesday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.pm=='0'?'':scope.row.wednesday.pm}}</div>
@@ -132,7 +126,6 @@
                             <el-table-column
                                     prop="thursday.am"
                                     label="上午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.am=='0'?'':scope.row.thursday.am}}</div>
@@ -141,7 +134,6 @@
                             <el-table-column
                                     prop="thursday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.pm=='0'?'':scope.row.thursday.pm}}</div>
@@ -158,7 +150,6 @@
                                     prop="friday.am"
                                     label="上午"
                                     :data="dateList[4].date"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.am=='0'?'':scope.row.friday.am}}</div>
@@ -167,7 +158,6 @@
                             <el-table-column
                                     prop="friday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.pm=='0'?'':scope.row.friday.pm}}</div>
@@ -183,7 +173,7 @@
                             <el-table-column
                                     prop="saturday.am"
                                     label="上午"
-                                    width="50"
+
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.am=='0'?'':scope.row.saturday.am}}</div>
@@ -192,7 +182,6 @@
                             <el-table-column
                                     prop="saturday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.pm=='0'?'':scope.row.saturday.pm}}</div>
@@ -209,7 +198,6 @@
                             <el-table-column
                                     prop="sunday.am"
                                     label="上午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.am=='0'?'':scope.row.sunday.am}}</div>
@@ -218,7 +206,6 @@
                             <el-table-column
                                     prop="sunday.pm"
                                     label="下午"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.pm=='0'?'':scope.row.sunday.pm}}</div>
