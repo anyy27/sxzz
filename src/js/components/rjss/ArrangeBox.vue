@@ -7,9 +7,7 @@
             </p>
             <h1>预约成功</h1>
             <p style="text-align: center;">西湖区西溪街道社区卫生服务中心转诊单</p>
-            <div class="commonbox-card">
-                <img src="" alt="">
-            </div>
+
             <div class="commonbox-con">
                 <div class="commonbox-news">
                     <div><span>预约号码:</span><span> {{zyzzList.ddid}}</span></div>
