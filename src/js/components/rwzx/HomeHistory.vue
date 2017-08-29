@@ -79,7 +79,6 @@
         </div>
         <div class="rwzx-charts">
             <div class="rwzx-picture">
-
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
                     <el-tab-pane label="转出图" name="first"></el-tab-pane>
                     <el-tab-pane label="转入图" name="second" ></el-tab-pane>
@@ -120,7 +119,6 @@
                                 label="住院"
                         >
                         </el-table-column>
-
                         <el-table-column
                                 prop="surgery"
                                 label="日间手术"

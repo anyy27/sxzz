@@ -1,6 +1,10 @@
 <template>
+<div >
+    <div class=" marginP remote-consultation-wrap content-bg-color" >
     <div class="base-top"  style="width: auto">
-        <p style="line-height: 40px;">基本信息</p>
+        <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+            <p style="line-height: 40px;font-size: 14px;">基本信息</p>
+        </div>
         <div class="base-message">
             <div class="base-doc">
                 <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
@@ -114,14 +118,13 @@
                 </el-form>
             </div>
         </div>
-        <p style="line-height: 40px;">病情资料</p>
+        <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+            <p style="line-height: 40px;font-size: 14px;">病情资料</p>
+        </div>
         <div class="base-message">
-
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="position: relative">
                 <div class="base-con" style="margin-top:10px;float: left;width: 40%">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;" >初步诊断:</span>
-
-
                     <el-input
                             type="text"
                             style="width:60%;margin-left:70px;"
@@ -129,11 +132,8 @@
                             width="200"
                             size="small"
                     ></el-input>
-
                     <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
-
                 </div>
-
                 <div class="base-con" style="height:60px;margin-top:10px;">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
                     <el-input
@@ -159,31 +159,32 @@
                 </div>
             </el-form>
         </div>
-       <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 30px">
+       <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 10px">
            <div class="base-appoint" style="padding: 0">
-               <p style="line-height: 40px;">预约信息</p>
-               <div class="base-con">
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
-
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.jcmc}}</span>
-
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.flmc}}</span>
-
+               <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                   <p style="line-height: 40px;font-size: 14px;">预约信息</p>
                </div>
-               <div class="base-con">
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
+                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
+                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.flmc}}</span>
+                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.jcmc}}</span>
+               </div>
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span class="demonstration" style="color:#48576A;margin-right: 50px">期望手术日期 : {{this.ruleForm.sqsj}}</span>
 
                </div>
-               <div class="base-con">
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.dizt==1?'是':'否'}}</span>
                    <span v-show="this.ruleForm.dizt==1" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
                </div>
            </div>
        </div>
-        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'&&this.type!='1'" style="margin-top: 30px;margin-bottom: 20px">
+        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'&&this.type!='1'" style="margin-top: 10px;margin-bottom: 20px">
             <div class="base-appoint" style="padding: 0">
-                <p style="line-height: 40px;">安排信息</p>
-                <div>
+                <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                    <p style="line-height: 40px;font-size: 14px;">安排信息</p>
+                </div>
+                <div style="box-sizing: border-box;padding:10px 20px;">
                     <span style="margin-right: 30px;font-size: 14px;color: #48576a">是否确认安排:</span>
                     <el-radio class="radio" v-model="radio" label="1">是</el-radio>
                     <el-radio class="radio" v-model="radio" label="2" >否</el-radio>
@@ -201,7 +202,7 @@
                     </div>
                 </div>
 
-                <div v-show="this.radio=='1'" style="margin-bottom: 20px;margin-top: 20px">
+                <div v-show="this.radio=='1'" style="box-sizing:border-box;padding:0px 20px;margin-bottom: 20px;margin-top: 20px;margin-lfet:20px;">
                     <span style="margin-right: 20px;font-size: 14px;color: #48576a">预约医院</span>
                     <el-select v-model="hosId" placeholder="请选择">
                         <el-option
@@ -235,11 +236,12 @@
             <el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>
             <el-button :disabled="!disabled"  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>
         </div>
-        <div v-show="this.projectId&&this.radio=='1'">
-            <div class="news-table">
+        <div v-show="this.projectId&&this.radio=='1'" style="width:100%;">
+            <div class="news-table" style="width:100%;">
                 <el-table
                         :data="arrangeList"
                         height="280"
+                        style="width:100%;"
                         border
                         @cell-click="and"
                 >
@@ -250,7 +252,6 @@
                             <el-table-column
                                     prop="monday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
@@ -259,7 +260,6 @@
                             <el-table-column
                                     prop="monday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
@@ -274,7 +274,6 @@
                             <el-table-column
                                     prop="tuesday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.am=='0'?'':scope.row.tuesday.am}}</div>
@@ -283,7 +282,6 @@
                             <el-table-column
                                     prop="tuesday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.pm=='0'?'':scope.row.tuesday.pm}}</div>
@@ -299,7 +297,6 @@
                             <el-table-column
                                     prop="wednesday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.am=='0'?'':scope.row.wednesday.am}}</div>
@@ -308,7 +305,6 @@
                             <el-table-column
                                     prop="wednesday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.pm=='0'?'':scope.row.wednesday.pm}}</div>
@@ -324,7 +320,6 @@
                             <el-table-column
                                     prop="thursday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.am=='0'?'':scope.row.thursday.am}}</div>
@@ -333,7 +328,6 @@
                             <el-table-column
                                     prop="thursday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.pm=='0'?'':scope.row.thursday.pm}}</div>
@@ -350,7 +344,6 @@
                                     prop="friday.am"
                                     label="上午"
                                     :data="dateList[4].date"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.am=='0'?'':scope.row.friday.am}}</div>
@@ -359,7 +352,6 @@
                             <el-table-column
                                     prop="friday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.pm=='0'?'':scope.row.friday.pm}}</div>
@@ -375,7 +367,6 @@
                             <el-table-column
                                     prop="saturday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.am=='0'?'':scope.row.saturday.am}}</div>
@@ -384,7 +375,6 @@
                             <el-table-column
                                     prop="saturday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.pm=='0'?'':scope.row.saturday.pm}}</div>
@@ -401,7 +391,6 @@
                             <el-table-column
                                     prop="sunday.am"
                                     label="上午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.am=='0'?'':scope.row.sunday.am}}</div>
@@ -410,7 +399,6 @@
                             <el-table-column
                                     prop="sunday.pm"
                                     label="下午"
-                                    width="60"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.pm=='0'?'':scope.row.sunday.pm}}</div>
@@ -421,17 +409,20 @@
                 </el-table>
             </div>
         </div>
-        <div style="background: white" v-show="this.tableData.length&&this.radio=='1'">
-            <div style="margin-top: 20px;margin-bottom: 20px">
-                <span>当前剩余号源数:{{this.tableData.length}}</span>
+        <div style="background: white" v-show="this.tableData.length&&this.radio=='1'" >
+            <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">当前剩余号源数:{{this.tableData.length}}</p>
             </div>
+            <!--<div style="height:40px;line-height: 40px;box-sizing: border-box;padding:0px 20px;">-->
+                <!--<span >当前剩余号源数:{{this.tableData.length}}</span>-->
+            <!--</div>-->
             <div>
                 <el-table
                         ref="multipleTable"
                         :data="tableData"
                         @current-change="handleCurrentChange"
                         height="330"
-                        style="width:90%;margin-left:5%;">
+                        style="width:100%;">
                     <el-table-column
                             type="index"
                     >
@@ -459,7 +450,6 @@
                             prop="aDDRESS"
                             label="检查地点"
                     >
-
                     </el-table-column>
                 </el-table>
             </div>
@@ -469,7 +459,8 @@
         </div>
 
     </div>
-
+    </div>
+</div>
 </template>
 <style>
     .showImg{

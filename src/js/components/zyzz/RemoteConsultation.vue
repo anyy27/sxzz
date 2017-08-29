@@ -26,6 +26,7 @@
        <div v-show="activeName=='4'&&shzt=='0'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
@@ -135,6 +136,7 @@
        <div v-show="activeName=='5'&&shzt=='0'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
@@ -232,11 +234,12 @@
        <div v-show="activeName=='0'&&shzt=='1'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
                        label="操作"
-                       width="250">
+                       width="200">
                    <template scope="scope">
                        <el-button
                                size="small"
@@ -332,6 +335,7 @@
        <div v-show="activeName=='1'&&shzt=='1'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
@@ -433,6 +437,7 @@
        <div v-show="activeName=='2'&&shzt=='1'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
@@ -530,6 +535,7 @@
        <div v-show="activeName=='3'&&shzt=='1'" class="arrange-table" >
            <el-table
                    :data="tableData"
+                   stripe
                    style="width:100%;overflow: auto;">
                <el-table-column
                        prop="date"
@@ -817,7 +823,7 @@
                     "ywlx": "2",
                     "czlx": type,
                     "pageNum":pageNum,
-                    "pageSize":"10"
+                    "pageSize":"5"
                 }).then(res=>{
                     console.log(res,33333);
                 if(res.succ){

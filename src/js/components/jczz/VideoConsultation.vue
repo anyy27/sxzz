@@ -24,6 +24,7 @@
         <div v-show="activeName==4&&shzt==0" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -66,7 +67,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
@@ -127,6 +128,7 @@
         <div v-show="activeName==5&&shzt==0" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -162,7 +164,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
@@ -223,6 +225,7 @@
         <div v-show="activeName==0&&(shzt=='1'||shzt=='2')" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -261,7 +264,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
@@ -322,6 +325,7 @@
         <div v-show="activeName==1&&(shzt=='1'||shzt=='2')" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -361,7 +365,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
@@ -422,6 +426,7 @@
         <div v-show="activeName==2&&(shzt=='1'||shzt=='2')" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -457,7 +462,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
@@ -518,6 +523,7 @@
         <div v-show="activeName==3&&(shzt=='1'||shzt=='2')" class="arrange-table" >
             <el-table
                     :data="tableData"
+                    stripe
                     style="width:100%;overflow: auto;">
                 <el-table-column
                         prop="date"
@@ -553,7 +559,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="jzsj"
+                        prop="yyrq"
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column

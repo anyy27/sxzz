@@ -1,11 +1,12 @@
 <template>
     <div>
+        <div class="deal-content marginP remote-consultation-wrap content-bg-color">
         <!--时间选择-->
         <div class="date-boxs">
-            <div class="date-box">
-            <div class="block">
+            <div class="date-box" style="width:180px;">
+            <div class="block" >
                 <span class="demonstration">转诊模式:</span>
-                <el-select v-model="out" placeholder="请选择">
+                <el-select v-model="out" placeholder="请选择" style="width:110px;">
                 <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -20,14 +21,17 @@
                 <span class="demonstration">转诊时间:</span>
                 <el-date-picker
                         v-model="value6"
+                        style="width:210px;"
                         type="daterange"
                         placeholder="选择日期范围">
                 </el-date-picker>
             </div>
         </div>
 
-            <div  class="date-box" style="width:180px;">
-                <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
+
+            <div class="date-box" style="width:150px;">
+                <el-select v-model="value2"  placeholder="请选择预约医院" style="width:150px;" @change="selectHospital">
+
                     <el-option
                             v-for="item in hospitalList"
                             :key="item.yyid"
@@ -37,7 +41,9 @@
                     </el-option>
                 </el-select>
             </div>
-            <div  class="date-box" style="width:180px;">
+
+            <div class="date-box" style="width:150px;">
+
                 <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
                     <el-option
                             v-for="item in officeList"
@@ -48,19 +54,19 @@
                 </el-select>
             </div>
             <div class="date-box">
-                <el-button>查询</el-button>
+                <el-button size="small">查询</el-button>
             </div>
             <div class="date-box">
-                <el-button class="btn" type="primary">导出excel</el-button>
+                <el-button class="btn" size="small" type="primary">导出excel</el-button>
             </div>
         </div>
         <div v-if="this.date.length!='0'"  class="hosptial-table">
-                <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick">
+                <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick" style="background: #E6E6E6;">
                     <el-tab-pane label="按医院" name="1"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="2"> </el-tab-pane>
                     <el-tab-pane label="按业务" name="3"> </el-tab-pane>
                 </el-tabs>
-                <el-tabs v-show="out==2" v-model="activeName"  @tab-click="handleClick">
+                <el-tabs v-show="out==2" v-model="activeName"   style="background: #E6E6E6;" @tab-click="handleClick">
                     <el-tab-pane label="按医院" name="4"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="5"> </el-tab-pane>
                     <el-tab-pane label="按业务" name="6"> </el-tab-pane>
@@ -496,6 +502,9 @@
         </div>
         <!--<div id="mains">-->
         <!--</div>-->
+
+        </div>
+
     </div>
 </template>
 <style scoped>
