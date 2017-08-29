@@ -27,17 +27,20 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="date-box" style="width:180px;">
-                <el-select v-model="somedata.ksid" placeholder="请选择预约科室" style="width:100%;">
-                    <el-option
-                            v-for="item in officeList"
-                            :key="item.ksid"
-                            :label="item.ksmc"
-                            :value="item.ksid"
-                           >
-                    </el-option>
-                </el-select>
-            </div>
+            <slot name="selOffice">
+                <div class="date-box" style="width:180px;">
+                    <el-select v-model="somedata.ksid" placeholder="请选择预约科室" style="width:100%;">
+                        <el-option
+                                v-for="item in officeList"
+                                :key="item.ksid"
+                                :label="item.ksmc"
+                                :value="item.ksid"
+                        >
+                        </el-option>
+                    </el-select>
+                </div>
+            </slot>
+
             <div class="date-box" style="width:180px;">
                 <el-select v-model="somedata.zzzt" placeholder="请选择预约状态" @change="searchData">
                     <el-option label="待审核" value="0"></el-option>

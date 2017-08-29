@@ -2,7 +2,7 @@
     <div class="home">
         <!--首页顶部菜单-->
         <div class="home-top clearfix">
-            <div v-show="docObj.mzzt" class="home-top-item clearfix">
+            <div v-show="!(docObj.mzzt==0)" class="home-top-item clearfix">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/pictureConsulting', 'twzx')">
                     <div class="home-top-item-content home-top-item-twzx fl" >
                         <p class="home-top-item-title">门诊转诊</p>
@@ -13,7 +13,7 @@
                     <div class="home-top-item-icon bg-twzx-big fr"></div>
                 </div>
             </div>
-            <div v-show="docObj.jczt" class="home-top-item clearfix">
+            <div v-show="!(docObj.jczt==0)" class="home-top-item clearfix">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/videoConsultation', 'spwz')">
                     <div class="home-top-item-content home-top-item-spwz fl" >
                         <p class="home-top-item-title">检查转诊</p>
@@ -24,7 +24,7 @@
                     <div class="home-top-item-icon bg-spwz-big fr"></div>
                 </div>
             </div>
-            <div v-show="docObj.zyzt" class="home-top-item clearflx">
+            <div v-show="!(docObj.zyzt==0)" class="home-top-item clearflx">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/remoteConsultation', 'ychz')">
                     <div class="home-top-item-content home-top-item-ychz fl">
                         <p class="home-top-item-title">住院转诊</p>
@@ -35,7 +35,7 @@
                     <div class="home-top-item-icon bg-ychz-big fr"></div>
                 </div>
             </div>
-            <div v-show="docObj.sszt" class="home-top-item clearfix">
+            <div v-show="!(docObj.sszt==0)" class="home-top-item clearfix">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/arrange', 'sszz')">
                     <div class="home-top-item-content home-top-item-spwz fl">
                         <p class="home-top-item-title">日间手术转诊</p>

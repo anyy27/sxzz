@@ -1,7 +1,9 @@
 <template>
     <div>
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
-        <AllHeader></AllHeader>
+        <AllHeader>
+            <div slot="selOffice"></div>
+        </AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                 <use xlink:href="#icon-xinzeng"></use>
@@ -645,7 +647,7 @@
         methods:{
             //审核
             audit(index,row){
-                if(!this.docObj.jczt=='1'){
+                if(this.docObj.jczt=='1'){
                     //手工模式
                     axiosUtil('smarthos.sxzz.byddid.list',{
                         "jgid": "59411511191ce23575a63218",

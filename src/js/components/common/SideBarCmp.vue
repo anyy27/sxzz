@@ -31,7 +31,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='rwzx'?'item-title-click': 'side-bar-item-title'], 'fl']">任务中心</span>
                 </router-link>
             </div>
-            <div v-show="docObj.mzzt"
+            <div v-show="!(docObj.mzzt==0)"
                     @click="clickItem('twzx')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx', { 'item-click': clickName=='twzx' }]">
                 <router-link to="/main/pictureConsulting" class="side-bar-link">
@@ -41,7 +41,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='twzx'?'item-title-click': 'side-bar-item-title'], 'fl']">门诊转诊</span><el-badge is-dot :hidden="!isGetNewMsg_qkfz"/>
                 </router-link>
             </div>
-            <div v-show="docObj.jczt"
+            <div v-show="!(docObj.jczt==0)"
                     @click="clickItem('spwz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='spwz' }]">
                 <router-link to="/main/videoConsultation" class="side-bar-link">
@@ -51,7 +51,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='spwz'?'item-title-click': 'side-bar-item-title'], 'fl']">检查转诊</span><el-badge is-dot :hidden="!isGetNewMsg_mysp"/>
                 </router-link>
             </div>
-            <div v-show="docObj.zyzt"
+            <div v-show="!(docObj.zyzt==0)"
                     @click="clickItem('ychz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='ychz' }]">
                 <router-link to="/main/remoteConsultation" class="side-bar-link">
@@ -61,7 +61,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='ychz'?'item-title-click': 'side-bar-item-title'], 'fl']">住院转诊</span><el-badge is-dot :hidden="!isGetNewMsg_ychz"/>
                 </router-link>
             </div>
-            <div v-show="docObj.sszt"
+            <div v-show="!(docObj.sszt==0)"
                     @click="clickItem('sszz')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='sszz' }]">
                 <router-link to="/main/arrange" class="side-bar-link">
@@ -71,7 +71,7 @@
                     <span :class="[{ 'hidden': isToggle }, [ clickName=='sszz'?'item-title-click': 'side-bar-item-title'], 'fl']">日间手术转诊</span><!--<el-badge is-dot :hidden="!isGetNewMsg_sszz"/>-->
                 </router-link>
             </div>
-            <div
+            <div v-show="!(docObj.tjzt==0)"
                     @click="clickItem('zztj')"
                     :class="['side-bar-item', 'h49', 'side-bar-icon-rwzx',{ 'item-click': clickName=='zztj' }]">
                 <router-link to="/main/transferCount" class="side-bar-link">
@@ -101,7 +101,11 @@
 //                show3: true
                 docObj:JSON.parse(localStorage.getItem('docObj'))
             }
-        },    computed: {
+        },
+        mounted(){
+                console.log(JSON.parse(localStorage.getItem('docObj')).tjzt,'转诊统计')
+        },
+        computed: {
             clickName: function(){
                 return this.$store.state.clickName;
             },

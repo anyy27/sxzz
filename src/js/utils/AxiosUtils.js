@@ -8,6 +8,7 @@ import {API_URL} from  "../data/Url.js";
 export default function axiosUtil(service, options) {
       if(JSON.parse(localStorage.getItem('docObj'))){
         options.yyr = JSON.parse(localStorage.getItem('docObj')).yyr;
+        options.jgid = JSON.parse(localStorage.getItem('docObj')).jgid;
       }
      return axios({
         //url: "http://api.test.zjwlyy.cn/api/app",

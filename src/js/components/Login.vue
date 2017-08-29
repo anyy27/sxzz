@@ -38,6 +38,7 @@
 <script>
     import { Message } from 'element-ui';
     import axiosUtil from "../utils/AxiosUtils.js";
+    import ajax from "../utils/ajax.js";
     import Vue from "vue";
     export default{
         data(){
@@ -71,7 +72,7 @@
                 let options={
                     oauthKey:this.oauthKey
                 }
-                axiosUtil("smarthos.sxzz.userExist.info",options).then(function(res){
+                ajax("smarthos.sxzz.userExist.info",options).then(function(res){
                     console.log("77/7777",res);
                     if(res.succ){
                         localStorage.setItem('docObj',JSON.stringify(res.obj));

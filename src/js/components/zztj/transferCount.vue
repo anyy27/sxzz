@@ -26,7 +26,7 @@
             </div>
         </div>
 
-            <div class="date-box" style="width:180px;">
+            <div  class="date-box" style="width:180px;">
                 <el-select v-model="value2" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
                     <el-option
                             v-for="item in hospitalList"
@@ -37,7 +37,7 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="date-box" style="width:180px;">
+            <div  class="date-box" style="width:180px;">
                 <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
                     <el-option
                             v-for="item in officeList"
@@ -496,8 +496,6 @@
         </div>
         <!--<div id="mains">-->
         <!--</div>-->
-
-
     </div>
 </template>
 <style scoped>
@@ -517,7 +515,7 @@
                 date:[],
                 hospitalList:[],
                 officeList:[],
-                out:'',
+                out:'1',
                 list1:[],
                 list2:[],
                 histogramList:[],
