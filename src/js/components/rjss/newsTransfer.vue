@@ -2,9 +2,12 @@
     <div>
         <el-form  ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <BaseMessage :index="index" @getDetail="getDetail"></BaseMessage>
+            <div  class=" marginP remote-consultation-wrap content-bg-color">
+                <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                    <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+                </div>
             <div class="base-appoint">
-                <p style="line-height: 40px;">预约信息</p>
-                <div class="base-con">
+                <div class="base-con" style="padding:20px 20px 0px 20px;">
                     <span style="font-size: 14px;color: #48576a;">预约医院:</span>
                     <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
                         <el-option
@@ -36,7 +39,7 @@
                     </el-select>
                 </div>
                 <div class="base-con">
-                    <span class="demonstration" style="color:#48576A;">期望手术日期:</span>
+                    <span class="demonstration" style="color:#48576A;margin-left:20px;">期望手术日期:</span>
                     <el-date-picker
                             v-model="sqyyrq"
                             type="date"
@@ -49,7 +52,7 @@
                     </el-select>
                 </div>
                 <div class="base-con">
-                    <el-form-item label="是否接受调剂:" prop="tjbz">
+                    <el-form-item label="是否接受调剂:" prop="tjbz" style="margin-left:20px;">
                         <el-radio class="radio" v-model="tjbz" label="1">是</el-radio>
                         <el-radio class="radio" v-model="tjbz" label="0">否</el-radio>
                     </el-form-item>
@@ -62,6 +65,7 @@
                             :picker-options="pickerOptions0">
                     </el-date-picker>
                 </div>
+            </div>
             </div>
             <div class="transfer-btn">
                 <div style="position:absolute;left:40%;top:20px;">

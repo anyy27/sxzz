@@ -1,6 +1,10 @@
 <template>
+<div>
+    <div class="deal-content marginP remote-consultation-wrap content-bg-color">
     <div class="base-top"  style="width: auto">
-        <p style="line-height: 40px;">基本信息</p>
+        <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+            <p style="line-height: 40px;font-size: 14px;">基本信息</p>
+        </div>
         <div class="base-message">
             <div class="base-doc">
                 <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
@@ -114,14 +118,13 @@
                 </el-form>
             </div>
         </div>
-        <p style="line-height: 40px;">病情资料</p>
+        <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+            <p style="line-height: 40px;font-size: 14px;">病情资料</p>
+        </div>
         <div class="base-message">
-
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="position: relative">
                 <div class="base-con" style="margin-top:10px;float: left;width: 40%">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;" >初步诊断:</span>
-
-
                     <el-input
                             type="text"
                             style="width:60%;margin-left:70px;"
@@ -129,11 +132,8 @@
                             width="200"
                             size="small"
                     ></el-input>
-
                     <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
-
                 </div>
-
                 <div class="base-con" style="height:60px;margin-top:10px;">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
                     <el-input
@@ -161,20 +161,22 @@
         </div>
        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 30px">
            <div class="base-appoint" style="padding: 0">
-               <p style="line-height: 40px;">预约信息</p>
-               <div class="base-con">
+               <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                   <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+               </div>
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
 
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.jcmc}}</span>
+                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.flmc}}</span>
 
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.flmc}}</span>
+                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.jcmc}}</span>
 
                </div>
-               <div class="base-con">
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span class="demonstration" style="color:#48576A;margin-right: 50px">期望手术日期 : {{this.ruleForm.sqsj}}</span>
 
                </div>
-               <div class="base-con">
+               <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.dizt==1?'是':'否'}}</span>
                    <span v-show="this.ruleForm.dizt==1" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
                </div>
@@ -469,7 +471,8 @@
         </div>
 
     </div>
-
+    </div>
+</div>
 </template>
 <style>
     .showImg{

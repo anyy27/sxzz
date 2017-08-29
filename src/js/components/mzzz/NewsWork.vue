@@ -35,23 +35,24 @@
                 <!--<el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>-->
                 <!--<el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>-->
             <!--</div>-->
-            <div class="news-table" style="width:98%;">
+            <div class="news-table" style="width:100%;overflow:hidden;">
                 <el-table
                         :data="arrangeList"
-                        style="width:100%;"
+                        style="width:100%;overflow:hidden;"
                         height="280"
+                        stripe
                         border
                         @cell-click="and"
                 >
                     <el-table-column
                             prop="name"
+                            style="width:10%;"
                             label="医生">
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>
                         </template>
                     </el-table-column>
-
-                    <el-table-column :label="dateList[0].date" prop="monday">
+                    <el-table-column :label="dateList[0].date" style="width:10%;" prop="monday">
                         <el-table-column
                                 :label="dateList[0].week"
                                 >
@@ -65,8 +66,7 @@
                             </el-table-column>
                             <el-table-column
                                     prop="monday.pm"
-                                    label="下午"
-                            >
+                                    label="下午">
                                 <template scope="scope">
                                     <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
                                 </template>
