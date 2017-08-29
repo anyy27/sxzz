@@ -37,7 +37,7 @@
                             {{scope.row.zzzt=='1'?'确认单':'重新预约'}}
                         </div>
                         <div v-show="scope.row.zzzt=='0'">
-                           审核
+                           撤销
                         </div>
                     </el-button>
                     <el-button
@@ -147,7 +147,6 @@
                     label="预约状态">
                 <template scope="scope">
                     <div v-show="scope.row.zzzt=='3'">取消</div>
-                    <div v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                 </template>
             </el-table-column>
             <el-table-column

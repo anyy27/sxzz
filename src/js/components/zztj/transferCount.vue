@@ -54,7 +54,7 @@
                 <el-button class="btn" type="primary">导出excel</el-button>
             </div>
         </div>
-        <div  class="hosptial-table">
+        <div v-if="this.date.length!='0'"  class="hosptial-table">
                 <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick">
                     <el-tab-pane label="按医院" name="1"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="2"> </el-tab-pane>
@@ -483,6 +483,9 @@
                     </el-table-column>
                 </el-table>
             </div>
+        <div v-else style="margin: 50px 100px">
+            暂无数据...
+        </div>
         <!--<div id="mains">-->
         <!--</div>-->
 
@@ -589,6 +592,7 @@
                     console.log(res,676767)
 //                    this.$set(this.$data,'list',res.list);
                     var list = res.list;
+
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
@@ -606,7 +610,7 @@
                     }
                     this.list = arr;
 
-                    console.log(arr,99999)
+                    console.log(this.date.length,'时间长度')
 
                 })
 
@@ -637,7 +641,7 @@
                     }
                     this.list = arr;
 
-                    console.log(arr,99999)
+
 
                 })
 

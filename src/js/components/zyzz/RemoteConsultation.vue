@@ -41,7 +41,7 @@
                                {{scope.row.zzzt=='1'?'确认单':'重新预约'}}
                            </div>
                            <div v-show="scope.row.zzzt=='0'">
-                                审核
+                                撤销
                            </div>
 
                        </el-button>
@@ -143,14 +143,6 @@
                        <el-button
                                size="small"
                                @click="handleEdit(scope.$index, scope.row)">转诊单</el-button>
-                       <el-button v-show="scope.row.zzzt=='1'"
-                               size="small"
-                               @click="handleEdit(scope.$index, scope.row)">确认单</el-button>
-                       <el-button
-                               size="small"
-                               @click="handleEdit(scope.$index, scope.row)">
-                           改约
-                       </el-button>
                        <el-button
                                size="small"
                                @click="handleDelete(scope.$index, scope.row)">查看</el-button>
@@ -160,7 +152,7 @@
                        prop="zzzt"
                        label="预约状态">
                    <template scope="scope">
-                       <div v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                      取消
                    </template>
                </el-table-column>
                <el-table-column
