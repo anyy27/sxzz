@@ -123,7 +123,6 @@
         },
         mounted(){
             this.getHospital();
-            this.checkBig();
         },
         methods: {
             outcheck:function(){
@@ -131,7 +130,10 @@
             },
             checkBig:function(){
                 let _this=this;
-                axiosUtil("smarthos.sxzz.jcxmdlsg.info").then(res=>{
+                let options={
+                    yyid:_this.somedata.hospital
+                }
+                axiosUtil("smarthos.sxzz.jcxmdlsg.info",options).then(res=>{
                     console.log("200000",res);
                     _this.bigList=res.list;
                 })
@@ -247,6 +249,7 @@
             },
             selectHospital(id){
                 console.log(id,565656);
+                this.checkBig();
                 this.getOffice(id)
             },
             getOffice(id){
