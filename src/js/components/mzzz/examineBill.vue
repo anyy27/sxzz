@@ -649,7 +649,8 @@
         mounted(){
             this.setDate(new Date());
            this.applyDetail  = this.$route.params.applyDetail;
-            this.type = this.$route.params.type
+            this.type = this.$route.params.type;
+            console.log( this.type,'类型啊')
                 this.ruleForm = {
                     ...this.ruleForm,
                     ...this.applyDetail

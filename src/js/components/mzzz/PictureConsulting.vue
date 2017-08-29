@@ -523,8 +523,8 @@
             FooterCmp
         },
         mounted(){
-            this.activeName = this.shzt==0?"4":"0";
-            this.type = this.shzt=='0'?'4':'0';
+            this.activeName = this.shzt==0?"4":"3";
+            this.type = this.shzt=='0'?'4':'3';
             this.getData(1,this.type)
         },
         methods:{

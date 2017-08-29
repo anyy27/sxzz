@@ -371,7 +371,8 @@
                   lxdh:'',
                   bqms:'',
                   wjidList:[],
-                  sqysdh:''
+                  sqysdh:'',
+                  yhid:''
               },
           }
       },
@@ -484,7 +485,11 @@
                       this.$set(this.$data.ruleForm,'lxdh',res.list[0].lxdh)
                       this.$set(this.$data.ruleForm,'klx',res.list[0].klx)
                       this.$set(this.$data.ruleForm,'lxdz',res.list[0].lxdz)
+<<<<<<< HEAD
                       this.$set(this.$data.ruleForm,'kh',res.list[0].kh)
+=======
+                      this.$set(this.$data.ruleForm,'yhid',res.list[0].yhid)
+>>>>>>> 0e4c583b783f7b64812996bb2da8c7c80f926162
                   }else {
                      alert(res.msg)
                   }

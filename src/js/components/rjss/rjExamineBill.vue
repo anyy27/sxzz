@@ -202,34 +202,36 @@
                 </div>
 
                 <div v-show="this.radio=='1'" style="margin-bottom: 20px;margin-top: 20px">
-                    <span style="margin-right: 20px;font-size: 14px;color: #48576a">预约医院</span>
-                    <el-select v-model="hosId" placeholder="请选择">
-                        <el-option
-                                v-for="item in hosList"
-                                :label="item.yymc"
-                                :value="item.yyid">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-right: 20px;font-size: 14px;color: #48576a;margin-left: 20px">检查大类</span>
+                    <span style="margin-right: 20px;font-size: 14px;color: #48576a;margin-left: 20px">预约医院</span>
                     <el-select v-model="typeId" placeholder="请选择" @change="getProject(typeId)">
                         <el-option
                                 v-for="item in typeList"
-                                :key="item.jcid"
-                                :label="item.jcmc"
-                                :value="item.jcid">
+                                :key="item.jgid"
+                                :label="item.sqyymc"
+                                :value="item.jgid">
                         </el-option>
                     </el-select>
-                    <span style="margin-right: 20px;font-size: 14px;color: #48576a;margin-left: 20px">检查项目</span>
-                    <el-select v-model="projectId" placeholder="请选择" @change="getProjectId(projectId)">
+                    <span style="margin-right: 20px;font-size: 14px;color: #48576a;margin-left: 20px">预约科室</span>
+                    <el-select v-model="projectId" placeholder="请选择" @change="getSslist(projectId)">
                         <el-option
                                 v-for="item in projectList"
-                                :key="item.jcid"
-                                :label="item.jcmc"
-                                :value="item.jcid">
+                                :key="item.ksid"
+                                :label="item.ksmc"
+                                :value="item.ksid">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-right: 20px;font-size: 14px;color: #48576a;margin-left: 20px">手术名称</span>
+                    <el-select v-model="ssid" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                        <el-option
+                                v-for="item in ssList"
+                                :key="item.ssid"
+                                :label="item.ssmc"
+                                :value="item.ssid"
+                        >
                         </el-option>
                     </el-select>
                     <div class="base-con" style="margin: 15px 0">
-                        <span class="demonstration" style="color:#48576A;">期望手术日期:</span>
+                        <span class="demonstration" style="color:#48576A;">住院日期:</span>
                         <el-date-picker
                                 v-model="sqyyrq"
                                 type="date"
@@ -360,6 +362,8 @@
     export default{
         data(){
             return{
+                ssid:"",
+                ssList:[],
                 pickerOptions0: {
                     pickerOptions0(time) {
                         return time.getTime() < Date.now() - 8.64e7;
@@ -383,7 +387,11 @@
                     yyid:""
                 }],
                 typeId:'',
-                typeList:[],
+                typeList:[{
+                    jgid:JSON.parse(localStorage.getItem('docObj')).jgid,
+                    sqyymc:JSON.parse(localStorage.getItem('docObj')).sqyymc
+
+                }],
                 projectId:'',
                 projectList:[],
                 options: [{
@@ -439,11 +447,25 @@
             this.ruleForm.cityId =parseInt(this.applyDetail.cityId)
             this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
             this.getData();
-//            this.getHosList();
-            this.typeLists();
+            this.projectLists()
+
 
         },
         methods: {
+            //手术术中
+            getSslist(id){
+                axiosUtil('smarthos.sxzz.sssz.list',{
+                    yyid:'59411511191ce23575a63218',
+                    ksid:id,
+                }).then(res=>{
+                    console.log(res,'书中');
+                    if(res.succ){
+                        this.ssList = res.list
+                    }else {
+                        alert(res.msg)
+                    }
+                })
+            },
             //拒接预约
             refuse(){
                 axiosUtil('smarthos.sxzz.jczzsl.info',{
@@ -452,7 +474,6 @@
                     "ddid":this.ruleForm.ddid,
                     "zzzt":this.radio,
                     "qryy":this.desc,
-                    "yylx":"1",
                     "jczt":"2",
                     "qrysmc": "陈刚",
                 }).then(res=>{
@@ -477,17 +498,14 @@
                     let _this=this;
                     _this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                     console.log( _this.sqyyrq,'时间格式')
-                    axiosUtil('smarthos.sxzz.jczzsl.info',{
+                    axiosUtil('smarthos.sxzz.sszzsl.info',{
                         "jgid": "59411511191ce23575a63218",
                         "yyr": "595d05b0f19b9c898a58cc70",
                         "ddid":this.ruleForm.ddid,
                         "zzzt":this.radio,
                         "yyrq":this.sqyyrq,
                         "yylx":this.sqyylx,
-                        "jczt":"1",
-                        "qrksbh": "1",
-                        "flid":this.typeId,
-                        "jcid":this.projectId
+                        "ssid": this.ssid,
                     }).then(res=>{
                         console.log(res,66666666);
                         if(res.succ){
@@ -518,14 +536,14 @@
                 }
                 return   arr.filter(getObj)
             },
-            //获取检查项目
-            projectLists(id){
-                axiosUtil('smarthos.sxzz.jcxmlbsg.info',{
+            //获取科室
+            projectLists(){
+                axiosUtil('smarthos.sxzz.dept.list',{
                     "jgid": "59411511191ce23575a63218",
-                    "yyid": "59411511191ce23575a63218",
-                    "flid":id
+                    "yyid":"59411511191ce23575a63218",
                 }).then(res=>{
                     if(res.succ){
+                        console.log(res,'科室列表')
                         this.projectList = res.list
                     }else {
                         alert(res.msg)
@@ -534,34 +552,10 @@
             },
             getProject(id){
                 console.log(id,'检查id')
-                this.projectLists(id)
+
             },
-            //获取检查大类
-            typeLists(){
-                axiosUtil('smarthos.sxzz.jcxmdlsg.info',{
-                    "jgid": "59411511191ce23575a63218",
-                    "yyid": "59411511191ce23575a63218",
-                }).then(res=>{
-                    if(res.succ){
-                        this.typeList = res.list
-                    }else {
-                        alert(res.msg)
-                    }
-                })
-            },
-            //获取医院
-            getHosList(){
-                axiosUtil('smarthos.sxzz.hos.list',{
-                    "jgid": "59411511191ce23575a63218",
-                    "ywlx":1
-                }).then(res=>{
-                    if(res.succ){
-                        this.hosList = res.list
-                    }else {
-                        alert(res.msg)
-                    }
-                })
-            },
+
+
             getValue(value){
                 console.log(value,8888)
                 this.$set(this.$data.ruleForm,'zdjg',value)
