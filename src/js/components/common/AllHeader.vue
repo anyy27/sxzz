@@ -6,8 +6,13 @@
                     <span class="demonstration">转诊时间:</span>
                     <el-date-picker
                             v-model="somedata.date"
-                            type="daterange"
-                            placeholder="选择日期范围">
+                            type="date"
+                            placeholder="选择日期">
+                    </el-date-picker> ---
+                    <el-date-picker
+                            v-model="somedata.date1"
+                            type="date"
+                            placeholder="选择日期">
                     </el-date-picker>
                 </div>
             </div>
@@ -62,7 +67,8 @@
                    cxyyid:'',
                    ksid:'',
                    date:'',
-                   zzzt:Number
+                   zzzt:"",
+                   date1:''
                },
                hospitalList:[],
                officeList:[],
@@ -106,14 +112,15 @@
             },
             searchData(){
                 console.log(this.somedata,77777);
-                console.log(formatUnixTime(this.somedata.date[0],"yyyy-MM-dd"))
-                console.log(formatUnixTime(this.somedata.date[1],"yyyy-MM-dd"));
+                console.log(formatUnixTime(this.somedata.date,"yyyy-MM-dd"))
+                console.log(formatUnixTime(this.somedata.date1,"yyyy-MM-dd"));
                 var val  = {
                         ...this.somedata,
-                    starttime:formatUnixTime(this.somedata.date[0],"yyyy-MM-dd"),
-                    endtime:formatUnixTime(this.somedata.date[1],"yyyy-MM-dd")
+                    starttime:formatUnixTime(this.somedata.date,"yyyy-MM-dd"),
+                    endtime:formatUnixTime(this.somedata.date1,"yyyy-MM-dd")
                 };
                 delete val.date;
+                delete val.date1;
                this.$emit("getSelect",val);
             }
         }
