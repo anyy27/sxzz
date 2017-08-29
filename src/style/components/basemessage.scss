@@ -1,7 +1,6 @@
 .base-top{
   width:100%;
   box-sizing: border-box;
-  padding:0px 20px;
 }
 .base-appoint{
   width:100%;
@@ -10,7 +9,12 @@
 }
 .base-message{
   box-sizing: border-box;
+  padding:10px 20px;
+  background: #fff;
   width:100%;
+  border-left:1px solid #E3E1E2;
+  border-right:1px solid #E3E1E2;
+  border-bottom:1px solid #E3E1E2;
 }
 .base-docs{
   width:100%;
@@ -53,7 +57,8 @@
   background-color: #00b2b1;
 }
 .base-doc{
-  margin-top:10px;
+  box-sizing: border-box;
+  padding:10px 0px;
 }
 .base-docs .el-input--small .el-input__inner{
   height:24px;
@@ -74,4 +79,8 @@
 }
 .base-idcard{
   float:left;
+}
+.base-docs label{
+  font-size: 14px;
+  color:#818181;
 }

@@ -15,12 +15,12 @@
                         </el-option>
                     </el-select>
                     <span style="font-size: 14px;color: #48576a;">检查大类:</span>
-                    <el-select v-model="somedata.flid"   @change="outcheck"  filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                    <el-select v-model="somedata.fild"   @change="outcheck"  filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option
                                 v-for="item in bigList"
-                                :key="item.dEPTCODE"
-                                :label="item.dEPTNAME"
-                                :value="item.dEPTCODE"
+                                :key="item.jcid"
+                                :label="item.jcmc"
+                                :value="item.jcid"
                         >
                         </el-option>
                     </el-select>
@@ -28,9 +28,9 @@
                     <el-select v-model="somedata.jcid" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option
                                 v-for="item in checkList"
-                                :key="item.iTEMCODE"
-                                :label="item.iTEMNAME"
-                                :value="item.iTEMCODE"
+                                :key="item.jcid"
+                                :label="item.jcmc"
+                                :value="item.jcid"
                         >
                         </el-option>
                     </el-select>
@@ -102,7 +102,7 @@
                 somedata:{
                     hospital:'',
                     jcid:'',
-                    flid:'',
+                    fild:"",
                     state:'',
                     date:'',
                 },
@@ -131,7 +131,7 @@
             },
             checkBig:function(){
                 let _this=this;
-                axiosUtil("smarthos.sxzz.jcxmdl.info").then(res=>{
+                axiosUtil("smarthos.sxzz.jcxmdlsg.info").then(res=>{
                     console.log("200000",res);
                     _this.bigList=res.list;
                 })
@@ -139,9 +139,9 @@
             checkText:function(){
                 let _this=this;
                 let options={
-                    DEPTCODE:_this.somedata.flid,
+                    flid:_this.somedata.fild,
                 };
-                axiosUtil("smarthos.sxzz.jcxmlb.info",options).then(res=>{
+                axiosUtil("smarthos.sxzz.jcxmlbsg.info",options).then(res=>{
                     console.log("200001",res);
                     _this.checkList=res.list;
                 })
@@ -149,33 +149,17 @@
             getDetail(dataForm){
                 var _this = this
                 function checkAdult(hos) {
-                    return hos.dEPTCODE== _this.somedata.flid
-                }
-                function checkAdults(hos) {
-                    return hos.iTEMCODE== _this.somedata.jcid
-                }
-                var hos1Obj= _this.bigList.filter((hos)=>{
-                   return hos.dEPTCODE== _this.somedata.flid
-                });
-                var offObj= _this.checkList.filter((hos)=>{
-                    return hos.iTEMCODE== _this.somedata.jcid
-                });
-                function checkAdult(hos) {
                     return hos.yyid== _this.somedata.hospital
                 }
                 var hosObj = this.hospitalList.filter(checkAdult);
                 var yymc=hosObj[0].yymc;
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
-                var flmc=hos1Obj[0].dEPTNAME;
-                var jcmc=offObj[0].iTEMNAME;
                 let options={
                     yhid:136,
                     "yyr": "595d05b0f19b9c898a58cc70",
-                    flid:_this.somedata.flid,
-                    flmc:flmc,
+                    flid:_this.somedata.fild,
                     jcid:_this.somedata.jcid,
-                    jcmc:jcmc,
                     klx:dataForm.klx,
                     kh: dataForm.kh,
                     yhxm: dataForm.yhxm,

@@ -7,6 +7,7 @@
 }
 .Header-title{
   width:100%;
+  background: #F9F9F9;
 }
 .el-button{
   color:#00b2b1;
@@ -14,8 +15,15 @@
 .Header-add{
   width:100%;
   padding:10px 30px;
+  background: #F9F9F9;
   box-sizing: border-box;
 }
+.el-tabs__header{
+  margin:0;
+}
+//.el-button--small{
+//  padding:5px 18px;
+//}
 .Header-add .btn{
   border-color: #00b2b1;
   background-color: #00b2b1;

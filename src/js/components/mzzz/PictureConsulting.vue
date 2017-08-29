@@ -1,5 +1,6 @@
 <template>
     <div >
+        <div class="deal-content marginP remote-consultation-wrap content-bg-color">
         <AllHeader @getSelect="getSelect"></AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
@@ -488,6 +489,7 @@
             </el-table>
         </div>
         <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
+        </div>
     </div>
 </template>
 <style>
@@ -497,7 +499,6 @@
     import AllHeader from "../common/AllHeader.vue";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import FooterCmp from "../common/FooterCmp.vue";
-
     export default{
         data (){
             return{
@@ -602,7 +603,6 @@
                 this.getData(1,this.type)
             },
             getData(pageNum,type,selectObj){
-
                 let _this=this
                 axiosUtil('smarthos.sxzz.order.list',{
                         ...selectObj,

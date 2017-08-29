@@ -3,8 +3,11 @@
         <el-form   label-width="100px" class="demo-ruleForm">
             <BaseMessage :index="watchNum" @getDetail="getDetail"></BaseMessage>
         </el-form>
+        <div  class=" marginP remote-consultation-wrap content-bg-color">
         <div class="news-con">
-            <p style="line-height: 40px;">预约信息</p>
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+            <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
             <div class="base-con">
                 <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
                 <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
@@ -226,7 +229,7 @@
                 </el-table>
             </div>
         </div>
-     <div class="dialog" v-show="dialogVisible">
+        <div class="dialog" v-show="dialogVisible">
          <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
              <p>预约信息</p>
          </div>
@@ -298,6 +301,7 @@
          </div>
          </div>
         <div class="BigBox" v-show="dialogVisible1"></div>
+        </div>
     </div>
 </template>
 <style>

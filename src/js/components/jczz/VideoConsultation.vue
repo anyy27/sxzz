@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="deal-content marginP remote-consultation-wrap content-bg-color">
         <AllHeader></AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
@@ -323,7 +324,7 @@
                 <el-table-column
                         prop="date"
                         label="操作"
-                        width="180">
+                        width="190">
                     <template scope="scope">
                         <el-button
                                 size="small"
@@ -608,6 +609,7 @@
             </el-table>
         </div>
         <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
+        </div>
     </div>
 </template>
 <style>
@@ -637,13 +639,12 @@
             this.activeName = this.shzt==0?"4":"0";
             this.type = this.shzt=='0'?'4':'0';
             this.getData(1,this.type);
-
             console.log(this.shzt,this.type,this.activeName,'显示')
         },
         methods:{
             //审核
             audit(index,row){
-                if(this.docObj.jczt=='1'){
+                if(!this.docObj.jczt=='1'){
                     //手工模式
                     axiosUtil('smarthos.sxzz.byddid.list',{
                         "jgid": "59411511191ce23575a63218",

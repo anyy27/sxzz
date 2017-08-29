@@ -1,5 +1,6 @@
 <template>
    <div>
+       <div class="deal-content marginP remote-consultation-wrap content-bg-color">
        <AllHeader   v-on:child-pop="listenToMyBoy">
                <!--<div class="date-box" slot="btn">-->
                    <!--<el-button class="btn" type="primary"  @click="sendAll" style="padding:5px 20px;">查询</el-button>-->
@@ -231,6 +232,7 @@
            </el-table>
        </div>
        <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
+       </div>
    </div>
 </template>
 <style>

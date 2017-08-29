@@ -7,6 +7,7 @@
                 </div>
                 <el-table
                         :data="zzjl"
+                        stripe
                         style="width: 100%"
                 >
                     <el-table-column
@@ -40,6 +41,7 @@
                 </div>
                 <el-table
                         :data="sljl"
+                        stripe
                         style="width: 100%"
                 >
                     <el-table-column

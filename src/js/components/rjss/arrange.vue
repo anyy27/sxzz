@@ -1,5 +1,6 @@
 <template>
 <div>
+    <div class="deal-content marginP remote-consultation-wrap content-bg-color">
     <AllHeader></AllHeader>
     <div class="Header-add">
         <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
@@ -217,6 +218,7 @@
         </el-table>
     </div>
     <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
+    </div>
 </div>
 </template>
 <style>
