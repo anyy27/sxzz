@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="deal-content marginP remote-consultation-wrap content-bg-color">
         <!--时间选择-->
         <div class="date-boxs">
             <div class="date-box" style="width:180px;">
@@ -56,12 +57,12 @@
             </div>
         </div>
         <div v-if="this.date.length!='0'"  class="hosptial-table">
-                <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick">
+                <el-tabs v-show="out==1" v-model="activeName"  @tab-click="handleClick" style="background: #E6E6E6;">
                     <el-tab-pane label="按医院" name="1"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="2"> </el-tab-pane>
                     <el-tab-pane label="按业务" name="3"> </el-tab-pane>
                 </el-tabs>
-                <el-tabs v-show="out==2" v-model="activeName"  @tab-click="handleClick">
+                <el-tabs v-show="out==2" v-model="activeName"   style="background: #E6E6E6;" @tab-click="handleClick">
                     <el-tab-pane label="按医院" name="4"> </el-tab-pane>
                     <el-tab-pane label="按科室" name="5"> </el-tab-pane>
                     <el-tab-pane label="按业务" name="6"> </el-tab-pane>
@@ -497,6 +498,7 @@
         </div>
         <!--<div id="mains">-->
         <!--</div>-->
+        </div>
     </div>
 </template>
 <style scoped>

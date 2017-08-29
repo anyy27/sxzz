@@ -22,10 +22,12 @@
     <div v-show="activeName=='4'" class="arrange-table" >
         <el-table
                 :data="tableData"
+                stripe
                 style="width:100%;">
             <el-table-column
                     prop="date"
                     label="操作"
+
                     width="200">
                 <template scope="scope">
                     <el-button
@@ -68,7 +70,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
@@ -129,6 +131,7 @@
     <div v-show="activeName=='5'" class="arrange-table" >
         <el-table
                 :data="tableData"
+                stripe
                 style="width:100%;">
             <el-table-column
                     prop="date"
@@ -164,7 +167,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
@@ -225,6 +228,7 @@
     <div v-show="activeName==0&&shzt=='1'" class="arrange-table" >
         <el-table
                 :data="tableData"
+                stripe
                 style="width:100%;">
             <el-table-column
                     prop="date"
@@ -263,7 +267,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
@@ -324,6 +328,7 @@
     <div v-show="activeName==1&&shzt=='1'" class="arrange-table" >
         <el-table
                 :data="tableData"
+                stripe
                 style="width:100%;">
             <el-table-column
                     prop="date"
@@ -363,7 +368,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
@@ -424,6 +429,7 @@
     <div v-show="activeName==2&&shzt=='1'" class="arrange-table" >
         <el-table
                 :data="tableData"
+                stripe
                 style="width:100%;">
             <el-table-column
                     prop="date"
@@ -459,7 +465,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
@@ -555,7 +561,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="yyrq"
+                    prop="sqyyrq"
                     label="期望住院日期">
             </el-table-column>
             <el-table-column
