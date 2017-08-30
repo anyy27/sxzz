@@ -27,7 +27,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -61,7 +62,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -137,7 +138,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -159,7 +161,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -235,7 +237,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -260,7 +263,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -336,7 +339,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -362,7 +366,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -438,7 +442,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -460,7 +465,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -536,7 +541,8 @@
            <el-table
                    :data="tableData"
                    stripe
-                   style="width:100%;overflow: auto;">
+                   height="400"
+                   style="width:100%;">
                <el-table-column
                        prop="date"
                        label="操作"
@@ -558,7 +564,7 @@
                    </template>
                </el-table-column>
                <el-table-column
-                       prop="kh"
+                       prop="yyh"
                        label="预约号">
                </el-table-column>
                <el-table-column
@@ -630,7 +636,7 @@
                </el-table-column>
            </el-table>
        </div>
-       <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="5"/>
+       <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="7"/>
        </div>
    </div>
 </template>
@@ -704,7 +710,7 @@
                 }).then(res=>{
                     console.log(res,7777)
                     this.$router.push({
-                        name:"transferBill",
+                        name:"remotebox",
                         params:{
                             zyzzList:res.obj
                         }
@@ -801,7 +807,7 @@
                     czlx:"4",
                     ywlx:"2",
                     pageNo:'1',
-                    pageSize:'5',
+                    pageSize:'7',
                 };
                 axiosUtil("smarthos.sxzz.order.list",options).then(function(res){
                      _this.tableData=res.list;
@@ -823,7 +829,7 @@
                     "ywlx": "2",
                     "czlx": type,
                     "pageNum":pageNum,
-                    "pageSize":"5"
+                    "pageSize":"7"
                 }).then(res=>{
                     console.log(res,33333);
                 if(res.succ){

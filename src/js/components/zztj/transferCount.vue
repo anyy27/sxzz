@@ -42,7 +42,7 @@
                 </el-select>
             </div>
 
-            <div class="date-box" style="width:150px;">
+            <div v-show="(activeName=='2'||activeName=='5')" class="date-box" style="width:150px;">
 
                 <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
                     <el-option

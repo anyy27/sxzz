@@ -397,7 +397,6 @@
                         "yyr": "595d05b0f19b9c898a58cc70",
                         "yyid": this.somedata.hospital,
                         "ksid":this.somedata.office,
-                        "yhid": "136",
                         'qrksmc': this.ksmc,
                         "ysid": this.docId,
                         "ysmc": this.docName,

@@ -56,8 +56,8 @@
                         <el-radio class="radio" v-model="tjbz" label="1">是</el-radio>
                         <el-radio class="radio" v-model="tjbz" label="0">否</el-radio>
                     </el-form-item>
-                    <span class="demonstration" style="margin-top:5px;margin-left:10px;">接受最晚时间:</span>
-                    <el-date-picker
+                    <span v-show="tjbz=='1'" class="demonstration" style="margin-top:5px;margin-left:10px;">接受最晚时间:</span>
+                    <el-date-picker v-show="tjbz=='1'"
                             v-model="tjrq"
                             type="date"
                             style="margin-top:5px;"
@@ -162,7 +162,7 @@
                 this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
                 this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
                 let options={
-                    yhid:136,
+                    yhid:dataForm.yhid,
                     "yyr": "595d05b0f19b9c898a58cc70",
                     flid:_this.somedata.fild,
                     jcid:_this.somedata.jcid,

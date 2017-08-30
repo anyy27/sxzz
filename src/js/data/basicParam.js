@@ -3,11 +3,22 @@ let randoms = "";
 for (let i = 0; i < 4; i++) {
     randoms += "1234567890".substr(Math.floor(Math.random() * 10), 1);
 }
-if(JSON.parse(localStorage.getItem('docObj'))){
- var  yymm = JSON.parse(localStorage.getItem('docObj')).yymm;
- var  jgid = JSON.parse(localStorage.getItem('docObj')).jgid;
+var yymm = '';
+var jgid='';
+var sign = '';
+let docStr = localStorage.getItem('docObj');
+if(docStr){
+    if(JSON.parse(docStr)){
+        yymm = JSON.parse(docStr).yymm;
+        jgid = JSON.parse(docStr).jgid;
+
+        sign = hex_md5(hex_md5(yymm)+jgid+randoms)
+    }
+}else {
+    sign=''
 }
-let sign = hex_md5(hex_md5(yymm)+jgid+randoms)
+
+
 const PasWord = function(options,random){
     const basicParam = {//服务器交互基本参数
         "jgid": "0571001",

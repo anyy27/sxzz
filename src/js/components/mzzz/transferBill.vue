@@ -14,7 +14,7 @@
             </div>
             <div class="commonbox-con">
                 <div class="commonbox-news">
-                    <div><span>预约号码:</span><span> {{zyzzList.qryymc}}</span></div>
+                    <div><span>预约号码:</span><span> {{zyzzList.yyh}}</span></div>
                     <div><span>预约医院:</span><span> {{zyzzList.yymc}}</span></div>
                     <div><span>预约专家:</span><span> {{zyzzList.ysxm}}</span></div>
                     <div><span>就诊序号:</span><span> {{zyzzList.yyxh}}</span></div>
