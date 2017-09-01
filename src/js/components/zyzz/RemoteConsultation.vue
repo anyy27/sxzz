@@ -75,7 +75,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -131,6 +131,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='0'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='0'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -174,7 +178,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -230,6 +234,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='0'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='0'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -276,7 +284,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -332,6 +340,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='0'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='0'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -379,7 +391,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -435,6 +447,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='0'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='0'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -478,7 +494,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -534,6 +550,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='0'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='0'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -577,7 +597,7 @@
                </el-table-column>
 
                <el-table-column
-                       prop="yyrq"
+                       prop="sqyyrq"
                        label="期望住院日期">
                </el-table-column>
                <el-table-column
@@ -633,6 +653,10 @@
                <el-table-column
                        prop="bqdj"
                        label="病情等级">
+                   <template scope="scope">
+                       <div v-show="!scope.row.bqdj=='2'">{{scope.row.bqdj=='0'?'一般':'急'}}</div>
+                       <div v-show="scope.row.bqdj=='2'">危重</div>
+                   </template>
                </el-table-column>
            </el-table>
        </div>
@@ -747,7 +771,7 @@
                     }).then(res=>{
                         console.log(res,66666)
                         this.$router.push({
-                            name:"zyExamineBill",
+                            name:"zyChange",
                             params:{
                                 applyDetail:res.obj
                             }

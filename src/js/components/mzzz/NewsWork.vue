@@ -351,6 +351,7 @@
             BaseMessage
         },
         mounted(){
+
            this.setDate(new Date());
 //            this.getData();
             this.getHospital();
@@ -415,7 +416,7 @@
                     }).then(res=>{
                         console.log(res,66666666)
                         _this.$router.push({
-                            name:'commonBox',
+                            name:'mzzzbox',
                             params:{
                                 zyzzList:res.obj
                             }
@@ -508,7 +509,8 @@
             formatDate(date){
                 var year = date.getFullYear()+'-';
                 var month = (date.getMonth()+1>9?date.getMonth()+1:'0'+(date.getMonth()+1))+'-';
-                var day = (date.getDate()>9?date.getDate():'0'+(date.getDate()))
+                var day = (date.getDate()>9?date.getDate():'0'+(date.getDate()));
+
                 var week = ['星期天','星期一','星期二','星期三','星期四','星期五','星期六'][date.getDay()];
                 return {
                     date:year+month+day,
@@ -517,7 +519,6 @@
             },
             setDate(date){
                 var week = date.getDay()-1;
-//                date = this.addDate(date,week*-1);
                 this.currentFirstDate = new Date(date);
                 var arr = [];
                 for(var i = 0;i<7;i++){

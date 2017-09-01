@@ -1,5 +1,7 @@
 <template>
-<div >
+<div>
+    <div class="msg" v-show="showMsg">
+    </div>
     <div class=" marginP remote-consultation-wrap content-bg-color" >
     <div class="base-top"  style="width: auto">
         <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
@@ -152,9 +154,12 @@
                                </span>
                     </div>
                     <div class="ghost-btn-wrap">
-                                   <span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
-                                       {{item.name}}
-                                   </span>
+                                   <!--<span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">-->
+                                       <!--{{item.name}}-->
+                                   <!--</span>-->
+                        <a :href="item.wjdz"  v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
+                            {{item.name}}
+                        </a>
                     </div>
                 </div>
             </el-form>
@@ -166,16 +171,31 @@
                </div>
                <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
                    <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约医院 : {{this.ruleForm.yymc}}</span>
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.flmc}}</span>
-                   <span style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.jcmc}}</span>
+                   <span v-show="ruleForm.flmc" style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查大类 : {{this.ruleForm.flmc}}</span>
+                   <span v-show="ruleForm.jcmc" style="font-size: 14px;color: #48576a;margin-right: 50px"> 检查项目 : {{this.ruleForm.jcmc}}</span>
+                   <span v-show="ruleForm.qrksmc" style="font-size: 14px;color: #48576a;margin-right: 50px"> 预约科室 : {{this.ruleForm.qrksmc}}</span>
+                   <span v-show="!(ruleForm.jcmc||ruleForm.ssmc)" style="font-size: 14px;color: #48576a;margin-right: 50px"> 病情等级 :
+                       <span v-show="ruleForm.bqdj==0">
+                       一般
+                   </span>
+                       <span v-show="!ruleForm.bqdj==0">
+                           {{this.ruleForm.bqdj=='1'?'急':'危重'}}
+                       </span>
+                   </span>
+                   <span v-show="ruleForm.ssmc" style="font-size: 14px;color: #48576a;margin-right: 50px"> 手术名称 : {{this.ruleForm.ssmc}}</span>
                </div>
                <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
-                   <span class="demonstration" style="color:#48576A;margin-right: 50px">期望手术日期 : {{this.ruleForm.sqsj}}</span>
+                   <span  v-show="ruleForm.jcmc" class="demonstration" style="color:#48576A;margin-right: 50px">期望检查日期 : {{this.ruleForm.sqyyrq}}
+                    &nbsp;&nbsp;&nbsp;{{this.ruleForm.sqyylx=='0'?'上午':'下午'}}</span>
+                   <span v-show="!(ruleForm.jcmc||ruleForm.ssmc)"  class="demonstration" style="color:#48576A;margin-right: 50px">期望住院时间 : {{this.ruleForm.sqyyrq}}
+                       &nbsp;&nbsp;&nbsp;{{this.ruleForm.sqyylx=='0'?'上午':'下午'}}</span>
+                   <span v-show="ruleForm.ssmc"  class="demonstration" style="color:#48576A;margin-right: 50px">期望手术时间 : {{this.ruleForm.sqyyrq}}
+                       &nbsp;&nbsp;&nbsp;{{this.ruleForm.sqyylx=='0'?'上午':'下午'}}</span>
 
                </div>
                <div class="base-con" style="box-sizing: border-box;padding:10px 20px;">
-                   <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.dizt==1?'是':'否'}}</span>
-                   <span v-show="this.ruleForm.dizt==1" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
+                   <span style="margin-right: 50px;font-size: 14px;color: #48576a;">是否接受调剂 : {{this.ruleForm.djzt=='1'?'是':'否'}}</span>
+                   <span v-show="this.ruleForm.djzt=='1'" class="demonstration" style="margin-right: 50px;margin-top:5px;margin-left:10px;">接受最晚时间:{{this.ruleForm.djrq}}</span>
                </div>
            </div>
        </div>
@@ -409,60 +429,84 @@
                 </el-table>
             </div>
         </div>
-        <div style="background: white" v-show="this.tableData.length&&this.radio=='1'" >
-            <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
-                <p style="line-height: 40px;font-size: 14px;">当前剩余号源数:{{this.tableData.length}}</p>
-            </div>
-            <!--<div style="height:40px;line-height: 40px;box-sizing: border-box;padding:0px 20px;">-->
-                <!--<span >当前剩余号源数:{{this.tableData.length}}</span>-->
-            <!--</div>-->
-            <div>
-                <el-table
-                        ref="multipleTable"
-                        :data="tableData"
-                        @current-change="handleCurrentChange"
-                        height="330"
-                        style="width:100%;">
-                    <el-table-column
-                            type="index"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            type="selection"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="nUMNO"
-                            label="就诊序号"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="nUMDATE"
-                            label="检查时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="dEPTCODE"
-                            label="检查设备代号"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="aDDRESS"
-                            label="检查地点"
-                    >
-                    </el-table-column>
-                </el-table>
-            </div>
-            <div style="width: 100%;text-align: center;margin-top: 20px">
-                <el-button type="primary" @click="SureYuyue">确认预约</el-button>
+            <div class="detail" v-show="showMsg">
+                <div style="background: white"  >
+                    <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                        <p style="line-height: 40px;font-size: 14px;">当前剩余号源数:{{this.tableData.length}}</p>
+                    </div>
+                    <!--<div style="height:40px;line-height: 40px;box-sizing: border-box;padding:0px 20px;">-->
+                    <!--<span >当前剩余号源数:{{this.tableData.length}}</span>-->
+                    <!--</div>-->
+                    <div>
+                        <el-table
+                                ref="multipleTable"
+                                :data="tableData"
+                                @current-change="handleCurrentChange"
+                                height="330"
+                                style="width:100%;">
+                            <el-table-column
+                                    type="index"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    type="selection"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="nUMNO"
+                                    label="就诊序号"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="nUMDATE"
+                                    label="检查时间"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="dEPTCODE"
+                                    label="检查设备代号"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="aDDRESS"
+                                    label="检查地点"
+                            >
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                    <div style="width: 100%;text-align: center;margin-top: 20px">
+                        <el-button type="primary" @click="showMsg=false">上一步</el-button>
+                        <el-button type="primary" @click="SureYuyue">确认预约</el-button>
+                    </div>
+                </div>
             </div>
         </div>
+        </div>
 
-    </div>
-    </div>
 </div>
 </template>
 <style>
+    .msg{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: black;
+        opacity: .7;
+        z-index: 666;
+    }
+    .detail{
+        position: absolute;
+        left: 0;
+        bottom:0;
+        right: 0;
+        top: 0;
+        margin:auto;
+        width: 60%;
+        height: 50%;
+        z-index: 888;
+    }
     .showImg{
         display: inline-block;
         width: 60px;
@@ -571,6 +615,7 @@
     export default{
         data(){
             return{
+                showMsg:false,
                 type:'',
                 jcdd:'',
                 desc:"",
@@ -591,7 +636,7 @@
                 arrangeList:[],
                 hosId:'',
                 hosList:[{
-                    yymc:'浙二医院',
+                    yymc:JSON.parse(localStorage.getItem('docObj')).sqyymc,
                     yyid:""
                 }],
                 typeId:'',
@@ -707,7 +752,6 @@
                         "hysj": this.nUMTIME,
                         "jcdd":this.jcdd
                     }).then(res=>{
-
                         console.log(res,66666666);
                         if(res.succ){
                             this.$router.push({
@@ -716,11 +760,11 @@
                                     zyzzList:res.obj
                                 }
                             })
+                            this.showMsg = false
                         }else {
                             alert(res.msg)
                         }
                     })
-
                 }).catch(() => {
                     console.log("2");
                 });
@@ -886,6 +930,7 @@
                     }).then(res=>{
                         if(res.succ){
                             this.$set(this.$data,'tableData',res.list);
+                            this.showMsg = true
                         }
                     })
                 }else {

@@ -31,12 +31,15 @@ import CommonBox from "./js/components/common/CommonBox.vue";
 import JczzConsultation from "./js/components/jczz/JczzConsultation.vue";
 import RemoteWork from "./js/components/zyzz/RemoteWork.vue";
 import RemoteBox from "./js/components/zyzz/RemoteBox.vue";
+import zyChange from "./js/components/zyzz/zyChange.vue";
 import zyExamineBill from "./js/components/zyzz/zyExamineBill.vue";
 import MzzzBox from "./js/components/mzzz/MzzzBox.vue";
 import transferBill from "./js/components/mzzz/transferBill.vue";
 import examineBill from "./js/components/mzzz/examineBill.vue";
 import ArrangeBox from "./js/components/rjss/ArrangeBox.vue";
+import rjChange from "./js/components/rjss/rjChange.vue";
 import JczzBox from "./js/components/jczz/JczzBox.vue";
+import JczzExamine from "./js/components/jczz/JczzExamine.vue";
 import rjExamineBill from "./js/components/rjss/rjExamineBill.vue";
 /*引入样式文件*/
 import 'element-ui/lib/theme-default/index.css'
@@ -71,6 +74,8 @@ const router =new VueRouter({
                 { path: "rjExamineBill",name:'rjExamineBill', component: rjExamineBill },
               //手工模式
                 { path: "sgExamineBill",name:'sgExamineBill', component: sgExamineBill },
+                { path: "zyChange",name:'zyChange', component: zyChange },
+                { path: "rjChange",name:'rjChange', component: rjChange },
                 /*检查转诊首页*/
                 { path: "videoConsultation/jczz", component:JczzConsultation},
                 /*远程会诊*/
@@ -107,6 +112,8 @@ const router =new VueRouter({
                 },
                 {//检查转诊问诊单
                     path:"jczzbox",name:"jczzbox",component:JczzBox
+                }, {//检查转诊问诊单
+                    path:"JczzExamine",name:"JczzExamine",component:JczzExamine
                 },
                 /*qkfz*/
                 { path: "pictureConsulting", component: PictureConsulting },

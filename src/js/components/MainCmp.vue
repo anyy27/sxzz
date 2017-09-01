@@ -48,6 +48,7 @@
             let _this = this;
             //上报推送ID
             let socket = io(SOCKET_URL);
+            console.log(socket,'推送666')
             socket.on('connect', function(){
                 if(socket.id){
                     let options = {

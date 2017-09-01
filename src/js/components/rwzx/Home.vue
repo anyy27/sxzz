@@ -1,7 +1,15 @@
 <template>
     <div class="home">
         <!--首页顶部菜单-->
-        <div class="home-top clearfix">
+
+        <div class="msgs">
+            <div class="leftMsg">
+                我的待处理
+            </div>
+            <div class="rightMsg" @click="getMsg">刷新</div>
+        </div>
+        <div class="home-top  msgsDetail">
+
             <div v-show="!(docObj.mzzt==0)" class="home-top-item clearfix">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/pictureConsulting', 'twzx')">
                     <div class="home-top-item-content home-top-item-twzx fl" >
@@ -56,6 +64,31 @@
     </div>
 </template>
 <style>
+.msgs{
+    overflow: hidden;
+    box-sizing: border-box;
+    margin:10px 30px 0  25px;
+    border: 1px solid gainsboro;
+    padding: 10px 25px
+}
+.msgsDetail{
+    overflow: hidden;
+    box-sizing: border-box;
+    margin:0px 30px 10px 25px;
+    border-left: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    padding: 10px 25px
+}
+    .leftMsg{
+        float: left;
+    }
+    .rightMsg{
+        float: right;
+    }
+.rightMsg:hover{
+    cursor: pointer;
+}
 
 </style>
 <script type="text/ecmascript-6">
@@ -91,22 +124,9 @@
             this.$store.dispatch("changeSideItem", "rwzx");
         },
         mounted:function(){
-            console.log(this.docObj,1212121)
-            let _this=this;
-            let options={
-                docId:"595d05b0f19b9c898a58cc70",
-            }
-            axiosUtil("smarthos.sxzz.pending.list",options).then(res=>{
-                if(res.succ){
-                    console.log("88/888",res);
-                        _this.jczz=res.list[0].count;
-                        _this.zyzz=res.list[1].count;
-                        _this.rjss=res.list[2].count;
+            console.log(this.docObj,1212121);
+            this.getMsg()
 
-                }else{
-                    console.log("66/666");
-                }
-            })
         },
         computed: {
             contentDataArr: function(){
@@ -118,6 +138,23 @@
             }
         },
         methods: {
+            getMsg(){
+                let _this=this;
+                let options={
+                    docId:"595d05b0f19b9c898a58cc70",
+                }
+                axiosUtil("smarthos.sxzz.pending.list",options).then(res=>{
+                    if(res.succ){
+                        console.log("88/888",res);
+                        _this.jczz=res.list[0].count;
+                        _this.zyzz=res.list[1].count;
+                        _this.rjss=res.list[2].count;
+
+                    }else{
+                        console.log("66/666");
+                    }
+                })
+            },
             getData: function () {//获取列表信息
                 let _this = this;
                 _this.isSuccess = false;

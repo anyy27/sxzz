@@ -133,8 +133,8 @@
                 function checkAdults(hos) {
                     return hos.ksid== _this.somedata.office;
                 }
-                this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10);
-                this.tjrq=formatUnixTime(this.tjrq).substring(0,10);
+                this.sqyyrq?this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10):this.sqyyrq="";
+                this.tjrq?this.tjrq=formatUnixTime(this.tjrq).substring(0,10):this.tjrq="";
               var hosObj = this.hospitalList.filter(checkAdult);
                 var yymc=hosObj[0].yymc;
               var offObj = this.officeList.filter(checkAdults);
@@ -155,7 +155,7 @@
                     sjhm:dataForm.sjhm,
                     lxdz:dataForm.lxdz,
                     lxdh:dataForm.lxdh,
-                    sqyymc:yymc,
+                    qryymc:yymc,
                     qrksmc:ksmc,
                     zdjg:dataForm.zdjg,
                     bqms:dataForm.bqms,
@@ -167,7 +167,6 @@
                     sqyylx:this.sqyylx,
                     tjbz:this.tjbz,
                     tjrq:this.tjrq,
-                    qryymc: "特扬医院",
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",
                     sqysdh: "18358023268",
@@ -186,7 +185,7 @@
                         console.log(res,9999)
                         if(res.succ){
                             console.log("999999",res);
-                            _this.$router.push({path:"/main/remotebox",name:"remotebox",params:{zyzzList:res}});
+                            _this.$router.push({path:"/main/remotebox",name:"remotebox",params:{zyzzList:res.obj}});
                         }else {
                             alert(res.msg)
                         }

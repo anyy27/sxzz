@@ -363,9 +363,9 @@
         },
         mounted(){
             this.setDate(new Date());
-//            this.getData();
             this.getHospital();
          this.applyDetail = this.$route.params.applyDetail;
+            console.log('门诊', this.applyDetail)
 
         },
         methods:{

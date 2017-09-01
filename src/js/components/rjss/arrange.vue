@@ -72,7 +72,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -170,7 +170,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -271,7 +271,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -373,7 +373,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -471,7 +471,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -569,7 +569,7 @@
 
             <el-table-column
                     prop="sqyyrq"
-                    label="期望住院日期">
+                    label="期望手术日期">
             </el-table-column>
             <el-table-column
                     prop="djrq"
@@ -735,7 +735,7 @@
                     }).then(res=>{
                         console.log(res,66666)
                         this.$router.push({
-                            name:"examineBill",
+                            name:"rjChange",
                             params:{
                                 applyDetail:res.obj
                             }

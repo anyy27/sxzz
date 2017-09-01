@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
-        <AllHeader>
+        <AllHeader @getSelect="getSelect">
             <div slot="selOffice"></div>
         </AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
@@ -72,7 +72,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -170,7 +170,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -271,7 +271,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -373,7 +373,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -471,7 +471,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -569,7 +569,7 @@
                         label="就诊日期">
                 </el-table-column>
                 <el-table-column
-                        prop="yymc"
+                        prop="jcdd"
                         label="检查地点">
                 </el-table-column>
 
@@ -643,7 +643,8 @@
                 activeName:'',
                 tableData: [],
                 propsTotalCols:0,
-                type:''
+                type:'',
+                selectObj:{}
             }
         },
         components:{
@@ -657,6 +658,12 @@
             console.log(this.shzt,this.type,this.activeName,'显示')
         },
         methods:{
+            //筛选
+            getSelect(val){
+                console.log(val,1414141414);
+                this.$set(this.$data,'selectObj',val);
+                this.getData(1,this.type,val)
+            },
             //审核
             audit(index,row){
                 if(this.docObj.jczt=='1'){
@@ -724,7 +731,7 @@
                     }).then(res=>{
                         console.log(res,66666)
                         this.$router.push({
-                            name:"examineBill",
+                            name:"JczzExamine",
                             params:{
                                 applyDetail:res.obj
                             }
@@ -791,9 +798,10 @@
                 this.type=val.name?val.name:4;
                 this.getData(1,this.type)
             },
-            getData(pageNum,type){
+            getData(pageNum,type,selectObj){
                 let _this=this;
                 axiosUtil('smarthos.sxzz.order.list',{
+                        ...selectObj,
                     "jgid": "59411511191ce23575a63218",
                     "yyid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",

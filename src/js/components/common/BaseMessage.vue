@@ -64,7 +64,6 @@
                          </div>
                          <div class="base-con">
                              <label><span class="fee-num">*</span>家庭住址:</label>
-
                                      <el-select v-model="ruleForm.provinceId" placeholder="请选择"  @change="getProvincess"  style="width: 114px"  >
                                          <el-option
                                                  v-for="item in provinces"
@@ -199,7 +198,7 @@
                                    <span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
                                        {{item.name}}
                                    </span>
-                                   <span  class="showText" v-for="(item,index) of nameList">
+                                   <span @click.stop="getFile(item.wjdz)"  class="showText" v-for="(item,index) of nameList">
                                        <span @click.stop="delText(index)" class="showTextSon">X</span>
                                        {{item}}
                                    </span>
@@ -388,16 +387,32 @@
               _this.ruleForm.wjidList = arr1;
               console.log("66666666",_this.ruleForm.wjidList);
               _this.$emit("getDetail",_this.ruleForm);
-        }
-      },
-      mounted(){
-        this.getData();
-          if(this.applyDetail){
-              this.ruleForm = {
+        },
+          applyDetail:function () {
+              if(this.applyDetail){
+                  this.ruleForm = {
                       ...this.ruleForm,
                       ...this.applyDetail
+                  }
+                  console.log(this.ruleForm,99);
+                  this.oldImgList = this.applyDetail.tpwjdzs
+                  this.oldNameList = this.applyDetail.fjwjdzs
+                  this.ruleForm.provinceId =parseInt(this.applyDetail.provinceId)
+                  this.ruleForm.cityId =parseInt(this.applyDetail.cityId)
+                  this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
               }
-              console.log(this.ruleForm,9999999999999999888888888);
+          }
+      },
+      mounted(){
+
+        this.getData();
+          console.log(this.applyDetail,'看看有数据没');
+          if(this.applyDetail){
+              this.ruleForm = {
+                  ...this.ruleForm,
+                  ...this.applyDetail
+              }
+              console.log(this.ruleForm,99);
               this.oldImgList = this.applyDetail.tpwjdzs
               this.oldNameList = this.applyDetail.fjwjdzs
               this.ruleForm.provinceId =parseInt(this.applyDetail.provinceId)
@@ -411,6 +426,11 @@
           }
       },
       methods: {
+          //下载文件
+          getFile(url){
+              console.log(url,'路径')
+//                window.location.href=url;
+          },
           getValue(value){
               console.log(value,8888)
               this.$set(this.$data.ruleForm,'zdjg',value)
@@ -487,6 +507,7 @@
                       this.$set(this.$data.ruleForm,'lxdz',res.list[0].lxdz)
                       this.$set(this.$data.ruleForm,'kh',res.list[0].kh)
                       this.$set(this.$data.ruleForm,'yhid',res.list[0].yhid)
+                      this.$set(this.$data.ruleForm,'age',res.list[0].age)
 
                   }else {
                      alert(res.msg)
@@ -494,14 +515,11 @@
               })
           },
           getData(id){
-
               axiosUtil('smarthos.sxzz.province.list',{}).then(res=>{
                   if(res.succ){
                       console.log(res,123123123)
                       var list = res.list;
                         this.provinces = list;
-
-
                   }else {
                       alert(res.msg)
                   }

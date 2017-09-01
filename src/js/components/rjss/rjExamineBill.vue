@@ -158,9 +158,12 @@
                                </span>
                     </div>
                     <div class="ghost-btn-wrap">
-                                   <span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
-                                       {{item.name}}
-                                   </span>
+                                   <!--<span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">-->
+                                       <!--{{item.name}}-->
+                                   <!--</span>-->
+                        <a :href="item.wjdz" v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
+                            {{item.name}}
+                        </a>
                     </div>
                 </div>
             </el-form>

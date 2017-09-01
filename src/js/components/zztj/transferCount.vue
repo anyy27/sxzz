@@ -17,34 +17,36 @@
             </div>
         </div>
             <div class="date-box">
-            <div class="block">
-                <span class="demonstration">转诊时间:</span>
-                <el-date-picker
-                        v-model="value6"
-                        style="width:210px;"
-                        type="daterange"
-                        placeholder="选择日期范围">
-                </el-date-picker>
-            </div>
+            <!--<div class="block">-->
+                <!--<span class="demonstration">转诊时间:</span>-->
+                <!--<el-date-picker-->
+                        <!--v-model="value6"-->
+                        <!--style="width:210px;"-->
+                        <!--type="daterange"-->
+                        <!--placeholder="选择日期范围">-->
+                <!--</el-date-picker>-->
+            <!--</div>-->
         </div>
 
 
-            <div class="date-box" style="width:150px;">
-                <el-select v-model="value2"  placeholder="请选择预约医院" style="width:150px;" @change="selectHospital">
+            <div class="date-box" style="width:200px;margin-left: 50px">
+                <div class="block">
+                    <el-select v-model="value2"  placeholder="请选择预约医院" style="width:200px;" @change="selectHospital">
+                        <el-option
+                                v-for="item in hospitalList"
+                                :key="item.yyid"
+                                :label="item.yymc"
+                                :value="item.yyid"
+                        >
+                        </el-option>
+                    </el-select>
+                </div>
 
-                    <el-option
-                            v-for="item in hospitalList"
-                            :key="item.yyid"
-                            :label="item.yymc"
-                            :value="item.yyid"
-                            >
-                    </el-option>
-                </el-select>
             </div>
 
-            <div v-show="(activeName=='2'||activeName=='5')" class="date-box" style="width:150px;">
+            <div v-show="(activeName=='2'||activeName=='5')" class="date-box" style="width:200px;">
 
-                <el-select v-model="value3" placeholder="请选择预约科室" style="width:100%;">
+                <el-select v-model="value3" placeholder="请选择预约科室" style="width:200px">
                     <el-option
                             v-for="item in officeList"
                             :key="item.ksid"
@@ -54,7 +56,7 @@
                 </el-select>
             </div>
             <div class="date-box">
-                <el-button size="small">查询</el-button>
+                <el-button size="small" @click="find">查询</el-button>
             </div>
             <div class="date-box">
                 <el-button class="btn" size="small" type="primary">导出excel</el-button>
@@ -74,6 +76,7 @@
                 <!--表格-->
                 <el-table v-show="activeName==1"
                         :data="list"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -140,6 +143,7 @@
                 </el-table>
                 <el-table v-show="activeName==4"
                         :data="list"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -206,6 +210,7 @@
                 </el-table>
                 <el-table v-show="activeName==2"
                         :data="list1"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -277,6 +282,7 @@
                 </el-table>
                 <el-table v-show="activeName==5"
                         :data="list1"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -348,6 +354,7 @@
                 </el-table>
                 <el-table v-show="activeName==3"
                         :data="list2"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -423,6 +430,7 @@
                 </el-table>
                 <el-table v-show="activeName==6"
                         :data="list2"
+                          height="400"
                         style="width: 100%">
                     <el-table-column
                             prop="date"
@@ -598,11 +606,47 @@
                 }
 
             },
+            //查询
+            find(){
+                axiosUtil('smarthos.sxzz.monthcount.list',{
+                    "yyid": "11111",
+                    "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
+                }).then(res=>{
+                    console.log(res,676767)
+//                    this.$set(this.$data,'list',res.list);
+                    var list = res.list;
+
+                    var arr = [];
+                    for(var i=0;i<list.length;i++){
+                        var obj = {};
+                        obj.date = i;
+                        obj.yymc = list[i].yymc;
+                        this.date = list[0].list;
+                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
+                        for(var j=0;j<list[i].list.length;j++){
+                            obj[nodes[j]] = list[i].list[j].count;
+                        };
+                        console.log(obj,2323232)
+                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+                        arr.push(obj);
+                        console.log(arr,77777)
+                    }
+                    this.list = arr;
+
+                    console.log(this.date.length,'时间长度')
+
+                })
+            },
             getData(){
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,676767)
 //                    this.$set(this.$data,'list',res.list);
@@ -634,7 +678,9 @@
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "sqysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,666666)
 //                    this.$set(this.$data,'list',res.list);
@@ -665,7 +711,9 @@
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "qrysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,666666)
 //                    this.$set(this.$data,'list',res.list);
@@ -696,7 +744,9 @@
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "sqysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,666666)
 //                    this.$set(this.$data,'list',res.list);
@@ -727,7 +777,9 @@
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "qrysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,666666)
 //                    this.$set(this.$data,'list',res.list);
@@ -758,7 +810,9 @@
                 axiosUtil('smarthos.sxzz.monthcount.list',{
                     "yyid": "11111",
                     "sqysbh": this.value?this.value:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1
+                    "zzms":this.activeName?this.activeName:1,
+                    "hosId":this.value2,
+                    "deptId":this.value3
                 }).then(res=>{
                     console.log(res,666666)
 //                    this.$set(this.$data,'list',res.list);
