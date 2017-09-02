@@ -4,6 +4,7 @@
     </div>
 </template>
 <style>
+
 </style>
 <script>
     import MainCmp from "./components/MainCmp.vue";
