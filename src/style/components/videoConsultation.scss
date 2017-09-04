@@ -80,9 +80,9 @@
         background-color: $cBlue6;
     }
 }
-.el-table--border td, .el-table--border th {
-    border: 0;
-}
+//.el-table--border td, .el-table--border th {
+//    border: 1px solid #dfe6ec;
+//}
 .videoCancel, .videoFinished, .videoOpinion {
     //border: 1px solid #e0e6ed;
     overflow-y: auto;
