@@ -230,7 +230,7 @@
                     sqysbh: "595d05b0f19b9c898a58cc70",
                     zzzt: 1
                 });
-                console.log(data,888888)
+                console.log(data,888888);
                 this.seriesd = data.list;
                 this._getTime();
                 this._setChat();

@@ -1,3 +1,4 @@
+
 <template>
     <div >
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
@@ -650,3 +651,4 @@
 
     }
 </script>
+
