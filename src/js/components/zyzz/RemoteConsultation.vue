@@ -147,7 +147,7 @@
                <el-table-column
                        prop="date"
                        label="操作"
-                       width="250">
+                       width="150">
                    <template scope="scope">
                        <el-button
                                size="small"
@@ -463,7 +463,7 @@
                <el-table-column
                        prop="date"
                        label="操作"
-                       width="250">
+                       width="150">
                    <template scope="scope">
                        <el-button
                                size="small"
@@ -566,7 +566,7 @@
                <el-table-column
                        prop="date"
                        label="操作"
-                       width="250">
+                       width="150">
                    <template scope="scope">
                        <el-button
                                size="small"
