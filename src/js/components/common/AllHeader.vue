@@ -8,7 +8,7 @@
                             v-model="somedata.date"
                             type="date"
                             placeholder="选择日期">
-                    </el-date-picker> ---
+                    </el-date-picker> -
                     <el-date-picker
                             v-model="somedata.date1"
                             type="date"
@@ -16,7 +16,7 @@
                     </el-date-picker>
                 </div>
             </div>
-            <div class="date-box" style="width:180px;">
+            <div class="date-box" style="width:150px;">
                 <el-select v-model="somedata.cxyyid" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
                     <el-option
                             v-for="item in hospitalList"
@@ -41,16 +41,17 @@
                 </div>
             </slot>
 
-            <div class="date-box" style="width:180px;">
+            <div class="date-box" style="width:100px;">
                 <el-select v-model="somedata.zzzt" placeholder="请选择预约状态" @change="searchData">
+                    <el-option label="未选择" value=""></el-option>
                     <el-option label="待审核" value="0"></el-option>
                     <el-option label="成功" value="1"></el-option>
                     <el-option label="失败" value="2"></el-option>
                     <el-option label="取消" value="3"></el-option>
                 </el-select>
             </div>
-            <div >
-                <el-button style="margin-left: 30px;padding:5px 18px;" size="small" type="primary" @click="searchData">查询</el-button>
+            <div class="date-box" style="width:100px;">
+                <el-button style="padding:5px 18px;" size="small" type="primary" @click="searchData">查询</el-button>
             </div>
            <slot name="btn"></slot>
         </div>

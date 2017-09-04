@@ -6,10 +6,11 @@
             <div class="leftMsg">
                 我的待处理
             </div>
-            <div class="rightMsg" @click="getMsg">刷新</div>
+            <div class="rightMsg" @click="getMsg">
+                <span style="font-size:14px;color:#00b2b1;" @click="refeash">刷新</span>
+            </div>
         </div>
         <div class="home-top  msgsDetail">
-
             <div v-show="!(docObj.mzzt==0)" class="home-top-item clearfix">
                 <div class="home-top-item-link clearfix" @click="linkToModule('/main/pictureConsulting', 'twzx')">
                     <div class="home-top-item-content home-top-item-twzx fl" >
@@ -67,24 +68,20 @@
 .msgs{
     overflow: hidden;
     box-sizing: border-box;
-    margin:10px 30px 0  25px;
-    border: 1px solid gainsboro;
-    padding: 10px 25px
+    margin:5px 10px 0  10px;
+    padding: 5px 10px
 }
 .msgsDetail{
     overflow: hidden;
     box-sizing: border-box;
-    margin:0px 30px 10px 25px;
-    border-left: 1px solid gainsboro;
-    border-right: 1px solid gainsboro;
-    border-bottom: 1px solid gainsboro;
-    padding: 10px 25px
+    padding: 0px 25px
 }
     .leftMsg{
         float: left;
     }
     .rightMsg{
         float: right;
+        margin-right:50px;
     }
 .rightMsg:hover{
     cursor: pointer;
@@ -152,6 +149,9 @@
             }
         },
         methods: {
+            refeash(){
+                window.location.reload();
+            },
             getMsg(){
                 let _this=this;
                 let options={

@@ -1,3 +1,4 @@
+
 <template>
     <div >
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
@@ -20,7 +21,6 @@
         </div>
         <div v-show="activeName==4&&shzt=='0'" class="arrange-table" >
             <el-table
-                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -118,7 +118,6 @@
         </div>
         <div v-show="activeName==6&&shzt=='0'" class="arrange-table" >
             <el-table
-                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -220,7 +219,6 @@
         </div>
         <div v-show="activeName==5&&shzt=='0'" class="arrange-table" >
             <el-table
-                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -314,7 +312,6 @@
         </div>
         <div v-show="activeName==3&&shzt=='1'" class="arrange-table" >
             <el-table
-                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -408,7 +405,6 @@
         </div>
         <div v-show="activeName==2&&shzt=='1'" class="arrange-table" >
             <el-table
-                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -505,13 +501,11 @@
     </div>
 </template>
 <style>
-    .el-table .info-row {
-        background: gainsboro;
-    }
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
     import AllHeader from "../common/AllHeader.vue";
+    import { Badge, Loading, MessageBox } from "element-ui";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import FooterCmp from "../common/FooterCmp.vue";
     export default{
@@ -543,17 +537,6 @@
             this.getData(1,this.type)
         },
         methods:{
-            //失败显示字体颜色不一样
-            tableRowClassName(row, index) {
-                console.log(row.zzzt,'颜色')
-                if (row.zzzt == 2) {
-                    console.log(10101001010)
-                    return 'info-row';
-                } else  {
-                    return '';
-                }
-
-            },
             goTransferBill(index,row){
                 axiosUtil('smarthos.sxzz.byddid.list',{
                     "jgid": "59411511191ce23575a63218",
@@ -590,20 +573,26 @@
                 this.$set(this.$data,'ddid',row.ddid);
 //                console.log(res,55555)
                 if(row.zzzt==1){
-                    axiosUtil('smarthos.sxzz.qxzzsq.info',{
-                        "jgid": "59411511191ce23575a63218",
-                        "yyr": "595d05b0f19b9c898a58cc70",
-                        "ysmc":"陈升华",
-                        "ddid":row.ddid,
-                    }).then(res=>{
-                        console.log(res,55555);
-                        if(res.succ){
-                            alert('撤销成功');
-                            this.getData(1,this.type);
-                        }else {
-                            alert(res.msg)
-                        }
-                    });
+                    MessageBox.confirm('是否确认撤销？', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        closeOnPressEscape:true,
+                        type: 'warning'
+                    }).then(() => {
+                        axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                            "jgid": "59411511191ce23575a63218",
+                            "yyr": "595d05b0f19b9c898a58cc70",
+                            "ysmc":"陈升华",
+                            "ddid":row.ddid,
+                        }).then(res=>{
+                            console.log(res,55555);
+                            if(res.succ){
+                                this.getData(1,this.type);
+                            }else {
+                                alert(res.msg)
+                            }
+                        });
+                    })
                 }else {
                     axiosUtil('smarthos.sxzz.byddid.list',{
                         "jgid": "59411511191ce23575a63218",
@@ -662,3 +651,4 @@
 
     }
 </script>
+

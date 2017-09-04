@@ -42,7 +42,10 @@
                             placeholder="选择日期"
                             :picker-options="pickerOptions0">
                     </el-date-picker>
-                    <el-select v-model="sqyylx" filterable  style="height:24px;margin-left:5px;">
+
+                    <span class="demonstration" style="color:#48576A;margin-left:20px;">上下午:</span>
+                    <el-select v-model="sqyylx" filterable style="height:24px;margin-left:5px;">
+
                         <el-option label="上午" value="0"></el-option>
                         <el-option label="下午" value="1"></el-option>
                     </el-select>

@@ -632,6 +632,7 @@
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
+    import { Badge, Loading, MessageBox } from "element-ui";
     import AllHeader from "../common/AllHeader.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import FooterCmp from "../common/FooterCmp.vue";
@@ -705,21 +706,27 @@
                 console.log(row.zzzt,'改约111')
                 this.$set(this.$data,'ddid',row.ddid);
                 if(row.zzzt==0){
-                    //取消转诊
-                    axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                    MessageBox.confirm('是否确认撤销？', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        closeOnPressEscape:true,
+                        type: 'warning'
+                    }).then(() => {
+                        axiosUtil('smarthos.sxzz.qxzzsq.info',{
                         "jgid": "59411511191ce23575a63218",
-                        "yyr": "595d05b0f19b9c898a58cc70",
-                        "ysmc":"陈升华",
-                        "ddid":row.ddid,
+                            "yyr": "595d05b0f19b9c898a58cc70",
+                            "ysmc":"陈升华",
+                            "ddid":row.ddid,
                     }).then(res=>{
                         console.log(res,55555);
-                        if(res.succ){
-                            alert('撤销成功');
-                            this.getData(1,this.type);
-                        }else {
-                            alert(res.msg)
-                        }
-                    });
+                    if(res.succ){
+                        this.getData(1,this.type);
+                    }else {
+                        alert(res.msg)
+                    }
+                });
+                    })
+                    //取消转诊
                 }else if(row.zzzt==2){
                     //重新预约
                     console.log('改约')

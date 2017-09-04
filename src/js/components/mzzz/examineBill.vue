@@ -9,7 +9,7 @@
         </div>
         <div class="base-message">
             <div class="base-doc">
-                <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
+                <el-button v-show="showMsg=false" class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
             </div>
             <div class="base-docs" style="margin-top:10px;">
                 <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -134,7 +134,7 @@
                             width="200"
                             size="small"
                     ></el-input>
-                    <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
+                    <el-button class="btn" v-show="showMsg=false" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
                 </div>
                 <div class="base-con" style="height:60px;margin-top:10px;">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
@@ -147,7 +147,7 @@
                     ></el-input>
                 </div>
                 <div  style="margin-top:10px;position:relative;">
-                    <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
+                    <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病历附件:</span>
                     <div class="add-pic-list" >
                                <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList">
                                 <img :src="item.wjdz" alt="">
@@ -482,7 +482,9 @@
             </div>
         </div>
         </div>
-
+    <div class="base-con" style="margin-top:30px;">
+        <el-button class="btn" @click="getBack" type="primary" style="padding:5px 10px;margin-left:45%;" >返回</el-button>
+    </div>
 </div>
 </template>
 <style>
@@ -564,7 +566,8 @@
     .diagnoseList{
         float: left;
         width: 300px;
-        border: 1px solid gray;
+        border-radius: 3px;
+        border: 1px solid #ccc;
         margin-top: 13px;
         position: absolute;
         left: 40%;
@@ -703,6 +706,10 @@
 
         },
         methods: {
+            //返回上一步
+            getBack(){
+                this.$router.go(-1);
+            },
             //拒接预约
             refuse(){
                 axiosUtil('smarthos.sxzz.jczzsl.info',{

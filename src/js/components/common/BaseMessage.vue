@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="deal-content marginP remote-consultation-wrap content-bg-color">
+    <div class="deal-content marginP remote-consultation-wrap content-bg-color" >
        <div class="base-top">
            <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
                <p style="line-height: 40px;font-size: 14px;">基本信息</p>
@@ -134,7 +134,7 @@
                                </span>
                        </p>
                        <ul>
-                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:5px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
+                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:1px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
                        </ul>
                        <div class="inputDiagnose">
                            <el-input
@@ -163,7 +163,7 @@
                            ></el-input>
                    </div>
                    <div  style="margin-top:10px;position:relative;">
-                       <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
+                       <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病历附件:</span>
                            <div class="add-pic-list" >
                                <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList">
                                 <img :src="item.wjdz" alt="">
@@ -272,13 +272,15 @@
 .diagnoseList{
     float: left;
     width: 300px;
-    border: 1px solid gray;
+    border-radius: 3px;
+    border: 1px solid #ccc;
     margin-top: 13px;
     position: absolute;
+    font-size:14px;
     left: 40%;
     top: 0;
     z-index: 888;
-    background: white;
+    background:#F9F9F9;
 }
     .diagnoseList p{
         border-bottom: 1px solid gray;

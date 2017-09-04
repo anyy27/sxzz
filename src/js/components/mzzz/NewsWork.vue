@@ -35,18 +35,17 @@
                 <!--<el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>-->
                 <!--<el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>-->
             <!--</div>-->
-            <div class="news-table" style="width:100%;overflow:hidden;">
+            <div class="news-table" style="width:100%;overflow:hidden;box-sizing: border-box">
                 <el-table
                         :data="arrangeList"
-                        style="width:100%;overflow:hidden;"
                         height="280"
                         stripe
-                        border
+                        :border=true
                         @cell-click="and"
                 >
                     <el-table-column
                             prop="name"
-                            style="width:10%;"
+                            style="width:20px;"
                             label="医生">
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>
