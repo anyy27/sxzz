@@ -6,7 +6,7 @@
             <div class="date-box" style="width:180px;">
             <div class="block" >
                 <span class="demonstration">转诊模式:</span>
-                <el-select v-model="out" placeholder="请选择" style="width:110px;">
+                <el-select v-model="out" placeholder="请选择" style="width:110px;" @change="outInput(out)">
                 <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -32,7 +32,8 @@
             <div class="date-box" style="width:200px;margin-left: 50px">
                 <div class="block">
                     <el-select v-model="value2"  placeholder="请选择预约医院" style="width:200px;" @change="selectHospital">
-                        <el-option
+                            </el-option>
+                            <el-option
                                 v-for="item in hospitalList"
                                 :key="item.yyid"
                                 :label="item.yymc"
@@ -560,6 +561,16 @@
             this.getHospital()
         },
         methods:{
+            outInput(out){
+                console.log(out,'转入');
+                if(out==1){
+                    this.activeName='1';
+                    this.find()
+                }else {
+                    this.activeName='4'
+                    this.find()
+                }
+            },
             getHospital(){
                 axiosUtil('smarthos.sxzz.hos.list',{
                     "qyid":"0",
@@ -567,7 +578,11 @@
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){
-                        this.$set(this.$data,'hospitalList',res.list)
+                        this.$set(this.$data,'hospitalList',res.list);
+                        this.hospitalList.unshift({
+                            yymc:'全部',
+                            yyid:''
+                        })
                     }else {
                         alert(res.msg)
                     }
@@ -578,16 +593,21 @@
                 this.getOffice(id)
             },
             getOffice(id){
-                axiosUtil('smarthos.sxzz.dept.list',{
-                    "yyid":id,
-                }).then(res=>{
-                    console.log(res,232323)
-                    if(res.succ){
-                        this.$set(this.$data,'officeList',res.list)
-                    }else {
-                        alert(res.msg)
-                    }
-                })
+
+                    axiosUtil('smarthos.sxzz.dept.list',{
+                        "yyid":id,
+                    }).then(res=>{
+                        console.log(res,232323)
+                        if(res.succ){
+                            this.$set(this.$data,'officeList',res.list);
+                            this.officeList.unshift({
+                                ksmc:'全部',
+                                ksid:''
+                            })
+                        }else {
+                            alert(res.msg)
+                        }
+                    })
             },
             handleClick(value){
                 console.log(value.name,2211111);
@@ -608,37 +628,42 @@
             },
             //查询
             find(){
-                axiosUtil('smarthos.sxzz.monthcount.list',{
-                    "yyid": "11111",
-                    "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
-                    "zzms":this.activeName?this.activeName:1,
-                    "hosId":this.value2,
-                    "deptId":this.value3
-                }).then(res=>{
-                    console.log(res,676767)
-//                    this.$set(this.$data,'list',res.list);
-                    var list = res.list;
+                console.log(this.activeName,"898989");
+                var value ={};
+                value.name = this.activeName;
+                this.handleClick(value);
+//                axiosUtil('smarthos.sxzz.monthcount.list',{
+//                    "yyid": "11111",
+//                    "qrysbh": this.id?this.id:'595d05b0f19b9c898a58cc70',
+//                    "zzms":this.activeName?this.activeName:1,
+//                    "hosId":this.value2,
+//                    "deptId":this.value3
+//                }).then(res=>{
+//                    console.log(res,676767)
+////                    this.$set(this.$data,'list',res.list);
+//                    var list = res.list;
+//
+//                    var arr = [];
+//                    for(var i=0;i<list.length;i++){
+//                        var obj = {};
+//                        obj.date = i;
+//                        obj.yymc = list[i].yymc;
+//                        this.date = list[0].list;
+//                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
+//                        for(var j=0;j<list[i].list.length;j++){
+//                            obj[nodes[j]] = list[i].list[j].count;
+//                        };
+//                        console.log(obj,2323232)
+//                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
+//                        arr.push(obj);
+//                        console.log(arr,77777)
+//                    }
+////                    this.list = arr;
+//                    this.$set(this.$data,'list',arr)
+//
+//                    console.log(this.list,'时间长度')
 
-                    var arr = [];
-                    for(var i=0;i<list.length;i++){
-                        var obj = {};
-                        obj.date = i;
-                        obj.yymc = list[i].yymc;
-                        this.date = list[0].list;
-                        let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
-                        for(var j=0;j<list[i].list.length;j++){
-                            obj[nodes[j]] = list[i].list[j].count;
-                        };
-                        console.log(obj,2323232)
-                        obj.total = parseInt(obj.two) + parseInt(obj.one)+parseInt(obj.three) +parseInt(obj.four) + parseInt(obj.five)+parseInt(obj.six) +parseInt(obj.seven) +parseInt(obj.eight) +parseInt(obj.nine) +parseInt(obj.ten) +parseInt(obj.eleven)+parseInt(obj.twelve)
-                        arr.push(obj);
-                        console.log(arr,77777)
-                    }
-                    this.list = arr;
-
-                    console.log(this.date.length,'时间长度')
-
-                })
+//                })
             },
             getData(){
                 axiosUtil('smarthos.sxzz.monthcount.list',{
