@@ -25,13 +25,13 @@
                                              size="small"
                                      ></el-input>
 
-                             <label style="margin-left:30px;"><span class="fee-num">*</span>姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名:</label>
+                             <label style="margin-left:25px;"><span class="fee-num">*</span>姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名:</label>
                                  <el-input
                                          v-model="ruleForm.yhxm"
                                          style="width:100px;"
                                          size="small"
                                  ></el-input>
-                             <label style="margin-left:44px;"><span class="fee-num">*</span>身份证号:</label>
+                             <label style="margin-left:42px;"><span class="fee-num">*</span>身份证号:</label>
                               <el-input
                                       v-model="ruleForm.zjhm"
                                       style="width:160px;"

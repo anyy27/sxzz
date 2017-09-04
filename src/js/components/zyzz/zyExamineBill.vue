@@ -6,7 +6,7 @@
             <p style="line-height: 40px;font-size: 14px;">基本信息</p>
         </div>
         <div class="base-message">
-            <div class="base-doc">
+            <div class="base-doc" v-show="shows7">
                 <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
             </div>
             <div class="base-docs" style="margin-top:10px;">
@@ -136,7 +136,7 @@
                             size="small"
                     ></el-input>
 
-                    <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
+                    <el-button v-show="shows7" class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
 
                 </div>
 
@@ -379,6 +379,7 @@
                 nUMID:"",
                 nUMDATE:'',
                 nUMTIME:"",
+                shows7:false,
                 shzt:JSON.parse(localStorage.getItem('shzt')),
                 radio:'',
                 currentFirstDate:'',

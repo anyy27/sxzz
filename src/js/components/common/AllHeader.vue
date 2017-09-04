@@ -18,6 +18,7 @@
             </div>
             <div class="date-box" style="width:150px;">
                 <el-select v-model="somedata.cxyyid" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
+                    <el-option label="全部" value=""></el-option>
                     <el-option
                             v-for="item in hospitalList"
                             :key="item.yyid"
@@ -30,6 +31,7 @@
             <slot name="selOffice">
                 <div class="date-box" style="width:180px;">
                     <el-select v-model="somedata.ksid" placeholder="请选择预约科室" style="width:100%;">
+                        <el-option label="全部" value=""></el-option>
                         <el-option
                                 v-for="item in officeList"
                                 :key="item.ksid"

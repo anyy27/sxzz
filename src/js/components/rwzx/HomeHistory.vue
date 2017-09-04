@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="rwzx-box">
-            <div class="rwzx-table">
+            <div class="rwzx-table" style="margin-left:10px;">
                 <div class="rwzx-title">
                     <p>最近转诊记录</p>
                 </div>
@@ -36,7 +36,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div class="rwzx-table">
+            <div class="rwzx-table" style="margin-left:2%;">
                 <div class="rwzx-title">
                     <p>最近受理记录</p>
                 </div>
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="rwzx-charts">
-            <div class="rwzx-picture">
+            <div class="rwzx-picture" style="margin-left:10px;">
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
                     <el-tab-pane label="转出图" name="first"></el-tab-pane>
                     <el-tab-pane label="转入图" name="second" ></el-tab-pane>
@@ -92,7 +92,7 @@
                 <!--</div>-->
 
             </div>
-            <div class="rwzx-picture">
+            <div class="rwzx-picture" style="margin-left:2%;">
                 <el-tabs v-model="activeName2" @tab-click="shiftTo1">
                     <el-tab-pane label="转出表" name="fourth"></el-tab-pane>
                     <el-tab-pane label="转入表" name="fifth"></el-tab-pane>
@@ -163,7 +163,8 @@
                 sljl: [],
                 seriesd: [],
                 sd: [],
-                st: []
+                st: [],
+                shift1:[]
             }
         },
         methods: {
@@ -207,12 +208,23 @@
             shiftTo1(value,event){
                 console.log(value.name,event,2222);
                 if(value.name=='fourth'){
-                    this._getShift()
+                    this._getShift1()
                 }else {
-                    this._getDatad();
+                    this._getDatad1();
                 }
             },
             async _getShift(){
+                console.log("323233434343");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    qrysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                console.log(data,999999)
+                this.seriesd = data.list;
+                this._getTime();
+            },
+            async _getShift1(){
                 console.log("323233434343");
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
@@ -220,8 +232,21 @@
                     zzzt: 1
                 });
                 console.log(data,999999)
-                this.seriesd = data.list;
+                this.shift1 = data.list;
                 this._getTime();
+                this._setChat();
+            },
+            async _getDatad1(){
+                console.log("lddl");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    qrysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                console.log(data,888888);
+                this.shift1 = data.list;
+                this._getTime();
+                this._setChat();
             },
             async _getDatad(){
                 console.log("lddl");
@@ -327,13 +352,14 @@
                     let date=timeformat(new Date().getTime() - (j + 1) * 24 * 3600 * 1000, "%Y-%m-%d")
                     var chatObj = {};
                     chatObj.date = date;
-                    chatObj.outpatient = this._getSeries(this.seriesd,0,date);
-                    chatObj.inspect = this._getSeries(this.seriesd,1,date);
-                    chatObj.hospital = this._getSeries(this.seriesd,2,date);
-                    chatObj.surgery = this._getSeries(this.seriesd,3,date);
+                    chatObj.outpatient = this._getSeries(this.shift1,0,date);
+                    chatObj.inspect = this._getSeries(this.shift1,1,date);
+                    chatObj.hospital = this._getSeries(this.shift1,2,date);
+                    chatObj.surgery = this._getSeries(this.shift1,3,date);
                     console.log(chatObj,55555555)
                     chatArr.push(chatObj)
                 }
+                console.log("66/66",chatArr);
                 this.$set(this.$data,'tableArr',chatArr)
             }
         },
