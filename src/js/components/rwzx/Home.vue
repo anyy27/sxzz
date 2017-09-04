@@ -125,7 +125,21 @@
         },
         mounted:function(){
             console.log(this.docObj,1212121);
-            this.getMsg()
+            let _this=this;
+            let options={
+                docId:"595d05b0f19b9c898a58cc70",
+            }
+            axiosUtil("smarthos.sxzz.pending.list",options).then(res=>{
+                if(res.succ){
+                    console.log("88/888",res);
+                    _this.jczz=res.list[0].count;
+                    _this.zyzz=res.list[1].count;
+                    _this.rjss=res.list[2].count;
+
+                }else{
+                    console.log("66/666");
+                }
+            })
 
         },
         computed: {
@@ -149,6 +163,7 @@
                         _this.jczz=res.list[0].count;
                         _this.zyzz=res.list[1].count;
                         _this.rjss=res.list[2].count;
+                        alert('刷新成功')
 
                     }else{
                         console.log("66/666");

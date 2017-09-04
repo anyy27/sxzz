@@ -20,6 +20,7 @@
         </div>
         <div v-show="activeName==4&&shzt=='0'" class="arrange-table" >
             <el-table
+                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -117,6 +118,7 @@
         </div>
         <div v-show="activeName==6&&shzt=='0'" class="arrange-table" >
             <el-table
+                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -218,6 +220,7 @@
         </div>
         <div v-show="activeName==5&&shzt=='0'" class="arrange-table" >
             <el-table
+                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -311,6 +314,7 @@
         </div>
         <div v-show="activeName==3&&shzt=='1'" class="arrange-table" >
             <el-table
+                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -404,6 +408,7 @@
         </div>
         <div v-show="activeName==2&&shzt=='1'" class="arrange-table" >
             <el-table
+                    :row-class-name="tableRowClassName"
                     :data="tableData"
                     stripe
                     height="400"
@@ -500,6 +505,9 @@
     </div>
 </template>
 <style>
+    .el-table .info-row {
+        background: gainsboro;
+    }
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
@@ -535,6 +543,17 @@
             this.getData(1,this.type)
         },
         methods:{
+            //失败显示字体颜色不一样
+            tableRowClassName(row, index) {
+                console.log(row.zzzt,'颜色')
+                if (row.zzzt == 2) {
+                    console.log(10101001010)
+                    return 'info-row';
+                } else  {
+                    return '';
+                }
+
+            },
             goTransferBill(index,row){
                 axiosUtil('smarthos.sxzz.byddid.list',{
                     "jgid": "59411511191ce23575a63218",
