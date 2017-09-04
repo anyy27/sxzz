@@ -72,7 +72,7 @@
                 return this.$store.state.clientH;
             },
             isLogin: function () {//先判断是否登录来显示页面
-                return localStorage.getItem("userInfo") && JSON.parse(localStorage.getItem("userInfo")).isAss;
+                return localStorage.getItem("docObj") ;
             }
         },
         methods: {

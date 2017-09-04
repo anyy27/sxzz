@@ -39,7 +39,7 @@
                     </el-select>
                 </div>
                 <div class="base-con">
-                    <span class="demonstration" style="color:#48576A;margin-left:20px;">期望手术日期:</span>
+                    <span class="demonstration" style="color:#48576A;margin-left:20px;">期望检查日期:</span>
                     <el-date-picker
                             v-model="sqyyrq"
                             type="date"

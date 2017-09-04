@@ -151,7 +151,7 @@
                     ></el-input>
                 </div>
                 <div  style="box-sizing:border-box;padding:10px 0px; margin-top:10px;position:relative;">
-                    <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病例附件:</span>
+                    <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病历附件:</span>
                     <div class="add-pic-list" >
                                <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList">
                                 <img :src="item.wjdz" alt="">
@@ -324,7 +324,8 @@
     .diagnoseList{
         float: left;
         width: 300px;
-        border: 1px solid gray;
+        border-radius: 3px;
+        border: 1px solid #ccc;
         margin-top: 13px;
         position: absolute;
         left: 40%;

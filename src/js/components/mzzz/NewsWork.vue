@@ -46,7 +46,7 @@
                 >
                     <el-table-column
                             prop="name"
-                            style="width:10%;"
+                            style="width:50px;"
                             label="医生">
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>

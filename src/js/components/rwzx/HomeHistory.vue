@@ -8,6 +8,7 @@
                 <el-table
                         :data="zzjl"
                         stripe
+                        :show-header=false
                         style="width: 100%"
                 >
                     <el-table-column
@@ -18,7 +19,7 @@
                     <el-table-column
                             prop="yhxm"
                             label="姓名"
-                            width="100">
+                            width="50">
                     </el-table-column>
                     <el-table-column
                             label="预约状态">
@@ -42,6 +43,7 @@
                 <el-table
                         :data="sljl"
                         stripe
+                        :show-header=false
                         style="width: 100%"
                 >
                     <el-table-column
@@ -91,9 +93,9 @@
 
             </div>
             <div class="rwzx-picture">
-                <el-tabs v-model="activeName" @tab-click="shiftTo">
-                    <el-tab-pane label="转出表" name="first"></el-tab-pane>
-                    <el-tab-pane label="转入表" name="second"></el-tab-pane>
+                <el-tabs v-model="activeName2" @tab-click="shiftTo1">
+                    <el-tab-pane label="转出表" name="fourth"></el-tab-pane>
+                    <el-tab-pane label="转入表" name="fifth"></el-tab-pane>
                 </el-tabs>
                 <div v-show="activeName1 == 'third'" class="rwzx-tj">
                     <el-table
@@ -155,6 +157,7 @@
                 tableArr:[],
                 activeName: 'first',
                 activeName1: 'third',
+                activeName2:"fourth",
                 charts: '',
                 zzjl: [],
                 sljl: [],
@@ -201,6 +204,14 @@
                     this._getDatad();
                 }
             },
+            shiftTo1(value,event){
+                console.log(value.name,event,2222);
+                if(value.name=='fourth'){
+                    this._getShift()
+                }else {
+                    this._getDatad();
+                }
+            },
             async _getShift(){
                 console.log("323233434343");
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
@@ -217,7 +228,6 @@
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
                     sqysbh: "595d05b0f19b9c898a58cc70",
-
                     zzzt: 1
                 });
                 console.log(data,888888)
