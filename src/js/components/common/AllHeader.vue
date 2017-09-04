@@ -43,7 +43,7 @@
 
             <div class="date-box" style="width:100px;">
                 <el-select v-model="somedata.zzzt" placeholder="请选择预约状态" @change="searchData">
-                    <el-option label="未选择" value=""></el-option>
+                    <el-option label="全部" value=""></el-option>
                     <el-option label="待审核" value="0"></el-option>
                     <el-option label="成功" value="1"></el-option>
                     <el-option label="失败" value="2"></el-option>

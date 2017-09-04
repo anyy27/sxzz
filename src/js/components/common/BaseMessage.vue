@@ -435,7 +435,8 @@
           },
           getValue(value){
               console.log(value,8888)
-              this.$set(this.$data.ruleForm,'zdjg',value)
+              this.$set(this.$data.ruleForm,'zdjg',value);
+              this.$set(this.$data,'showDiagnoseList',false)
           },
           hideDiagnose(){
               this.$set(this.$data,'showDiagnoseList',false)

@@ -1,13 +1,17 @@
 <template>
     <div>
         <div class="commonbox-box">
-            <p style="text-align: center;"><svg class="icon success">
-                <use xlink:href="#icon-zhengque"></use>
-            </svg>
-            </p>
-            <h1 v-show="zyzzList.zzzt==1||zyzzList.zzzt==2">{{zyzzList.zzzt==1?'成功':'失败'}}</h1>
-            <h1 v-show="zyzzList.zzzt==3||zyzzList.zzzt==0">{{zyzzList.zzzt==3?'已取消':'待审核'}}</h1>
-            <p style="text-align: center;">西湖区西溪街道社区卫生服务中心转诊单</p>
+            <div v-show="shows1">
+                <p style="text-align: center;"><svg class="icon success">
+                    <use xlink:href="#icon-zhengque"></use>
+                </svg>
+                </p>
+                <h1 v-show="zyzzList.zzzt==1||zyzzList.zzzt==2">{{zyzzList.zzzt==1?'成功':'失败'}}</h1>
+                <h1 v-show="zyzzList.zzzt==3||zyzzList.zzzt==0">{{zyzzList.zzzt==3?'已取消':'待审核'}}</h1>
+            </div>
+            <p style="font-weight: bold;font-size: 16px;text-align: center;margin-top:30px;" v-show="shows2">西湖区西溪街道社区卫生服务中心转诊单</p>
+            <div style="width:100%;height:100px;" v-show="shows2"></div>
+            <p style="text-align: center;" v-show="shows1">西湖区西溪街道社区卫生服务中心转诊单</p>
 
             <div class="commonbox-con">
                 <div class="commonbox-news">
@@ -32,7 +36,7 @@
                 </div>
             </div>
             <div class="commonbox-btn">
-                <el-button class="btn commonboxbtn" type="text" style="padding:5px 20px;">打印</el-button>
+                <el-button class="btn commonboxbtn" type="text" style="padding:5px 20px;" @click="open1">打印</el-button>
                 <el-button class="btn commonboxbtn" type="text" style="padding:5px 20px;" @click="open">关闭</el-button>
             </div>
         </div>
@@ -48,7 +52,9 @@
     export default{
         data(){
             return {
-                zyzzList:{}
+                zyzzList:{},
+                shows1:true,
+                shows2:false
             }
         },
         mounted:function(){
@@ -59,6 +65,10 @@
             open(){
                 let _this=this;
                 _this.$router.go(-1);
+            },
+            open1(){
+                this.shows1=false;
+                this.shows2=true;
             }
         }
     }

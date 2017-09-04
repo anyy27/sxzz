@@ -58,9 +58,7 @@
         },
         methods:{
             open(){
-                this.$router.push({
-                    name:"videoConsultation"
-                })
+                this.$router.go(-1);
             }
         }
     }
