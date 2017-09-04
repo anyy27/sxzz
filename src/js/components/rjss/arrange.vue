@@ -54,7 +54,7 @@
                     label="预约状态">
                 <template scope="scope">
                     <div v-show="scope.row.zzzt=='0'">待审核</div>
-                    <div v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                    <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -355,7 +355,7 @@
                     prop="zzzt"
                     label="预约状态">
                 <template scope="scope">
-                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                    <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -453,7 +453,7 @@
                     prop="zzzt"
                     label="预约状态">
                 <template scope="scope">
-                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                    <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -551,7 +551,7 @@
                     prop="zzzt"
                     label="预约状态">
                 <template scope="scope">
-                    <div>{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                    <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -631,7 +631,9 @@
 </div>
 </template>
 <style>
-
+.active{
+    color: red;
+}
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
