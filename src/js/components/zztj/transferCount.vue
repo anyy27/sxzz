@@ -60,7 +60,7 @@
                 <el-button size="small" @click="find">查询</el-button>
             </div>
             <div class="date-box">
-                <el-button class="btn" size="small" type="primary">导出excel</el-button>
+                <el-button class="btn" size="small" type="primary" @click="onexport">导出excel</el-button>
             </div>
         </div>
         <div v-if="this.date.length!='0'"  class="hosptial-table">
@@ -75,7 +75,8 @@
                     <el-tab-pane label="按业务" name="6"> </el-tab-pane>
                 </el-tabs>
                 <!--表格-->
-                <el-table v-show="activeName==1"
+
+                <el-table id="out-table"  v-show="activeName==1"
                         :data="list"
                           height="400"
                         style="width: 100%">
@@ -142,7 +143,7 @@
                             label="全年">
                     </el-table-column>
                 </el-table>
-                <el-table v-show="activeName==4"
+                <el-table id="out-table4" v-show="activeName==4"
                         :data="list"
                           height="400"
                         style="width: 100%">
@@ -209,7 +210,7 @@
                             label="全年">
                     </el-table-column>
                 </el-table>
-                <el-table v-show="activeName==2"
+                <el-table id="out-table2" v-show="activeName==2"
                         :data="list1"
                           height="400"
                         style="width: 100%">
@@ -281,7 +282,7 @@
                             label="全年">
                     </el-table-column>
                 </el-table>
-                <el-table v-show="activeName==5"
+                <el-table id="out-table5" v-show="activeName==5"
                         :data="list1"
                           height="400"
                         style="width: 100%">
@@ -353,7 +354,7 @@
                             label="全年">
                     </el-table-column>
                 </el-table>
-                <el-table v-show="activeName==3"
+                <el-table id="out-table3" v-show="activeName==3"
                         :data="list2"
                           height="400"
                         style="width: 100%">
@@ -429,7 +430,7 @@
                             label="全年">
                     </el-table-column>
                 </el-table>
-                <el-table v-show="activeName==6"
+                <el-table id="out-table6" v-show="activeName==6"
                         :data="list2"
                           height="400"
                         style="width: 100%">
@@ -529,6 +530,7 @@
     export default {
         data() {
             return {
+                tableId:"out-table",
                 list:[],
                 date:[],
                 hospitalList:[],
@@ -561,6 +563,29 @@
             this.getHospital()
         },
         methods:{
+            //导出exel
+            s2ab(s) {
+                if(typeof ArrayBuffer !== 'undefined') {
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                } else {
+                    var buf = new Array(s.length);
+                    for (var i=0; i!=s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+            },
+            onexport(evt) {
+                /* generate workbook object from table */
+                var wb = XLSX.utils.table_to_book(document.getElementById(this.tableId));
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+                    var self = this;
+                    /* force a download */
+                    saveAs(new Blob([self.s2ab(wbout)], { type: 'application/octet-stream' }), "sheetjs.xlsx");
+
+            },
             outInput(out){
                 console.log(out,'转入');
                 if(out==1){
@@ -612,16 +637,22 @@
             handleClick(value){
                 console.log(value.name,2211111);
                 if(value.name==1){
+                    this.tableId = 'out-table';
                     this.getData()
                 }else if(value.name==2){
+                    this.tableId = 'out-table2';
                     this.getList()
                 }else if(value.name==3){
+                    this.tableId = 'out-table3';
                     this.getArr()
                 }else if(value.name==4){
+                    this.tableId = 'out-table4';
                     this.getDatas()
                 }else if(value.name==5){
+                    this.tableId = 'out-table5';
                     this.getLists()
                 }else if(value.name==6){
+                    this.tableId = 'out-table6';
                     this.getArrs()
                 }
 
