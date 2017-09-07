@@ -58,7 +58,7 @@
                             <el-table-column
                                     prop="monday.am"
                                     label="上午"
-                            >
+                                >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
                                 </template>
@@ -530,7 +530,7 @@
                 return date;
             },
             nextDate(){
-                this.index++
+                this.index++;
                 this.$set(this.$data,'disabled',false);
                 this.setDate(this.addDate(this.currentFirstDate,7));
             },

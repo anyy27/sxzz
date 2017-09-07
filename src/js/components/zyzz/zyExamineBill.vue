@@ -6,7 +6,7 @@
             <p style="line-height: 40px;font-size: 14px;">基本信息</p>
         </div>
         <div class="base-message">
-            <div class="base-doc">
+            <div class="base-doc" v-show="shows7">
                 <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
             </div>
             <div class="base-docs" style="margin-top:10px;">
@@ -136,7 +136,7 @@
                             size="small"
                     ></el-input>
 
-                    <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
+                    <el-button v-show="shows7" class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
 
                 </div>
 
@@ -311,18 +311,7 @@
         top:10px;
         right: 5px;
     }
-    .diagnoseList{
-        float: left;
-        width: 300px;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        margin-top: 13px;
-        position: absolute;
-        left: 40%;
-        top: 0;
-        z-index: 888;
-        background: white;
-    }
+
     .diagnoseList p{
         border-bottom: 1px solid gray;
         padding: 8px;
@@ -379,6 +368,7 @@
                 nUMID:"",
                 nUMDATE:'',
                 nUMTIME:"",
+                shows7:false,
                 shzt:JSON.parse(localStorage.getItem('shzt')),
                 radio:'',
                 currentFirstDate:'',
@@ -451,8 +441,6 @@
             this.ruleForm.regionId =parseInt(this.applyDetail.regionId)
             this.getData();
             this.projectLists()
-
-
         },
         methods: {
             //拒接预约
@@ -528,8 +516,7 @@
             //获取科室
             projectLists(){
                 axiosUtil('smarthos.sxzz.dept.list',{
-                    "jgid": "59411511191ce23575a63218",
-                    "yyid":"59411511191ce23575a63218",
+                    "yyid":JSON.parse(localStorage.getItem('docObj')).jgid,
                 }).then(res=>{
                     if(res.succ){
                         console.log(res,'科室列表')

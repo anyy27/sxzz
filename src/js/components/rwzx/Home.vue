@@ -4,7 +4,7 @@
 
         <div class="msgs">
             <div class="leftMsg">
-                我的待处理
+                <span style="font-size:14px;color:#666666;font-weight: bold;" @click="refeash">我的待处理</span>
             </div>
             <div class="rightMsg" @click="getMsg">
                 <span style="font-size:14px;color:#00b2b1;" @click="refeash">刷新</span>
@@ -73,8 +73,9 @@
 }
 .msgsDetail{
     overflow: hidden;
+    width:98%;
     box-sizing: border-box;
-    padding: 0px 25px
+    margin-left:10px;
 }
     .leftMsg{
         float: left;

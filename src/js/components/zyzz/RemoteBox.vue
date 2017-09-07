@@ -25,7 +25,7 @@
                 </div>
                 <div class="commonbox-news" style="margin-left:1%;">
                     <div><span>预约科室:</span><span> &nbsp&nbsp{{zyzzList.qrksmc}}</span></div>
-                    <div><span>住院时间:</span><span> &nbsp&nbsp{{zyzzList.sqyyrq}}</span></div>
+                    <div><span>住院时间:</span><span> &nbsp&nbsp{{zyzzList.sqyyrq}}</span><span style="margin-left:20px;">{{zyzzList.jzsj}}</span></div>
                     <div><span>申请医院:</span><span> &nbsp&nbsp{{zyzzList.sqyymc}}</span></div>
                     <div><span>申请人电话:</span><span> &nbsp&nbsp{{zyzzList.sqysdh}}</span></div>
                     <!--<div><span>门办地址:</span><span> &nbsp&nbsp门诊大楼二楼医患沟通中心</span></div>-->

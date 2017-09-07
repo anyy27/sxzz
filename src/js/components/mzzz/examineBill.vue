@@ -9,111 +9,99 @@
         </div>
         <div class="base-message">
             <div class="base-doc">
-                <el-button v-show="showMsg=false" class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
+                <el-button class="btn" type="primary" style="padding:5px 20px;">读市民卡</el-button>
             </div>
             <div class="base-docs" style="margin-top:10px;">
                 <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
                     <div class="base-con">
-                        <el-form-item label="就诊卡号:"  >
-                            <div class="base-idcard" style="width:120px;margin-left:10px;">
-                                <el-select v-model="ruleForm.klx" placeholder="请选择卡号">
-                                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                        </el-option>
-                                </el-select>
-                            </div>
-                            <div class="base-idcard" style="margin-left:10px;">
-                                <el-input
-                                        v-model="ruleForm.kh"
-                                        width="200"
-                                        size="small"
-                                ></el-input>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="姓名:">
-                            <el-input
-                                    v-model="ruleForm.yhxm"
-                                    style="width:100px;"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="身份证号:"  style="margin-left:150px;" >
-                            <el-input
-                                    v-model="ruleForm.zjhm"
-                                    width="200"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
-                    </div>
-                    <div class="base-con">
-                        <el-form-item label="性别:" >
-                            <el-radio class="radio" v-model="ruleForm.xb" label="男">男</el-radio>
-                            <el-radio class="radio" v-model="ruleForm.xb" label="女">女</el-radio>
-                        </el-form-item>
-                        <el-form-item label="年龄:" >
-                            <el-input
-                                    v-model="ruleForm.age"
-                                    style="width:100px;"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="患者手机号:"  style="margin-left:80px;">
-                            <el-input
-                                    v-model="ruleForm.sjhm"
-                                    width="100"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="其他联系方式:"  style="margin-left:40px;">
-                            <el-input
-                                    v-model="ruleForm.lxdh"
-                                    width="100"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
+                        <label><span class="fee-num">*</span>就诊卡号:</label>
+                        <el-select v-model="ruleForm.klx"    style="width:150px;"placeholder="请选择卡号">
+                            <el-option label="省医保" value="0"></el-option>
+                            <el-option label="市医保" value="1"></el-option>
+                            <el-option label="市民卡" value="2"></el-option>
+                            <el-option label="就诊卡" value="3"></el-option>
+                        </el-select>
+                        <el-input
+                                v-model="ruleForm.kh"
+                                style="width:200px;"
+                                size="small"
+                        ></el-input>
 
+                        <label style="margin-left:25px;"><span class="fee-num">*</span>姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名:</label>
+                        <el-input
+                                v-model="ruleForm.yhxm"
+                                style="width:100px;"
+                                size="small"
+                        ></el-input>
+                        <label style="margin-left:68px;"><span class="fee-num">*</span>身份证号:</label>
+                        <el-input
+                                v-model="ruleForm.zjhm"
+                                style="width:160px;"
+                                size="small"
+                                @blur="getUser(ruleForm.zjhm)"
+                        ></el-input>
                     </div>
                     <div class="base-con">
-                        <el-form-item label="家庭住址:" >
-                            <div class="block">
-                                <el-select v-model="ruleForm.provinceId" placeholder="请选择"  @change="getProvincess"  style="width: 150px"  >
-                                    <el-option
-                                            v-for="item in provinces"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id">
-                                    </el-option>
-                                </el-select>
-                                <el-select v-model="ruleForm.cityId" placeholder="请选择" @change="getEaras"  style="width: 150px">
-                                    <el-option
-                                            v-for="item in citys"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id">
-                                    </el-option>
-                                </el-select>
-                                <el-select v-model="ruleForm.regionId" placeholder="请选择"  style="width: 150px">
-                                    <el-option
-                                            v-for="item in earas"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id">
-                                    </el-option>
-                                </el-select>
-                                <el-input
-                                        v-model="ruleForm.lxdz"
-                                        style="width:200px;"
-                                        size="small"
-                                        placeholder="街道等详细地址选择填写"
-                                ></el-input>
-                            </div>
-                        </el-form-item>
-                        <el-form-item label="医生电话:"  style="margin-left:40px;">
-                            <el-input
-                                    v-model="ruleForm.sqysdh"
-                                    width="100"
-                                    size="small"
-                            ></el-input>
-                        </el-form-item>
+                        <label><span class="fee-num">*</span>性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别:</label>
+                        <el-radio class="radio" v-model="ruleForm.xb" label="男">男</el-radio>
+                        <el-radio class="radio" v-model="ruleForm.xb" label="女">女</el-radio>
+                        <label style="margin-left:118px;"><span class="fee-num"></span>年龄:</label>
+                        <el-input
+                                v-model="ruleForm.age"
+                                style="width:100px;"
+                                size="small"
+                        ></el-input>
+                        <label style="margin-left:30px;"><span class="fee-num">*</span>患者手机号:</label>
+                        <el-input
+                                v-model="ruleForm.sjhm"
+                                style="width:100px;"
+                                size="small"
+                        ></el-input>
+                        <label style="margin-left:40px;"><span class="fee-num">*</span>其他联系方式:</label>
+                        <el-input
+                                v-model="ruleForm.lxdh"
+                                style="width:160px;"
+                                size="small"
+                        ></el-input>
+                    </div>
+                    <div class="base-con">
+                        <label><span class="fee-num">*</span>家庭住址:</label>
+                        <el-select v-model="ruleForm.provinceId" placeholder="请选择"  @change="getProvincess"  style="width: 114px"  >
+                            <el-option
+                                    v-for="item in provinces"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                        <el-select v-model="ruleForm.cityId" placeholder="请选择" @change="getEaras"  style="width: 114px">
+                            <el-option
+                                    v-for="item in citys"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                        <el-select v-model="ruleForm.regionId" placeholder="请选择"  style="width: 114px">
+                            <el-option
+                                    v-for="item in earas"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                        <el-input
+                                v-model="ruleForm.lxdz"
+                                style="width:212px;"
+                                size="small"
+                                placeholder="街道等详细地址选择填写"
+                        ></el-input>
+                        <label style="margin-left:76px;"><span class="fee-num"></span>医生电话:</label>
+                        <el-input
+                                v-model="ruleForm.sqysdh"
+                                style="width:160px;"
+                                size="small"
+                        ></el-input>
                     </div>
                 </el-form>
             </div>
@@ -161,6 +149,26 @@
                     </div>
                 </div>
             </el-form>
+        </div>
+
+        <div>
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊科室:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrksmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊医生:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.ysxm}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{arranges.jzsj}}</span>
+            </div>
         </div>
        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 10px">
            <div class="base-appoint" style="padding: 0">
@@ -481,7 +489,8 @@
         </div>
         </div>
     <div class="base-con" style="margin-top:30px;">
-        <el-button class="btn" @click="getBack" type="primary" style="padding:5px 10px;margin-left:45%;" >返回</el-button>
+        <el-button class="btn " type="primary" style="padding:5px 20px; margin-left:45%;border-color: #00b2b1;
+  background-color: #00b2b1;" @click="goBack">返回</el-button>
     </div>
 </div>
 </template>
@@ -561,18 +570,6 @@
         top:10px;
         right: 5px;
     }
-    .diagnoseList{
-        float: left;
-        width: 300px;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        margin-top: 13px;
-        position: absolute;
-        left: 40%;
-        top: 0;
-        z-index: 888;
-        background: white;
-    }
     .diagnoseList p{
         border-bottom: 1px solid gray;
         padding: 8px;
@@ -616,6 +613,9 @@
     export default{
         data(){
             return{
+                arranges:{},
+                hosname:"",
+                deptname:"",
                 showMsg:false,
                 type:'',
                 jcdd:'',
@@ -685,7 +685,9 @@
 
         mounted(){
             this.setDate(new Date());
-           this.applyDetail  = this.$route.params.applyDetail;
+            this.applyDetail  = this.$route.params.applyDetail;
+            this.arranges=this.applyDetail;
+            console.log("66/666",this.arranges)
             this.type = this.$route.params.type;
             console.log( this.type,'类型啊')
                 this.ruleForm = {
@@ -1041,7 +1043,7 @@
                     "ysid": "595d05b0f19b9c898a58cf48",
                     "zdxx": this.zdxx
                 }).then(res=>{
-                    console.log(res,66666);
+                    console.log(res,666661);
                     if(res.succ){
                         this.getDiagnoseList();
                         this.zdxx=''
@@ -1058,7 +1060,7 @@
                         "jgid": "59411511191ce23575a63218",
                         "zdid":id
                     }).then(res=>{
-                        console.log(res,66666);
+                        console.log(res,666662);
                         if(res.succ){
                             this.getDiagnoseList()
                         }else {
@@ -1076,7 +1078,7 @@
                     "jgid": "59411511191ce23575a63218",
                     "yyr":"595d05b0f19b9c898a58cf48"
                 }).then(res=>{
-                    console.log(res,66666);
+                    console.log(res,666663);
                     if(res.succ){
                         this.$set(this.$data,'diagnoseList',res.list)
                     }else {

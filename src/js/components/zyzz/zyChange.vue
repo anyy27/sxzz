@@ -169,6 +169,7 @@
                     sqyylx:this.sqyylx,
                     tjbz:this.tjbz,
                     tjrq:this.tjrq,
+                    ddid:this.applyDetail.ddid,
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",
                     sqysdh: "18358023268",
