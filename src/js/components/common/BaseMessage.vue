@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="deal-content marginP remote-consultation-wrap content-bg-color" >
+    <div class=" marginP remote-consultation-wrap content-bg-color" >
        <div class="base-top">
            <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
                <p style="line-height: 40px;font-size: 14px;">基本信息</p>
@@ -31,7 +31,7 @@
                                          style="width:100px;"
                                          size="small"
                                  ></el-input>
-                             <label style="margin-left:42px;"><span class="fee-num">*</span>身份证号:</label>
+                             <label style="margin-left:68px;"><span class="fee-num">*</span>身份证号:</label>
                               <el-input
                                       v-model="ruleForm.zjhm"
                                       style="width:160px;"
@@ -58,7 +58,7 @@
                              <label style="margin-left:40px;"><span class="fee-num">*</span>其他联系方式:</label>
                                  <el-input
                                          v-model="ruleForm.lxdh"
-                                         style="width:120px;"
+                                         style="width:160px;"
                                          size="small"
                                  ></el-input>
                          </div>
@@ -90,14 +90,14 @@
                                      </el-select>
                                      <el-input
                                              v-model="ruleForm.lxdz"
-                                             style="width:200px;"
+                                             style="width:212px;"
                                              size="small"
                                              placeholder="街道等详细地址选择填写"
                                      ></el-input>
-                             <label style="margin-left:60px;"><span class="fee-num"></span>医生电话:</label>
+                             <label style="margin-left:76px;"><span class="fee-num"></span>医生电话:</label>
                                  <el-input
                                          v-model="ruleForm.sqysdh"
-                                         style="width:100px;"
+                                         style="width:160px;"
                                          size="small"
                                  ></el-input>
                          </div>
@@ -122,20 +122,15 @@
                            style="width:60%;margin-left:70px;"
                            v-model="ruleForm.zdjg"
                            width="200"
+                           @focus="getDiagnoseList"
                            size="small"
                    ></el-input>
-
-                   <el-button class="btn" type="primary" style="margin-left:20px;padding:5px 10px;" @click="getDiagnoseList">常用诊断</el-button>
-
                </div>
                    <div class="diagnoseList" v-show="showDiagnoseList">
                        <p>常用诊断
                            <span class="delete"><el-button @click="hideDiagnose"  type="primary" style="padding:5px 10px;background: white;color: grey;border: none">X</el-button>
                                </span>
                        </p>
-                       <ul>
-                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:1px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
-                       </ul>
                        <div class="inputDiagnose">
                            <el-input
                                    type="text"
@@ -150,13 +145,15 @@
                            </div>
 
                        </div>
-
+                       <ul>
+                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:1px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
+                       </ul>
                    </div>
                    <div class="base-con" style="height:60px;margin-top:10px;">
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
                            <el-input
                                    type="textarea"
-                                   style="width:70%;margin-left:70px;resize: none;"
+                                   style="width:76%;margin-left:70px;resize: none;"
                                    v-model="ruleForm.bqms"
                                    width="200"
                                    size="small"
@@ -206,7 +203,7 @@
                                    <el-button size="small" type="primary">点击上传</el-button>
                                </el-upload>
                            </div>
-                       <p  style="color:#afafaf;font-size: 12px;">仅支持pdf、xls、xlsx、doc、docx、txt格式，文件小于5M。</p>
+                       <p  style="color:#afafaf;font-size: 12px;">仅支持pdf、xls、xlsx、doc、docx、txt、rar、RAR格式，文件小于500M。</p>
                    </div>
                </el-form>
            </div>
@@ -215,97 +212,7 @@
     </div>
 </template>
 <style>
-    .showImg{
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        margin-right: 5px;
-        position: relative;
-    }
-    .showImg:hover .showImgSon{
-        display: block;
-    }
-    .showImgSon{
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        vertical-align: middle;
-        background: black;
-        opacity: .7;
-        color: white;
-        display: none;
-        cursor: pointer;
-    }
-    .showImg  img{
-        width: 60px;
-        height: 60px;
-        margin-right: 10px;
-    }
-    .showText{
-        display: inline-block;
-        min-width: 150px;
-        height: 30px;
-        width: auto;
-        line-height: 1px;
-        text-align: center;
-        border: 1px solid gainsboro;
-        border-radius: 5px;
-        background: white;
-        padding: 15px 40px;
-        font-size: 14px;
-        color: grey;
-        margin-right: 5px;
-        position: relative;
-        box-sizing: border-box;
-    }
-    .showText:hover .showTextSon{
-        display: block;
-    }
-    .showTextSon{
-        position: absolute;
-        display: none;
-        top:10px;
-        right: 5px;
-    }
-.diagnoseList{
-    float: left;
-    width: 300px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    margin-top: 13px;
-    position: absolute;
-    font-size:14px;
-    left: 40%;
-    top: 0;
-    z-index: 888;
-    background:#F9F9F9;
-}
-    .diagnoseList p{
-        border-bottom: 1px solid gray;
-        padding: 8px;
-    }
-    .diagnoseList ul{
-        border-bottom: 1px solid lightgrey;
-        padding-bottom: 10px;
-        max-height: 200px;
-        overflow: auto;
-    }
-    .diagnoseList li{
-        padding: 10px 8px 0 8px ;
 
-    }
-    .delete{
-        display: inline-block;
-        float: right;
-    }
-    .inputDiagnose{
-    }
-    .btnDiagnose{
-        padding: 10px 8px 10px 8px ;
-        overflow: hidden;
-    }
 </style>
 <script type="text/ecmascript-6">
   import Vue from "vue";
@@ -511,7 +418,6 @@
                       this.$set(this.$data.ruleForm,'kh',res.list[0].kh)
                       this.$set(this.$data.ruleForm,'yhid',res.list[0].yhid)
                       this.$set(this.$data.ruleForm,'age',res.list[0].age)
-
                   }else {
                      alert(res.msg)
                   }

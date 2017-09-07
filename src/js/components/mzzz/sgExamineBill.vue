@@ -318,18 +318,6 @@
         top:10px;
         right: 5px;
     }
-    .diagnoseList{
-        float: left;
-        width: 300px;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        margin-top: 13px;
-        position: absolute;
-        left: 40%;
-        top: 0;
-        z-index:999;
-        background: white;
-    }
     .diagnoseList p{
         border-bottom: 1px solid gray;
         padding: 8px;

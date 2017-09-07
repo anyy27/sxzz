@@ -17,7 +17,7 @@
                                 :value="item.yyid">
                         </el-option>
                     </el-select>
-                    <span style="font-size: 14px;color: #48576a;">预约科室:</span>
+                    <span style="font-size: 14px;color: #48576a;margin-left:20px;">预约科室:</span>
                     <el-select v-model="somedata.office" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option
                                 v-for="item in officeList"
@@ -27,7 +27,7 @@
                         >
                         </el-option>
                     </el-select>
-                    <span style="font-size: 14px;color: #48576a;">病情等级:</span>
+                    <span style="font-size: 14px;color: #48576a;margin-left:20px;">病情等级:</span>
                     <el-select v-model="bqdj" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
                         <el-option label="一般" value="0"></el-option>
                         <el-option label="急" value="1"></el-option>
@@ -39,13 +39,13 @@
                     <el-date-picker
                             v-model="sqyyrq"
                             type="date"
+                            style="width:190px;"
                             placeholder="选择日期"
                             :picker-options="pickerOptions0">
                     </el-date-picker>
 
-                    <span class="demonstration" style="color:#48576A;margin-left:20px;">上下午:</span>
+                    <span class="demonstration" style="color:#48576A;margin-left:40px;">上下午:</span>
                     <el-select v-model="sqyylx" filterable style="height:24px;margin-left:5px;">
-
                         <el-option label="上午" value="0"></el-option>
                         <el-option label="下午" value="1"></el-option>
                     </el-select>

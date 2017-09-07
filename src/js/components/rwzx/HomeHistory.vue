@@ -179,7 +179,7 @@
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
-             pageSize: 10,
+             pageSize: 5,
              pageNum: 1,
              sqysbh: "595d05b0f19b9c898a58cc70",
              zzzt: 0

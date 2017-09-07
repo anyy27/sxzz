@@ -46,7 +46,7 @@
                         label="预约状态">
                     <template scope="scope">
                         <div v-show="scope.row.zzzt=='3'">取消</div>
-                        <div v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'" :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                        <div v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'" :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -140,7 +140,7 @@
                         label="预约状态">
                     <template scope="scope">
                         <div v-show="scope.row.zzzt=='3'">取消</div>
-                        <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                        <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -242,7 +242,7 @@
                         label="预约状态">
                     <template scope="scope">
                         <div v-show="scope.row.zzzt=='3'">取消</div>
-                        <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                        <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -335,7 +335,7 @@
                         label="预约状态">
                     <template scope="scope">
                         <div v-show="scope.row.zzzt=='3'">取消</div>
-                        <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                        <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -428,7 +428,7 @@
                         label="预约状态">
                     <template scope="scope">
                         <div v-show="scope.row.zzzt=='3'">取消</div>
-                        <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                        <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -497,6 +497,19 @@
             </el-table>
         </div>
         <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="7"/>
+            <div class="MessageBox1" v-show="shows6">
+                <div style="border-bottom:1px solid #ccc;box-sizing: border-box;padding:2px 0px;">
+                    <h1>是否确认撤销?</h1>
+                </div>
+                <br style="background:#ccc;">
+                <p style="margin-top:10px;"><span>{{hosname}}</span><span style="margin-left:20px;"     >{{deptname}}</span><span style="margin-left:20px;">{{patname}}</span></p>
+                <p style="margin-top:20px;"><span>{{qrtime}}</span><span style="margin-left:20px;">{{qrclock}}</span></p>
+                <el-button  class="btn success1" type="text" style="padding:6px 8px;position:absolute;
+right:80px;bottom:20px;" @click="SendAppoint">关闭</el-button>
+                <el-button class="btn" type="primary" size="small" @click="arranges1" style="position:absolute;bottom:20px;right:20px;"> 确认</el-button>
+            </div>
+            <div class="MessageBack" v-show="shows6">
+            </div>
         </div>
     </div>
 </template>
@@ -504,22 +517,31 @@
     .active{
         color: red;
     }
+    .active1{
+        color:#10BF18;
+    }
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
     import AllHeader from "../common/AllHeader.vue";
-    import { Badge, Loading, MessageBox } from "element-ui";
+    import { Badge, Loading, MessageBox ,Message} from "element-ui";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import FooterCmp from "../common/FooterCmp.vue";
     export default{
         data (){
             return{
+                hosname:"",
+                deptname:"",
+                patname:"",
+                qrtime:"",
+                qrclock:"",
                 shzt:JSON.parse(localStorage.getItem('shzt')),
                 activeName:'',
                 tableData: [],
                 propsTotalCols:0,
                 type: '',
                 ddid:"",
+                shows6:false,
                 dialogVisible:false,
                 selectObj:{
                     starttime:"",
@@ -561,7 +583,7 @@
                     "jgid": "59411511191ce23575a63218",
                     "yyr": "595d05b0f19b9c898a58cc70",
                     "ywlx": "0",
-                    "ddid":row.ddid,
+                    "ddid":row.ddid
                 }).then(res=>{
                     console.log(res,66666)
                     this.$router.push({
@@ -572,36 +594,42 @@
                     })
                 });
             },
+            SendAppoint(){
+                this.shows6=false;
+            },
+            arranges1(){
+               this.shows6=false;
+                axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ysmc":"陈升华",
+                    "ddid":this.ddid,
+                }).then(res=>{
+                    console.log(res,55555);
+                    if(res.succ){
+                        this.getData(1,this.type);
+                    }else {
+                        alert(res.msg);
+                    }
+                });
+            },
             handleEdit(index,row){
-                this.$set(this.$data,'ddid',row.ddid);
-//                console.log(res,55555)
+                this.ddid=row.ddid;
+                 console.log("11/111",row);
                 if(row.zzzt==1){
-                    MessageBox.confirm('是否确认撤销？', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        closeOnPressEscape:true,
-                        type: 'warning'
-                    }).then(() => {
-                        axiosUtil('smarthos.sxzz.qxzzsq.info',{
-                            "jgid": "59411511191ce23575a63218",
-                            "yyr": "595d05b0f19b9c898a58cc70",
-                            "ysmc":"陈升华",
-                            "ddid":row.ddid,
-                        }).then(res=>{
-                            console.log(res,55555);
-                            if(res.succ){
-                                this.getData(1,this.type);
-                            }else {
-                                alert(res.msg)
-                            }
-                        });
-                    })
+                    this.hosname=row.sqyymc;
+                    this.deptname=row.sqksmc;
+                    this.patname=row.yhxm;
+                    this.qrtime=row.qrsj;
+                    this.qrclock=row.jzsj;
+                    this.shows6=true;
+
                 }else {
                     axiosUtil('smarthos.sxzz.byddid.list',{
                         "jgid": "59411511191ce23575a63218",
                         "yyr": "595d05b0f19b9c898a58cc70",
                         "ywlx": "0",
-                        "ddid":row.ddid,
+                        "ddid":this.ddid,
                     }).then(res=>{
                         console.log(res,66666)
                         this.$router.push({

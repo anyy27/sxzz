@@ -128,6 +128,7 @@
         },
         mounted(){
             this.applyDetail = this.$route.params.applyDetail;
+            console.log("55/555",this.applyDetail);
             this.getHospital();
         },
         methods: {
@@ -191,6 +192,7 @@
                     djzt:_this.tjbz,
                     djrq:this.tjrq,
                     sqyymc: "特扬医院",
+                    ddid:this.applyDetail.ddid,
                     sqysxm: "陈刚",
                     sqysdh: "18358023268",
                     sqksbh: "59193cddca72a7bbbbe86c1c",

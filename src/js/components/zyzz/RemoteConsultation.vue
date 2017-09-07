@@ -58,7 +58,7 @@
                        label="预约状态">
                    <template scope="scope">
                        <div v-show="scope.row.zzzt=='0'">待审核</div>
-                       <div :class="{active:scope.row.zzzt=='2'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}" v-show="scope.row.zzzt=='1'||scope.row.zzzt=='2'">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                    </template>
                </el-table-column>
                <el-table-column
@@ -374,7 +374,7 @@
                        prop="zzzt"
                        label="预约状态">
                    <template scope="scope">
-                       <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
                    </template>
                </el-table-column>
                <el-table-column
@@ -477,7 +477,8 @@
                        prop="zzzt"
                        label="预约状态">
                    <template scope="scope">
-                       <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div v-show="scope.row.zzzt=='2'||scope.row.zzzt=='1'" :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div v-show="scope.row.zzzt=='0'||scope.row.zzzt=='3'" :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='0'?'待审核':'取消'}}</div>
                    </template>
                </el-table-column>
                <el-table-column
@@ -580,7 +581,8 @@
                        prop="zzzt"
                        label="预约状态">
                    <template scope="scope">
-                       <div :class="{active:scope.row.zzzt=='2'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div v-show="scope.row.zzzt=='2'||scope.row.zzzt=='1'" :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='1'?'成功':'失败'}}</div>
+                       <div v-show="scope.row.zzzt=='0'||scope.row.zzzt=='3'" :class="{active:scope.row.zzzt=='2',active1:scope.row.zzzt=='1'}">{{scope.row.zzzt=='0'?'待审核':'取消'}}</div>
                    </template>
                </el-table-column>
                <el-table-column
@@ -667,6 +669,9 @@
 <style>
 .active{
     color: red;
+}
+.active1{
+    color:#10BF18
 }
 </style>
 <script type="text/ecmascript-6">

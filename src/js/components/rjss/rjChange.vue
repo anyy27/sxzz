@@ -181,6 +181,7 @@
                     tjrq:this.tjrq,
                     ssid:_this.ssid,
                     ssmc:ssmc,
+                    ddid:this.applyDetail.ddid,
                     qryymc: yymc,
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",

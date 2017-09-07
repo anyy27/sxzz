@@ -43,9 +43,11 @@ import JczzExamine from "./js/components/jczz/JczzExamine.vue";
 import rjExamineBill from "./js/components/rjss/rjExamineBill.vue";
 /*引入样式文件*/
 import 'element-ui/lib/theme-default/index.css'
-// import ElementUI from 'element-ui'
 
+// import ElementUI from 'element-ui'
 import "./style/app.scss";
+import ElementUi from "element-ui"
+Vue.use(ElementUi)
 Vue.use(VueRouter);
  // Vue.use(ElementUI)
 const router =new VueRouter({

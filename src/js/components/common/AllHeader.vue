@@ -16,9 +16,13 @@
                     </el-date-picker>
                 </div>
             </div>
-            <div class="date-box" style="width:150px;">
-                <el-select v-model="somedata.cxyyid" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
-                    <el-option label="全部" value=""></el-option>
+            <div class="date-box" style="width:160px;">
+                <el-select
+                        v-model="somedata.cxyyid"
+                        clearable
+                        placeholder="请选择预约医院"
+                        style="width:100%;"
+                        @change="selectHospital">
                     <el-option
                             v-for="item in hospitalList"
                             :key="item.yyid"
@@ -29,9 +33,8 @@
                 </el-select>
             </div>
             <slot name="selOffice">
-                <div class="date-box" style="width:180px;">
-                    <el-select v-model="somedata.ksid" placeholder="请选择预约科室" style="width:100%;">
-                        <el-option label="全部" value=""></el-option>
+                <div class="date-box" style="width:160px;">
+                    <el-select v-model="somedata.ksid"  clearable placeholder="请选择预约科室" style="width:100%;">
                         <el-option
                                 v-for="item in officeList"
                                 :key="item.ksid"
@@ -42,10 +45,8 @@
                     </el-select>
                 </div>
             </slot>
-
-            <div class="date-box" style="width:100px;">
-                <el-select v-model="somedata.zzzt" placeholder="请选择预约状态" @change="searchData">
-                    <el-option label="全部" value=""></el-option>
+            <div class="date-box" style="width:160px;">
+                <el-select v-model="somedata.zzzt" clearable  placeholder="请选择预约状态" @change="searchData">
                     <el-option label="待审核" value="0"></el-option>
                     <el-option label="成功" value="1"></el-option>
                     <el-option label="失败" value="2"></el-option>
