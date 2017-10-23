@@ -1,4 +1,24 @@
 let random = Math.round(Math.random()*10000);
+let randoms = "";
+for (let i = 0; i < 4; i++) {
+    randoms += "1234567890".substr(Math.floor(Math.random() * 10), 1);
+}
+var yymm = '';
+var jgid='';
+var sign = '';
+let docStr = localStorage.getItem('docObj');
+if(docStr){
+    if(JSON.parse(docStr)){
+        yymm = JSON.parse(docStr).yymm;
+        jgid = JSON.parse(docStr).jgid;
+
+        sign = hex_md5(hex_md5(yymm)+jgid+randoms)
+    }
+}else {
+    sign=''
+}
+
+
 const PasWord = function(options,random){
     const basicParam = {//服务器交互基本参数
         "jgid": "0571001",
@@ -10,11 +30,9 @@ const PasWord = function(options,random){
     //const _options = Object.assign(options,basicParam);
 };
 const basicParam = {//服务器交互基本参数
-    "jgid": "59411511191ce23575a63218",
     "format": "JSON",
-    "random": "ouws",
-    "sign": "19c84baf0a1bf73d189734f3e93f9cd5",
-
+    "random": randoms,
+    "sign": sign,
 };
 const upLoadBasicParam = {
     spid: "1001",

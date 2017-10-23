@@ -1,73 +1,71 @@
 <template>
     <div>
         <el-form  ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <BaseMessage :index="index" @getDetail="getDetail"></BaseMessage>
+            <BaseMessage :applyDetail="applyDetail" :index="index" @getDetail="getDetail"></BaseMessage>
             <div  class=" marginP remote-consultation-wrap content-bg-color">
                 <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
                     <p style="line-height: 40px;font-size: 14px;">预约信息</p>
                 </div>
-            <div class="base-appoint" style="">
-                <div class="base-con" style="padding:20px 20px 0px 20px;">
-                    <span style="font-size: 14px;color: #48576a;">预约医院:</span>
-                    <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
-                        <el-option
-                                v-for="item in hospitalList"
-                                :key="item.yyid"
-                                :label="item.yymc"
-                                :value="item.yyid">
-                        </el-option>
-                    </el-select>
-                    <span style="font-size: 14px;color: #48576a;margin-left:20px;">检查大类:</span>
-                    <el-select v-model="somedata.fild"   @change="outcheck"  filterable placeholder="请选择" style="height:24px;margin-left:5px;">
-                        <el-option
-                                v-for="item in bigList"
-                                :key="item.jcid"
-                                :label="item.jcmc"
-                                :value="item.jcid"
-                        >
-                        </el-option>
-                    </el-select>
-                    <span style="font-size: 14px;color: #48576a;margin-left:20px;">检查项目:</span>
-                    <el-select v-model="somedata.jcid" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
-                        <el-option
-                                v-for="item in checkList"
-                                :key="item.jcid"
-                                :label="item.jcmc"
-                                :value="item.jcid"
-                        >
-                        </el-option>
-                    </el-select>
+                <div class="base-appoint" style="">
+                    <div class="base-con" style="padding:20px 20px 0px 20px;">
+                        <span style="font-size: 14px;color: #48576a;">预约医院:</span>
+                        <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
+                            <el-option
+                                    v-for="item in hospitalList"
+                                    :key="item.yyid"
+                                    :label="item.yymc"
+                                    :value="item.yyid">
+                            </el-option>
+                        </el-select>
+                        <span style="font-size: 14px;color: #48576a;">检查大类:</span>
+                        <el-select v-model="somedata.fild"   @change="outcheck"  filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                            <el-option
+                                    v-for="item in bigList"
+                                    :key="item.jcid"
+                                    :label="item.jcmc"
+                                    :value="item.jcid"
+                            >
+                            </el-option>
+                        </el-select>
+                        <span style="font-size: 14px;color: #48576a;">检查项目:</span>
+                        <el-select v-model="somedata.jcid" filterable placeholder="请选择" style="height:24px;margin-left:5px;">
+                            <el-option
+                                    v-for="item in checkList"
+                                    :key="item.jcid"
+                                    :label="item.jcmc"
+                                    :value="item.jcid"
+                            >
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <div class="base-con">
+                        <span class="demonstration" style="color:#48576A;margin-left:20px;">期望检查日期:</span>
+                        <el-date-picker
+                                v-model="sqyyrq"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions0">
+                        </el-date-picker>
+                        <el-select v-model="sqyylx" filterable style="height:24px;margin-left:5px;">
+                            <el-option label="上午" value="0"></el-option>
+                            <el-option label="下午" value="1"></el-option>
+                        </el-select>
+                    </div>
+                    <div class="base-con">
+                        <el-form-item label="是否接受调剂:" prop="tjbz" style="margin-left:20px;">
+                            <el-radio class="radio" v-model="tjbz" label="1">是</el-radio>
+                            <el-radio class="radio" v-model="tjbz" label="0">否</el-radio>
+                        </el-form-item>
+                        <span v-show="tjbz=='1'" class="demonstration" style="margin-top:5px;margin-left:10px;">接受最晚时间:</span>
+                        <el-date-picker v-show="tjbz=='1'"
+                                        v-model="tjrq"
+                                        type="date"
+                                        style="margin-top:5px;"
+                                        placeholder="选择日期"
+                                        :picker-options="pickerOptions0">
+                        </el-date-picker>
+                    </div>
                 </div>
-                <div class="base-con">
-                    <span class="demonstration" style="color:#48576A;margin-left:20px;">期望检查日期:</span>
-                    <el-date-picker
-                            v-model="sqyyrq"
-                            type="date"
-                            style="width:195px;"
-                            placeholder="选择日期"
-                            :picker-options="pickerOptions0">
-                    </el-date-picker>
-                    <span class="demonstration" style="color:#48576A;margin-left:35px;">上下午:</span>
-                    <el-select v-model="sqyylx" filterable  style="height:24px;margin-left:5px;">
-                        <el-option label="上午" value="0"></el-option>
-                        <el-option label="下午" value="1"></el-option>
-                    </el-select>
-                </div>
-                <div class="base-con">
-                    <el-form-item label="是否接受调剂:" prop="tjbz" style="margin-left:20px;">
-                        <el-radio class="radio" v-model="tjbz" label="1">是</el-radio>
-                        <el-radio class="radio" v-model="tjbz" label="0">否</el-radio>
-                    </el-form-item>
-                    <span v-show="tjbz=='1'" class="demonstration" style="margin-top:5px;margin-left:10px;">接受最晚时间:</span>
-                    <el-date-picker v-show="tjbz=='1'"
-                            v-model="tjrq"
-                            type="date"
-                            style="margin-top:5px;"
-                            placeholder="选择日期"
-                            :picker-options="pickerOptions0">
-                    </el-date-picker>
-                </div>
-            </div>
             </div>
             <div class="transfer-btn">
                 <div style="position:absolute;left:40%;top:20px;">
@@ -100,6 +98,7 @@
     export default{
         data (){
             return {
+                index:0,
                 pickerOptions0: {
                     pickerOptions0(time) {
                         return time.getTime() < Date.now() - 8.64e7;
@@ -128,6 +127,8 @@
             BaseMessage
         },
         mounted(){
+            this.applyDetail = this.$route.params.applyDetail;
+            console.log("55/555",this.applyDetail);
             this.getHospital();
         },
         methods: {
@@ -162,7 +163,7 @@
                 var hosObj = this.hospitalList.filter(checkAdult);
                 var yymc=hosObj[0].yymc;
                 this.sqyyrq?this.sqyyrq=formatUnixTime(this.sqyyrq).substring(0,10):this.sqyyrq="";
-                this.tjrq?this.tjrq=formatUnixTime(this.tjrq).substring(0,10):this.tjrq="";
+                this.tjrq?this.tjrq=formatUnixTime(this.tjrq).substring(0,10):this.tjrq='';
                 let options={
                     yhid:dataForm.yhid,
                     "yyr": "595d05b0f19b9c898a58cc70",
@@ -191,6 +192,7 @@
                     djzt:_this.tjbz,
                     djrq:this.tjrq,
                     sqyymc: "特扬医院",
+                    ddid:this.applyDetail.ddid,
                     sqysxm: "陈刚",
                     sqysdh: "18358023268",
                     sqksbh: "59193cddca72a7bbbbe86c1c",

@@ -10,7 +10,7 @@ module.exports = {
         vendors: ["vue", "vue-router", "axios"]
     },
     output: {
-        //publicPath: "./",
+        publicPath: "./",
         path: __dirname + "/dist",
         filename: "[name].[hash].js"
     },

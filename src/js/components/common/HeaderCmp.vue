@@ -190,17 +190,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    let options = {
-                        token: localStorage.getItem("token"),
-                        Service: "nethos.pat.logout"
-                    };
-                    axiosUtil(options, function(){
-                        window.location = HOST_URL;
-                        localStorage.removeItem("docId");
-                        localStorage.removeItem("userInfo");
-                        localStorage.removeItem("token");
-                        _this.$store.dispatch("changeSideItem", "rwzx");
-                    });
+                    localStorage.clear();
+                    this.$router.push("/login");
+                    this.$store.dispatch("changeSideItem", "rwzx");
                 }).catch(() => {
 
                 });

@@ -4,6 +4,7 @@
     </div>
 </template>
 <style>
+
 </style>
 <script>
     import MainCmp from "./components/MainCmp.vue";
@@ -22,9 +23,9 @@
             console.log("===================version: 2.2=========================");
             let _this = this;
             if (this.isLogin) {//如果已经登录则跳转到个人中心
-                this.$router.push("/main");
+                 this.$router.push("/main");
             } else {//如果未登录则跳转到登录页面
-                this.$router.push("/login");
+                 this.$router.push("/login");
                 //window.location = HOST_URL;
             }
             /*this.clientH = document.documentElement.clientHeight || document.body.clientHeight;*/
@@ -71,7 +72,7 @@
                 return this.$store.state.clientH;
             },
             isLogin: function () {//先判断是否登录来显示页面
-                return localStorage.getItem("userInfo") && JSON.parse(localStorage.getItem("userInfo")).isAss;
+                return localStorage.getItem("docObj") ;
             }
         },
         methods: {

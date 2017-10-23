@@ -1,14 +1,11 @@
 <template>
     <div>
         <el-form   label-width="100px" class="demo-ruleForm">
-            <BaseMessage :index="watchNum" @getDetail="getDetail"></BaseMessage>
+            <BaseMessage :applyDetail="applyDetail" :index="watchNum" @getDetail="getDetail"></BaseMessage>
         </el-form>
-        <div  class=" marginP remote-consultation-wrap content-bg-color">
         <div class="news-con">
-            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
-            <p style="line-height: 40px;font-size: 14px;">预约信息</p>
-            </div>
-            <div class="base-con" style="padding:20px 20px 0px 20px;">
+            <p style="line-height: 40px;">预约信息</p>
+            <div class="base-con">
                 <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
                 <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
                     <el-option
@@ -31,41 +28,44 @@
                 </el-select>
 
             </div>
-            <!--<div style="margin-left:20px;">-->
-                <!--<el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>-->
-                <!--<el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>-->
-            <!--</div>-->
-            <div class="news-table" style="width:100%;overflow:hidden;box-sizing: border-box">
+            <div>
+                <el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>
+                <el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>
+            </div>
+            <div class="news-table">
                 <el-table
                         :data="arrangeList"
                         height="280"
-                        stripe
-                        :border=true
+                        border
                         @cell-click="and"
                 >
                     <el-table-column
                             prop="name"
-                            style="width:20px;"
-                            label="医生">
+                            label="医生"
+                            width="130">
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="dateList[0].date" style="width:10%;" prop="monday">
+
+                    <el-table-column :label="dateList[0].date" prop="monday">
                         <el-table-column
                                 :label="dateList[0].week"
-                                >
+                        >
                             <el-table-column
                                     prop="monday.am"
                                     label="上午"
-                                >
+                                    width="50"
+                            >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
                                 </template>
                             </el-table-column>
                             <el-table-column
                                     prop="monday.pm"
-                                    label="下午">
+                                    label="下午"
+                                    width="50"
+                            >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
                                 </template>
@@ -75,10 +75,11 @@
                     <el-table-column :label="dateList[1].date" props="tuesday">
                         <el-table-column
                                 :label="dateList[1].week"
-                                >
+                        >
                             <el-table-column
                                     prop="tuesday.am"
                                     label="上午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.am=='0'?'':scope.row.tuesday.am}}</div>
@@ -87,6 +88,7 @@
                             <el-table-column
                                     prop="tuesday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.pm=='0'?'':scope.row.tuesday.pm}}</div>
@@ -98,10 +100,11 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[2].week"
-                                >
+                        >
                             <el-table-column
                                     prop="wednesday.am"
                                     label="上午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.am=='0'?'':scope.row.wednesday.am}}</div>
@@ -110,6 +113,7 @@
                             <el-table-column
                                     prop="wednesday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.pm=='0'?'':scope.row.wednesday.pm}}</div>
@@ -121,10 +125,11 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[3].week"
-                                >
+                        >
                             <el-table-column
                                     prop="thursday.am"
                                     label="上午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.am=='0'?'':scope.row.thursday.am}}</div>
@@ -133,6 +138,7 @@
                             <el-table-column
                                     prop="thursday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.pm=='0'?'':scope.row.thursday.pm}}</div>
@@ -144,11 +150,12 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[4].week"
-                                >
+                        >
                             <el-table-column
                                     prop="friday.am"
                                     label="上午"
                                     :data="dateList[4].date"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.am=='0'?'':scope.row.friday.am}}</div>
@@ -157,6 +164,7 @@
                             <el-table-column
                                     prop="friday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.pm=='0'?'':scope.row.friday.pm}}</div>
@@ -168,11 +176,11 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[5].week"
-                                >
+                        >
                             <el-table-column
                                     prop="saturday.am"
                                     label="上午"
-
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.am=='0'?'':scope.row.saturday.am}}</div>
@@ -181,6 +189,7 @@
                             <el-table-column
                                     prop="saturday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.pm=='0'?'':scope.row.saturday.pm}}</div>
@@ -193,10 +202,11 @@
                         <el-table-column
                                 prop="name"
                                 :label="dateList[6].week"
-                                >
+                        >
                             <el-table-column
                                     prop="sunday.am"
                                     label="上午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.am=='0'?'':scope.row.sunday.am}}</div>
@@ -205,6 +215,7 @@
                             <el-table-column
                                     prop="sunday.pm"
                                     label="下午"
+                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.pm=='0'?'':scope.row.sunday.pm}}</div>
@@ -216,78 +227,77 @@
             </div>
         </div>
         <div class="dialog" v-show="dialogVisible">
-         <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
-             <p>预约信息</p>
-         </div>
-         <div style="width:90%;margin-left:5%;height:80px;">
-             <div class="newsworks">
-                 <span>身份证号:</span>
-                 <span>{{this.totalObj.zjhm}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>姓名:</span>
-                 <span>{{this.totalObj.yhxm}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>就诊时间:</span>
-                 <span>{{this.hyrq}} {{this.yylx==1?'下午':'上午'}}</span>
-             </div>
-             <div class="newsworks" style="width: 50%">
-                 <span>预约医院:</span>
-                 <span>{{this.yymc}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>预约科室:</span>
-                 <span>{{this.ksmc}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>预约医生:</span>
-                 <span>{{this.docName}}</span>
-             </div>
-             <div class="newsworks">
-                 <span>挂号费:</span>
-                 <span>{{this.zlf}}</span>
-             </div>
-             <div class="newsworks">
-                 <span style="color:red;">当前剩余号源还剩:</span>
-                 <span style="color:red;">{{this.tableData.length}}</span>
-             </div>
-         </div>
-         <el-table
-                 ref="multipleTable"
-                 :data="tableData"
-                 @current-change="handleCurrentChange"
-                 height="330"
-                 style="width:90%;margin-left:5%;">
-             <el-table-column
-                     type="index"
-                    >
-             </el-table-column>
-             <el-table-column
-                     type="selection"
-                    >
-             </el-table-column>
-             <el-table-column
-                     prop="hyxh"
-                     label="就诊序号"
-                    >
-             </el-table-column>
-             <el-table-column
-                     prop="qhsj"
-                     label="就诊时间"
-                    >
-                 <template scope="scope">
-                     <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
-                 </template>
-             </el-table-column>
-         </el-table>
-         <div class="btn-con">
-         <el-button  class="btn success1" @click="close" type="text" style="padding:5px 50px" >上一步</el-button>
-         <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
-         </div>
-         </div>
-        <div class="BigBox" v-show="dialogVisible1"></div>
+            <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
+                <p>预约信息</p>
+            </div>
+            <div style="width:90%;margin-left:5%;height:80px;">
+                <div class="newsworks">
+                    <span>身份证号:</span>
+                    <span>{{this.totalObj.zjhm}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>姓名:</span>
+                    <span>{{this.totalObj.yhxm}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>就诊时间:</span>
+                    <span>{{this.hyrq}} {{this.yylx==1?'下午':'上午'}}</span>
+                </div>
+                <div class="newsworks" style="width: 50%">
+                    <span>预约医院:</span>
+                    <span>{{this.yymc}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>预约科室:</span>
+                    <span>{{this.ksmc}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>预约医生:</span>
+                    <span>{{this.docName}}</span>
+                </div>
+                <div class="newsworks">
+                    <span>挂号费:</span>
+                    <span>{{this.zlf}}</span>
+                </div>
+                <div class="newsworks">
+                    <span style="color:red;">当前剩余号源还剩:</span>
+                    <span style="color:red;">{{this.tableData.length}}</span>
+                </div>
+            </div>
+            <el-table
+                    ref="multipleTable"
+                    :data="tableData"
+                    @current-change="handleCurrentChange"
+                    height="330"
+                    style="width:90%;margin-left:5%;">
+                <el-table-column
+                        type="index"
+                >
+                </el-table-column>
+                <el-table-column
+                        type="selection"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="hyxh"
+                        label="就诊序号"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="qhsj"
+                        label="就诊时间"
+                >
+                    <template scope="scope">
+                        <div>{{scope.row.qhsj.substring(0,2)+':'+scope.row.qhsj.substring(2.4)}}</div>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="btn-con">
+                <el-button  class="btn success1" @click="SureYuyue" type="text" style="padding:5px 50px" >上一步</el-button>
+                <el-button class="btn" type="primary" style="padding:5px 50px;" @click="SureYuyue">确认预约</el-button>
+            </div>
         </div>
+        <div class="BigBox" v-show="dialogVisible1"></div>
     </div>
 </template>
 <style>
@@ -295,7 +305,8 @@
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
-//    import  'element-ui';
+    //    import  'element-ui';
+
     import BaseMessage from  "../common/BaseMessage.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover , Dialog,MessageBox } from "element-ui";
@@ -312,6 +323,7 @@
     export default{
         data(){
             return{
+                applyDetail:{},
                 totalObj:{},
                 docName:'',
                 docId:"",
@@ -350,23 +362,24 @@
             BaseMessage
         },
         mounted(){
-
-           this.setDate(new Date());
-//            this.getData();
+            this.setDate(new Date());
             this.getHospital();
+         this.applyDetail = this.$route.params.applyDetail;
+            console.log('门诊', this.applyDetail)
+
         },
         methods:{
             filterArr(arr,id){
                 function getObj (item) {
                     return item.yyid==id;
                 }
-            return   arr.filter(getObj)
+                return   arr.filter(getObj)
             },
             filterArr1(arr,id){
                 function getObj (item) {
                     return item.ksid==id;
                 }
-            return   arr.filter(getObj)
+                return   arr.filter(getObj)
             },
             getDetail(value){
                 this.$set(this.$data,'totalObj',value)
@@ -376,10 +389,6 @@
                 this.$set(this.$data,'hyDate',val.qhsj);
                 this.$set(this.$data,'hyxh',val.hyxh)
                 this.$refs.multipleTable.toggleRowSelection(old,false);
-            },
-            close(){
-                this.dialogVisible=false;
-                this.dialogVisible1=false;
             },
             SureYuyue(){
 //               this.yymc + ',' +this.ksmc +','+this.docName+','
@@ -397,6 +406,7 @@
                         "yyr": "595d05b0f19b9c898a58cc70",
                         "yyid": this.somedata.hospital,
                         "ksid":this.somedata.office,
+                        "yhid":this.applyDetail.yhid,
                         'qrksmc': this.ksmc,
                         "ysid": this.docId,
                         "ysmc": this.docName,
@@ -474,6 +484,7 @@
                 }).then(res=>{
                     if(res.succ){
                         var list = res.list;
+                        console.log(res,26262626)
                         var arr = [];
                         for(var i=0;i<list.length;i++){
                             var obj = {};
@@ -501,15 +512,14 @@
                         };
                         this.$set(this.$data,'arrangeList',arr)
                     }else{
-                       alert(res.msg)
+                        alert(res.msg)
                     }
                 })
             },
             formatDate(date){
                 var year = date.getFullYear()+'-';
                 var month = (date.getMonth()+1>9?date.getMonth()+1:'0'+(date.getMonth()+1))+'-';
-                var day = (date.getDate()>9?date.getDate():'0'+(date.getDate()));
-
+                var day = (date.getDate()>9?date.getDate():'0'+(date.getDate()))
                 var week = ['星期天','星期一','星期二','星期三','星期四','星期五','星期六'][date.getDay()];
                 return {
                     date:year+month+day,
@@ -518,6 +528,7 @@
             },
             setDate(date){
                 var week = date.getDay()-1;
+//                date = this.addDate(date,week*-1);
                 this.currentFirstDate = new Date(date);
                 var arr = [];
                 for(var i = 0;i<7;i++){
@@ -530,7 +541,7 @@
                 return date;
             },
             nextDate(){
-                this.index++;
+                this.index++
                 this.$set(this.$data,'disabled',false);
                 this.setDate(this.addDate(this.currentFirstDate,7));
             },
@@ -562,72 +573,72 @@
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pbid)
                         this.$set(this.$data,'zlf',row.monday.zlf)
-                    break;
+                        break;
                     case 'monday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[0].date);
                         this.$set(this.$data,'pbid',row.monday.pmpbid)
                         this.$set(this.$data,'zlf',row.monday.zlf)
-                    break;
+                        break;
                     case 'tuesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pbid)
                         this.$set(this.$data,'zlf',row.tuesday.zlf)
-                    break;
+                        break;
                     case 'tuesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[1].date)
                         this.$set(this.$data,'pbid',row.tuesday.pmpbid)
                         this.$set(this.$data,'zlf',row.tuesday.zlf)
-                    break;
+                        break;
                     case 'wednesday.am':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pbid)
                         this.$set(this.$data,'zlf',row.wednesday.zlf)
-                    break;
+                        break;
                     case 'wednesday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[2].date)
                         this.$set(this.$data,'pbid',row.wednesday.pmpbid)
                         this.$set(this.$data,'zlf',row.wednesday.zlf)
-                    break;
+                        break;
                     case 'thursday.am':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pbid)
                         this.$set(this.$data,'zlf',row.thursday.zlf)
-                    break;
+                        break;
                     case 'thursday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[3].date)
                         this.$set(this.$data,'pbid',row.thursday.pmpbid)
                         this.$set(this.$data,'zlf',row.thursday.zlf)
-                    break;
+                        break;
                     case 'friday.am':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pbid)
                         this.$set(this.$data,'zlf',row.friday.zlf)
-                    break;
+                        break;
                     case 'friday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[4].date)
                         this.$set(this.$data,'pbid',row.friday.pmpbid)
                         this.$set(this.$data,'zlf',row.friday.zlf)
-                    break;
+                        break;
                     case 'saturday.am':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pbid)
                         this.$set(this.$data,'zlf',row.saturday.zlf)
-                    break;
+                        break;
                     case 'saturday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[5].date)
                         this.$set(this.$data,'pbid',row.saturday.pmpbid)
                         this.$set(this.$data,'zlf',row.saturday.zlf)
-                    break;
+                        break;
                     case 'sunday.am':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pbid)
                         this.$set(this.$data,'zlf',row.sunday.zlf)
-                    break;
+                        break;
                     case 'sunday.pm':
                         this.$set(this.$data,'hyrq',this.dateList[6].date)
                         this.$set(this.$data,'pbid',row.sunday.pmpbid)
                         this.$set(this.$data,'zlf',row.sunday.zlf)
-                    break;
+                        break;
                 }
                 this.sourceList();
                 this.$set(this.$data,'dialogTableVisible',true)
@@ -650,7 +661,7 @@
                         }
                     })
                 }else {
-                  alert('号源列表为空！')
+                    alert('号源列表为空！')
                 }
 
 

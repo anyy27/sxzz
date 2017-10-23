@@ -1,12 +1,14 @@
 <template>
     <div>
         <div class="rwzx-box">
-            <div class="rwzx-table">
+            <div class="rwzx-table" style="margin-left:10px;">
                 <div class="rwzx-title">
                     <p>最近转诊记录</p>
                 </div>
                 <el-table
                         :data="zzjl"
+                        stripe
+                        :show-header=false
                         style="width: 100%"
                 >
                     <el-table-column
@@ -17,11 +19,10 @@
                     <el-table-column
                             prop="yhxm"
                             label="姓名"
-                            width="60">
+                            width="50">
                     </el-table-column>
                     <el-table-column
-                            label="预约状态"
-                            width="60">
+                            label="预约状态">
                         <template scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.zzzt==0?'预约成功':'预约成功'}}</span>
                         </template>
@@ -35,12 +36,14 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div class="rwzx-table">
+            <div class="rwzx-table" style="margin-left:2%;">
                 <div class="rwzx-title">
                     <p>最近受理记录</p>
                 </div>
                 <el-table
                         :data="sljl"
+                        stripe
+                        :show-header=false
                         style="width: 100%"
                 >
                     <el-table-column
@@ -77,7 +80,7 @@
             </div>
         </div>
         <div class="rwzx-charts">
-            <div class="rwzx-picture">
+            <div class="rwzx-picture" style="margin-left:10px;">
                 <el-tabs v-model="activeName" @tab-click="shiftTo">
                     <el-tab-pane label="转出图" name="first"></el-tab-pane>
                     <el-tab-pane label="转入图" name="second" ></el-tab-pane>
@@ -87,11 +90,12 @@
                 <!--<div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">-->
 
                 <!--</div>-->
+
             </div>
-            <div class="rwzx-picture">
-                <el-tabs v-model="activeName" @tab-click="shiftTo">
-                    <el-tab-pane label="转入表" name="first"></el-tab-pane>
-                    <el-tab-pane label="转出表" name="second"></el-tab-pane>
+            <div class="rwzx-picture" style="margin-left:2%;">
+                <el-tabs v-model="activeName2" @tab-click="shiftTo1">
+                    <el-tab-pane label="转出表" name="fourth"></el-tab-pane>
+                    <el-tab-pane label="转入表" name="fifth"></el-tab-pane>
                 </el-tabs>
                 <div v-show="activeName1 == 'third'" class="rwzx-tj">
                     <el-table
@@ -117,7 +121,6 @@
                                 label="住院"
                         >
                         </el-table-column>
-
                         <el-table-column
                                 prop="surgery"
                                 label="日间手术"
@@ -143,7 +146,7 @@
 </style>
 <script type="text/ecmascript-6">
     import echarts from 'echarts';
-    import timeformat from "lmw-time-format"
+    import timeformat from "lmw-time-format";
     import axiosUtil from "../../utils/AxiosUtils.js";
     import Vue from  "vue";
     require('echarts/theme/macarons');
@@ -154,71 +157,29 @@
                 tableArr:[],
                 activeName: 'first',
                 activeName1: 'third',
+                activeName2:"fourth",
                 charts: '',
-                opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
-                opinionData: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'},
-                    {value: 135, name: '视频广告'},
-                    {value: 1548, name: '搜索引擎'}
-                ],
                 zzjl: [],
                 sljl: [],
                 seriesd: [],
                 sd: [],
                 st: [],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区'
-                },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-04',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    },
-                    {
-                        date: '2016-05-01',
-                        name: '王小虎',
-                        address: '上海市普陀区'
-                    }]
+                shift1:[]
             }
         },
         methods: {
-           async _getData(){
+            getZr:function(){
+              console.log("2222")
+            },
+            getZc:function(){
+                console.log("1111");
+                _getDatad();
+            },
+             async _getData(){
              console.log("lddl");
              let data = await axiosUtil("smarthos.sxzz.newrecord.list", {
              yyid: "59411511191ce23575a63218",
-             pageSize: 10,
+             pageSize: 5,
              pageNum: 1,
              sqysbh: "595d05b0f19b9c898a58cc70",
              zzzt: 0
@@ -244,7 +205,26 @@
                     this._getDatad();
                 }
             },
+            shiftTo1(value,event){
+                console.log(value.name,event,2222);
+                if(value.name=='fourth'){
+                    this._getShift1()
+                }else {
+                    this._getDatad1();
+                }
+            },
             async _getShift(){
+                console.log("323233434343");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    qrysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                console.log(data,999999)
+                this.seriesd = data.list;
+                this._getTime();
+            },
+            async _getShift1(){
                 console.log("323233434343");
                 let data = await axiosUtil("smarthos.sxzz.daycount.list", {
                     yyid: "59411511191ce23575a63218",
@@ -252,8 +232,21 @@
                     zzzt: 1
                 });
                 console.log(data,999999)
-                this.seriesd = data.list;
+                this.shift1 = data.list;
                 this._getTime();
+                this._setChat();
+            },
+            async _getDatad1(){
+                console.log("lddl");
+                let data = await axiosUtil("smarthos.sxzz.daycount.list", {
+                    yyid: "59411511191ce23575a63218",
+                    qrysbh: "595d05b0f19b9c898a58cc70",
+                    zzzt: 1
+                });
+                console.log(data,888888);
+                this.shift1 = data.list;
+                this._getTime();
+                this._setChat();
             },
             async _getDatad(){
                 console.log("lddl");
@@ -262,14 +255,14 @@
                     sqysbh: "595d05b0f19b9c898a58cc70",
                     zzzt: 1
                 });
-                console.log(data,888888)
+                console.log(data,888888);
                 this.seriesd = data.list;
                 this._getTime();
                 this._setChat();
             },
             _getTime(){
                 console.log("7777",this.seriesd);
-                let list = []
+                let list = [];
                 for (let i = 0; i < 20; i++) {
                     list.push({
                         count: Math.round(Math.random() * 100),
@@ -294,7 +287,6 @@
             },
             _getSeries(list, type, date){
                 for (let i = 0; i < list.length; i++) {
-
                     if(list[i].ywrq==date&&list[i].ywlx==type){
                         console.log(list[i].count,56565656)
                         return list[i].count
@@ -360,13 +352,14 @@
                     let date=timeformat(new Date().getTime() - (j + 1) * 24 * 3600 * 1000, "%Y-%m-%d")
                     var chatObj = {};
                     chatObj.date = date;
-                    chatObj.outpatient = this._getSeries(this.seriesd,0,date);
-                    chatObj.inspect = this._getSeries(this.seriesd,1,date);
-                    chatObj.hospital = this._getSeries(this.seriesd,2,date);
-                    chatObj.surgery = this._getSeries(this.seriesd,3,date);
+                    chatObj.outpatient = this._getSeries(this.shift1,0,date);
+                    chatObj.inspect = this._getSeries(this.shift1,1,date);
+                    chatObj.hospital = this._getSeries(this.shift1,2,date);
+                    chatObj.surgery = this._getSeries(this.shift1,3,date);
                     console.log(chatObj,55555555)
                     chatArr.push(chatObj)
                 }
+                console.log("66/66",chatArr);
                 this.$set(this.$data,'tableArr',chatArr)
             }
         },
@@ -375,7 +368,6 @@
             this._getData();
              this._getDatas();
             this._getDatad();
-
         }
     }
 </script>

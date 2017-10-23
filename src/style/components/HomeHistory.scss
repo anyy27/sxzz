@@ -1,8 +1,7 @@
 .rwzx-table{
   width:48%;
-  height:260px;
+  height:265px;
   float:left;
-  margin-left:20px;
   border:1px solid #dfe6ec;
   overflow: hidden;
 }
@@ -21,7 +20,7 @@
   font-size: 14px;
   line-height:30px;
   box-sizing: border-box;
-  padding:0px 20px;
+  padding:0px 10px;
 }
 .rwzx-box{
   width:100%;
@@ -36,21 +35,23 @@
 }
 .rwzx-picture{
   width:48%;
-  height:250px;
-  margin-left:20px;
+  height:260px;
   float:left;
   box-sizing: border-box;
   border:1px solid #dfe6ec;
   overflow: hidden;
 }
 .rwzx-tj{
-  width:98%;
+  width:100%;
   height:100%;
   box-sizing: border-box;
 }
-.bl.el-tae td{
+//.bl.el-tae td{
+//  height:26px;
+//}
+.rwzx-picture td{
   height:30px;
 }
-.el-table td{
-  height:26px;
-}
+//.el-table td{
+//  height:26px;
+//}

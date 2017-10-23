@@ -1,8 +1,8 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 module.exports = {
-    context:__dirname+'/src',
-    //devtool: "eval-source-map",
+    devtool: "eval-source-map",
     entry: {
         index: __dirname + "/src/index.js",
         //login: __dirname + "/src/login.js",
@@ -68,13 +68,13 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
-        /*new webpack.optimize.UglifyJsPlugin({
-            minimize: true,
-            compress: {
-                warnings: false
-            }
-        }),*/
-        //new webpack.optimize.CommonsChunkPlugin("vendors", "vendors.js"),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     minimize: true,
+        //     compress: {
+        //         warnings: false
+        //     }
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin("vendors", "vendors.js"),
         new HtmlWebpackPlugin({
             template: __dirname + "/src/index.tmp.html",
             chunk: ["vendor", "index"],
@@ -83,11 +83,11 @@ module.exports = {
         new webpack.ProvidePlugin({//全局暴露axios不用重复import
             axios: "axios",
         }),
-        //new HtmlWebpackPlugin({
+        // new HtmlWebpackPlugin({
         //    template: __dirname + "/src/login.tmp.html",
         //    chunk: [ "vendor", "login"],
         //    filename: "login.html"
-        //})
+        // })
     ],
     devServer: {
         contentBase: "./public",

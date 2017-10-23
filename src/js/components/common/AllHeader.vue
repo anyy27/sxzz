@@ -5,14 +5,24 @@
                 <div class="block">
                     <span class="demonstration">转诊时间:</span>
                     <el-date-picker
-                            v-model="value6"
-                            type="daterange"
-                            placeholder="选择日期范围">
+                            v-model="somedata.date"
+                            type="date"
+                            placeholder="选择日期">
+                    </el-date-picker> -
+                    <el-date-picker
+                            v-model="somedata.date1"
+                            type="date"
+                            placeholder="选择日期">
                     </el-date-picker>
                 </div>
             </div>
-            <div class="date-box" style="width:180px;">
-                <el-select v-model="hospital" placeholder="请选择预约医院" style="width:100%;" @change="selectHospital">
+            <div class="date-box" style="width:160px;">
+                <el-select
+                        v-model="somedata.cxyyid"
+                        clearable
+                        placeholder="请选择预约医院"
+                        style="width:100%;"
+                        @change="selectHospital">
                     <el-option
                             v-for="item in hospitalList"
                             :key="item.yyid"
@@ -22,31 +32,31 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="date-box" style="width:180px;">
-                <el-select v-model="office" placeholder="请选择预约科室" style="width:100%;">
-                    <el-option
-                            v-for="item in officeList"
-                            :key="item.ksid"
-                            :label="item.ksmc"
-                            :value="item.ksid"
-                           >
-                    </el-option>
+            <slot name="selOffice">
+                <div class="date-box" style="width:160px;">
+                    <el-select v-model="somedata.ksid"  clearable placeholder="请选择预约科室" style="width:100%;">
+                        <el-option
+                                v-for="item in officeList"
+                                :key="item.ksid"
+                                :label="item.ksmc"
+                                :value="item.ksid"
+                        >
+                        </el-option>
+                    </el-select>
+                </div>
+            </slot>
+            <div class="date-box" style="width:160px;">
+                <el-select v-model="somedata.zzzt" clearable  placeholder="请选择预约状态" @change="searchData">
+                    <el-option label="待审核" value="0"></el-option>
+                    <el-option label="成功" value="1"></el-option>
+                    <el-option label="失败" value="2"></el-option>
+                    <el-option label="取消" value="3"></el-option>
                 </el-select>
             </div>
-            <div class="date-box" style="width:180px;">
-                <el-select v-model="value4" placeholder="请选择预约状态" style="width:100%;">
-                    <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
-                    </el-option>
-                </el-select>
+            <div class="date-box" style="width:100px;">
+                <el-button style="padding:5px 18px;" size="small" type="primary" @click="searchData">查询</el-button>
             </div>
-            <div class="date-box">
-                <el-button class="btn" type="primary" style="padding:5px 20px;">查询</el-button>
-            </div>
+           <slot name="btn"></slot>
         </div>
     </div>
 </template>
@@ -55,36 +65,23 @@
 </style>
 <script type="text/ecmascript-6">
     import Vue from "vue";
-    import axiosUtil from "../../utils/AxiosUtils.js"
+    import axiosUtil from "../../utils/AxiosUtils.js";
+    import {formatUnixTime} from '../../utils/DateFormat'
     export default{
        data() {
            return {
-               hospital:'',
+               somedata:{
+                   cxyyid:'',
+                   ksid:'',
+                   date:'',
+                   zzzt:"",
+                   date1:''
+               },
                hospitalList:[],
                officeList:[],
-               office:'',
-            value2:'',
-            value3:'',
-            value4:'',
-            value6:'',
-            activeName:'first',
-            data2:[{
-                date: '1',
-                name: '王小虎',
-                address: '上海市'
-            }, {
-                date: '2',
-                name: '王小虎',
-                address: '上海市'
-            }, {
-                date: '3',
-                name: '王小虎',
-                address: '上海市'
-            }, {
-                date: '4',
-                name: '王小虎',
-                address: '上海市'
-            }]
+               value2:'',
+               value3:'',
+               activeName:'first',
         }
     },
         mounted(){
@@ -98,7 +95,7 @@
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){
-                        this.$set(this.$data,'hospitalList',res.list)
+                        this.$set(this.$data,'hospitalList',res.list);
                     }else {
                         alert(res.msg)
                     }
@@ -110,7 +107,7 @@
             },
             getOffice(id){
                 axiosUtil('smarthos.sxzz.dept.list',{
-                    "yyid": id,
+                    "yyid":id,
                 }).then(res=>{
                     console.log(res,232323)
                     if(res.succ){
@@ -119,6 +116,19 @@
                         alert(res.msg)
                     }
                 })
+            },
+            searchData(){
+                console.log(this.somedata,77777);
+                console.log(formatUnixTime(this.somedata.date,"yyyy-MM-dd"))
+                console.log(formatUnixTime(this.somedata.date1,"yyyy-MM-dd"));
+                var val  = {
+                        ...this.somedata,
+                    starttime:formatUnixTime(this.somedata.date,"yyyy-MM-dd"),
+                    endtime:formatUnixTime(this.somedata.date1,"yyyy-MM-dd")
+                };
+                delete val.date;
+                delete val.date1;
+               this.$emit("getSelect",val);
             }
         }
 }
