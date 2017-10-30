@@ -6,7 +6,6 @@ module.exports = {
     devtool: false,
     entry: {
         index: __dirname + "/src/index.js",
-
         vendors: ["vue", "vue-router", "axios"]
     },
     output: {
