@@ -261,10 +261,12 @@
                  style="width:90%;margin-left:5%;">
              <el-table-column
                      type="index"
+                     label="序号"
                     >
              </el-table-column>
              <el-table-column
                      type="selection"
+                     @select-all="selectall"
                     >
              </el-table-column>
              <el-table-column
@@ -386,7 +388,7 @@
 //                        +this.hyrq+','+this.hyxh+','+this.hyDate.substr(0,2)+':'+this.hyDate.substr(2,4)
                 MessageBox.confirm( '是否确认预约？', {
                     confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                    cancelButtonText: '',
                     closeOnPressEscape:true,
                     type: 'warning'
                 }).then(() => {
@@ -440,8 +442,7 @@
                 this.getData(val)
             },
             getHospital(){
-                axiosUtil('smarthos.sxzz.mzhos.list',{
-                    "qyid":"0",
+                axiosUtil('smarthos.sxzz.hos.list',{
                     "ywlx":"0"
                 }).then(res=>{
                     if(res.succ){
@@ -632,6 +633,9 @@
                 this.sourceList();
                 this.$set(this.$data,'dialogTableVisible',true)
             },
+            selectall:function(){
+                alert("只能选择一个号源")
+              },
             sourceList(){
                 this.watchNum++
                 if(this.pbid){

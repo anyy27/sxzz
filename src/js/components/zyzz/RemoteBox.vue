@@ -2,9 +2,20 @@
     <div>
         <div class="commonbox-box">
             <div v-show="shows1">
-                <p style="text-align: center;"><svg class="icon success">
-                    <use xlink:href="#icon-zhengque"></use>
-                </svg>
+                <p style="text-align: center;" v-show="success">
+                    <svg class="icon success" >
+                        <use xlink:href="#icon-zhengque"></use>
+                    </svg>
+                </p>
+                <p  style="text-align: center;"  v-show="defaults">
+                    <svg class="icon success" >
+                        <use xlink:href="#icon-shibai" ></use>
+                    </svg>
+                </p>
+                <p style="text-align: center;"  v-show="waiting">
+                    <svg class="icon success" >
+                        <use xlink:href="#icon-dengdai"></use>
+                    </svg>
                 </p>
                 <h1 v-show="zyzzList.zzzt==1||zyzzList.zzzt==2">{{zyzzList.zzzt==1?'成功':'失败'}}</h1>
                 <h1 v-show="zyzzList.zzzt==3||zyzzList.zzzt==0">{{zyzzList.zzzt==3?'已取消':'待审核'}}</h1>
@@ -21,13 +32,13 @@
                     <!--<div><span>门办电话:</span><span> &nbsp&nbsp0571-56005123</span></div>-->
                     <div style="margin-top:20px;"><span>患者姓名:</span><span> &nbsp&nbsp{{zyzzList.yhxm}}</span></div>
                     <div><span>身份证号:</span><span> &nbsp&nbsp{{zyzzList.zjhm}}</span></div>
-                    <div><span>联系方式:</span><span> &nbsp&nbsp{{zyzzList.lxdh}}</span></div>
+                    <div><span>联系方式:</span><span> &nbsp&nbsp{{zyzzList.sjhm}}</span></div>
                 </div>
                 <div class="commonbox-news" style="margin-left:1%;">
                     <div><span>预约科室:</span><span> &nbsp&nbsp{{zyzzList.qrksmc}}</span></div>
-                    <div><span>住院时间:</span><span> &nbsp&nbsp{{zyzzList.sqyyrq}}</span><span style="margin-left:20px;">{{zyzzList.jzsj}}</span></div>
+                    <div><span>期望住院时间:</span><span> &nbsp&nbsp{{zyzzList.sqyyrq}}</span><span style="margin-left:20px;">{{ampm}}</span><span style="margin-left:20px;">{{zyzzList.jzsj}}</span></div>
                     <div><span>申请医院:</span><span> &nbsp&nbsp{{zyzzList.sqyymc}}</span></div>
-                    <div><span>申请人电话:</span><span> &nbsp&nbsp{{zyzzList.sqysdh}}</span></div>
+                    <div><span>申请人电话:</span><span> {{zyzzList.sqysxm}}</span><span> &nbsp&nbsp{{zyzzList.sqysdh}}</span></div>
                     <!--<div><span>门办地址:</span><span> &nbsp&nbsp门诊大楼二楼医患沟通中心</span></div>-->
                     <div style="margin-top:20px;"><span>患者性别:</span><span> &nbsp&nbsp{{zyzzList.xb}}</span></div>
                     <div><span>患者年龄:</span><span> &nbsp&nbsp{{zyzzList.age}}</span></div>
@@ -53,13 +64,35 @@
             return {
                 zyzzList:{},
                 shows1:true,
-                shows2:false
+                shows2:false,
+                success:false,
+                defaults:false,
+                waiting:false,
+                ampm:""
+
             }
         },
         mounted:function(){
             console.log(this.$route.params.zyzzList,66666)
-            return this.zyzzList=this.$route.params.zyzzList;
-
+            this.zyzzList=this.$route.params.zyzzList;
+            if(this.zyzzList.sqyylx=="0"){
+                this.ampm="上午"
+            }else if(this.zyzzList.sqyylx=="1"){
+                this.ampm="下午"
+            }
+            if(this.zyzzList.zzzt=="1"){
+                this.success=true;
+                this.defaults=false;
+                this.waiting=false;
+            }else if(this.zyzzList.zzzt=="2"){
+                this.success=false;
+                this.defaults=true;
+                this.waiting=false;
+            }else if(this.zyzzList.zzzt=="0"){
+                this.success=false;
+                this.defaults=false;
+                this.waiting=true;
+            }
         },
         methods:{
             open(){

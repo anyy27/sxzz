@@ -599,7 +599,7 @@
             getHospital(){
                 axiosUtil('smarthos.sxzz.hos.list',{
                     "qyid":"0",
-                    "ywlx":"0"
+                    "ywlx":""
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){
@@ -711,7 +711,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
@@ -744,7 +744,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         this.date = list[0].list;
                         let nodes=["one","two",'three','four','five','six','seven','eight','nine','ten','eleven','twelve']
@@ -777,7 +777,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
@@ -810,7 +810,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         obj.ksmc = list[i].ksmc;
                         this.date = list[0].list;
@@ -843,7 +843,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
@@ -876,7 +876,7 @@
                     var arr = [];
                     for(var i=0;i<list.length;i++){
                         var obj = {};
-                        obj.date = i;
+                        obj.date = i+1;
                         obj.yymc = list[i].yymc;
                         obj.ywlx = list[i].ywlx;
                         this.date = list[0].list;
@@ -891,11 +891,8 @@
                     }
                     this.list2 = arr;
                     console.log(this.date,99999)
-
                 })
-
             },
-
         }
     }
 </script>

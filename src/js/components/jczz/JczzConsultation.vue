@@ -192,7 +192,7 @@
                     djrq:this.tjrq,
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",
-                    sqysdh: "18358023268",
+                    sqysdh: dataForm.sqysdh,
                     sqksbh: "59193cddca72a7bbbbe86c1c",
                     sqksmc: "骨科",
                 };

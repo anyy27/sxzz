@@ -6,14 +6,15 @@ import {Message} from "element-ui";
 import {API_URL} from "../data/Url.js";
 import {docCache} from "../lib/cache";
 
+
 export default function axiosUtil(service, options) {
     let randoms = "";
     for (let i = 0; i < 4; i++) {
         randoms += "1234567890".substr(Math.floor(Math.random() * 10), 1);
     }
-    var yymm = '';
-    var jgid = '';
-    var sign = '';
+    let yymm = '';
+    let jgid = '';
+    let sign = '';
     let docStr = docCache.get();
     if (docStr) {
         yymm = docStr.yymm;
@@ -22,12 +23,12 @@ export default function axiosUtil(service, options) {
     } else {
         sign = ''
     }
-    ;
     const basicParam = {//服务器交互基本参数
         "format": "JSON",
         "random": randoms,
         "sign": sign,
     };
+
 
     if (docStr) {
         options.yyr = docStr.yyr;
@@ -42,7 +43,6 @@ export default function axiosUtil(service, options) {
         console.log("res", res);
         if (res.data.succ) {
             return res.data
-            //succCallback(res.data);
         } else {
             Message({
                 showClose: true,

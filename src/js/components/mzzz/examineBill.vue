@@ -3,6 +3,7 @@
     <div class="msg" v-show="showMsg">
     </div>
     <div class=" marginP remote-consultation-wrap content-bg-color" >
+        <ImageAmplify/>
     <div class="base-top"  style="width: auto">
         <div style="box-sizing:border-box;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
             <p style="line-height: 40px;font-size: 14px;">基本信息</p>
@@ -120,7 +121,7 @@
                             width="200"
                             size="small"
                     ></el-input>
-                    <el-button class="btn" v-show="showMsg=false" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
+                    <el-button class="btn" v-show="false" type="primary" style="margin-left:20px;padding:5px 10px;" >常用诊断</el-button>
                 </div>
                 <div class="base-con" style="height:60px;margin-top:10px;">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
@@ -135,8 +136,8 @@
                 <div  style="margin-top:10px;position:relative;">
                     <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病历附件:</span>
                     <div class="add-pic-list" >
-                               <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList">
-                                <img :src="item.wjdz" alt="">
+                               <span v-show="oldImgList" class="showImg" v-for="(item,index) of oldImgList" :key="index">
+                                <img :src="item.wjdz" alt="" @click="handleImageAmplify(index, oldImgList, $event)">
                                </span>
                     </div>
                     <div class="ghost-btn-wrap">
@@ -151,7 +152,7 @@
             </el-form>
         </div>
 
-        <div>
+        <div v-show="showmzzz">
             <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
                 <p style="line-height: 40px;font-size: 14px;">预约信息</p>
             </div>
@@ -167,7 +168,133 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
                 <br>
                 <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
                 <span style="font-size: 14px;color: #48576a;">{{arranges.yyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{yylxs}}</span>
                 <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{arranges.jzsj}}</span>
+            </div>
+        </div>
+        <div v-show="showjczz">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">检查大类:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.flmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">检查项目:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.jcmc}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.sqyyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;">{{yylxs}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{arranges.jzsj}}</span>
+            </div>
+        </div>
+        <div v-show="showzyzz">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊科室:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrksmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">病情等级:</span>
+                <span style="font-size: 14px;color: #48576a;">{{bqdjs}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.sqyyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;">{{yylxs}}</span>
+            </div>
+        </div>
+        <div v-show="showsszz">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊科室:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrksmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">手术名称:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.ssmc}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.sqyyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;">{{yylxs}}</span>
+            </div>
+        </div>
+
+        <div v-show="showjczzap">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">安排信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">检查大类:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrflmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">检查项目:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrjcmc}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{yylxs}}</span>
+            </div>
+        </div>
+        <div v-show="showzyzzap">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">安排信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊科室:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.ksmc}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{yylxs}}</span>
+            </div>
+        </div>
+        <div v-show="showsszzap">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">安排信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yymc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">接诊科室:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.ksmc}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:30px;">手术名称:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qrssmc}}</span>
+                <br>
+                <br>
+                <span style="font-size: 14px;color: #48576a;margin-top:30px;">预约时间:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.yyrq}}</span>
+                <span style="font-size: 14px;color: #48576a;margin-left:20px;">{{yylxs}}</span>
+            </div>
+        </div>
+
+        <div v-show="showsB">
+            <div style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">安排信息</p>
+            </div>
+            <div style="padding:20px 20px 0px 20px;background:#ffffff;width:100%;height:100px;box-sizing: border-box;border-left:1px solid #E3E1E2;
+border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
+                <span style="font-size: 14px;color: #48576a;">驳回理由:</span>
+                <span style="font-size: 14px;color: #48576a;">{{arranges.qryy}}</span>
             </div>
         </div>
        <div v-show="!this.ruleForm.ywlx=='0'&&shzt=='1'" style="margin-top: 10px">
@@ -490,7 +617,7 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
         </div>
     <div class="base-con" style="margin-top:30px;">
         <el-button class="btn " type="primary" style="padding:5px 20px; margin-left:45%;border-color: #00b2b1;
-  background-color: #00b2b1;" @click="goBack">返回</el-button>
+  background-color: #00b2b1;" @click="goback">返回</el-button>
     </div>
 </div>
 </template>
@@ -599,6 +726,8 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
     import Vue from "vue";
     import { API_URL } from "../../data/Url.js";
     import { basicParam }from "../../data/basicParam";
+    import ImageAmplify from "../common/ImageAmplify.vue";
+    import { imageAmplify } from "../../utils/AmplifyImage.js";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import { Form, FormItem,Button, Select, Option, DatePicker,Input, Message, Upload ,MessageBox} from "element-ui";
     Vue.use(Form);
@@ -613,6 +742,17 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
     export default{
         data(){
             return{
+
+                showsB:false,
+                showmzzz:false,
+                showjczz:false,
+                showzyzz:false,
+                showsszz:false,
+                showjczzap:false,
+                showzyzzap:false,
+                showsszzap:false,
+                bqdjs:"",
+                yylxs:"",
                 arranges:{},
                 hosname:"",
                 deptname:"",
@@ -682,11 +822,77 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
                 },
             }
         },
-
+        components:{
+            ImageAmplify
+        },
         mounted(){
             this.setDate(new Date());
             this.applyDetail  = this.$route.params.applyDetail;
             this.arranges=this.applyDetail;
+            if(this.arranges.zzzt=="2"){
+             this.showsB=true;
+            }
+            if( this.arranges.yylx=="0"||this.arranges.sqyylx=="0"){
+                this.yylxs="上午"
+            }else if( this.arranges.yylx=="1"||this.arranges.sqyylx=="1"){
+                this.yylxs="下午"
+            }
+            if(this.arranges.bqdj=="0"){
+                this.bqdjs="一般"
+            }else if(this.arranges.bqdj=="1"){
+                this.bqdjs="急"
+            }else if(this.arranges.bqdj=="2"){
+                this.bqdjs="危重"
+            }
+            if(JSON.parse(localStorage.getItem("docObj")).shzt=="1"){
+                this.showmzzz=false;
+                this.showjczz=false;
+                this.showzyzz=false;
+                this.showsszz=false;
+            }else if(JSON.parse(localStorage.getItem("docObj")).shzt=="0"){
+                if(this.arranges.ywlx=="0"){
+                    this.showmzzz=true;
+                    this.showjczz=false;
+                    this.showzyzz=false;
+                    this.showsszz=false;
+                    this.showjczzap=false;
+                    this.showzyzzap=false;
+                    this.showsszzap=false;
+                }else if(this.arranges.ywlx=="1"){
+                    this.showmzzz=false;
+                    this.showjczz=true;
+                    this.showzyzz=false;
+                    this.showsszz=false;
+                    if(this.arranges.zzzt=="1"){
+                        this.showjczzap=true;
+                        this.showzyzzap=false;
+                        this.showsszzap=false;
+                    }
+                }
+                else if(this.arranges.ywlx=="2"){
+                    this.showmzzz=false;
+                    this.showjczz=false;
+                    this.showzyzz=true;
+                    this.showsszz=false;
+                    if(this.arranges.zzzt=="1"){
+                        this.showjczzap=false;
+                        this.showzyzzap=true;
+                        this.showsszzap=false;
+                    }
+                }
+                else if(this.arranges.ywlx=="3"){
+                    this.showmzzz=false;
+                    this.showjczz=false;
+                    this.showzyzz=false;
+                    this.showsszz=true;
+                    if(this.arranges.zzzt=="1"){
+                        this.showjczzap=false;
+                        this.showzyzzap=false;
+                        this.showsszzap=true;
+                    }
+                }
+            }
+
             console.log("66/666",this.arranges)
             this.type = this.$route.params.type;
             console.log( this.type,'类型啊')
@@ -704,8 +910,22 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
 //            this.getHosList();
             this.typeLists();
 
+
         },
         methods: {
+
+            //图片放大
+            handleImageAmplify: function(index=0, oldImgList, ev){//获取的图片放大
+                let e = ev || event;
+                let element = e.target || e.srcElement;
+                let src = element.src;
+                let obj = {
+                    imgList:oldImgList,
+                    index: index
+                };
+                this.$store.dispatch("getAmplifyImageArr", obj);// 储存需要放大的数组，用于左右按钮切换
+                imageAmplify(src);
+            },
             //返回上一步
             getBack(){
                 this.$router.go(-1);
@@ -841,6 +1061,9 @@ border-right:1px solid #E3E1E2;border-bottom:1px solid #E3E1E2;">
                 },
             getProjectId(id){
                 this.getMarkNum(id,'')
+            },
+            goback:function(){
+                this.$router.go(-1);
             },
             //获取号源数据改造
             and(row, column, cell){

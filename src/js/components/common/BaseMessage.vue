@@ -126,29 +126,28 @@
                            size="small"
                    ></el-input>
                </div>
-                   <div class="diagnoseList" v-show="showDiagnoseList">
-                       <p>常用诊断
-                           <span class="delete"><el-button @click="hideDiagnose"  type="primary" style="padding:5px 10px;background: white;color: grey;border: none">X</el-button>
-                               </span>
-                       </p>
-                       <div class="inputDiagnose">
-                           <el-input
-                                   type="text"
-                                   style="margin-top:10px;resize: none;"
-                                   v-model="zdxx"
-                                   size="small"
-                           ></el-input>
-                       </div>
-                       <div class="btnDiagnose">
-                           <div style="float: right">
-                               <el-button  type="primary" style="padding:5px 10px;" @click="addDiagnose" >加入常用诊断</el-button>
-                           </div>
-
-                       </div>
-                       <ul>
-                           <li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:1px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>
-                       </ul>
-                   </div>
+                   <!--<div class="diagnoseList" v-show="showDiagnoseList">-->
+                       <!--<p>常用诊断-->
+                           <!--<span class="delete"><el-button @click="hideDiagnose"  type="primary" style="padding:5px 10px;background: white;color: grey;border: none">X</el-button>-->
+                               <!--</span>-->
+                       <!--</p>-->
+                       <!--<div class="inputDiagnose">-->
+                           <!--<el-input-->
+                                   <!--type="text"-->
+                                   <!--style="margin-top:10px;resize: none;"-->
+                                   <!--v-model="zdxx"-->
+                                   <!--size="small"-->
+                           <!--&gt;</el-input>-->
+                       <!--</div>-->
+                       <!--<div class="btnDiagnose">-->
+                           <!--<div style="float: right">-->
+                               <!--<el-button  type="primary" style="padding:5px 10px;" @click="addDiagnose" >加入常用诊断</el-button>-->
+                           <!--</div>-->
+                       <!--</div>-->
+                       <!--<ul>-->
+                           <!--<li @click="getValue(item.zdxx)" v-for="item of diagnoseList"><span>{{item.zdxx}}</span><span class="delete"><el-button  type="primary" style="padding:1px 10px;" @click="delDiagnose(item.zdid)">X</el-button></span></li>-->
+                       <!--</ul>-->
+                   <!--</div>-->
                    <div class="base-con" style="height:60px;margin-top:10px;">
                        <span style="font-size: 14px;color: #48576a;position:absolute;left:0;top:0;">病情描述:</span>
                            <el-input
@@ -184,7 +183,6 @@
                                </el-upload>
                            </div>
                            <div class="ghost-btn-wrap">
-
                                <el-upload
                                        :action="uploadUrl"
                                        :data="uploadData"
@@ -195,15 +193,17 @@
                                    <span v-show="oldNameList"  class="showText" v-for="(item,index) of oldNameList">
                                        {{item.name}}
                                    </span>
-                                   <span @click.stop="getFile(item.wjdz)"  class="showText" v-for="(item,index) of nameList">
+                                   <div @click.stop="getFile(item.wjdz)"  v-for="(item,index) of nameList" style="margin-top:5px;">
+                                       <span   class="showText">
                                        <span @click.stop="delText(index)" class="showTextSon">X</span>
                                        {{item}}
-                                   </span>
+                                      </span>
+                                   </div>
                                    <span v-show="flag" style="font-size: 14px;color: grey">上传中.....</span>
-                                   <el-button size="small" type="primary">点击上传</el-button>
+                                   <el-button size="small" type="primary" style="margin-top:5px;">点击上传</el-button>
                                </el-upload>
                            </div>
-                       <p  style="color:#afafaf;font-size: 12px;">仅支持pdf、xls、xlsx、doc、docx、txt、rar、RAR格式，文件小于500M。</p>
+                       <p  style="color:#afafaf;font-size: 12px;">仅支持pdf、zip、xls、xlsx、doc、docx、txt、rar、RAR格式，文件小于500M。</p>
                    </div>
                </el-form>
            </div>
@@ -313,7 +313,7 @@
           }
       },
       mounted(){
-
+          this.ruleForm.sqysdh=JSON.parse(localStorage.getItem("docObj")).sqysdh;
         this.getData();
           console.log(this.applyDetail,'看看有数据没');
           if(this.applyDetail){
@@ -447,7 +447,6 @@
                   if(res.succ){
                       var list = res.list;
                         this.earas = list;
-
                   }else {
                       alert(res.msg)
                   }
@@ -576,7 +575,10 @@
           onRemoveImg: function(file, fileList) {//删除上传图片
               this.imgUploadList = fileList;
           },
-
+          handlePictureCardPreview(file) {
+              this.dialogImageUrl = file.url;
+              this.dialogVisible = true;
+          },
           onSuccessimg: function(response, file, fileList){//上传图片成功后钩子
               console.log("222223",this.imgUploadList);
               if(response.succ){

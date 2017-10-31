@@ -2,7 +2,7 @@
 <template>
     <div >
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
-        <AllHeader @getSelect="getSelect"></AllHeader>
+        <AllHeader @getSelect="getSelect" :ywlx="ywlx"></AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
             <el-button class="btn" type="primary" @click="arranges"><svg class="icon">
                 <use xlink:href="#icon-xinzeng"></use>
@@ -38,7 +38,7 @@
                                 @click="handleEdit(scope.$index, scope.row)">{{scope.row.zzzt=='1'?'撤销':'重新预约'}}</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -132,7 +132,7 @@
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -226,15 +226,15 @@
                 <el-table-column
                         prop="date"
                         label="操作"
-                        width="120">
+                        width="80">
                     <template scope="scope">
 
+                        <!--<el-button-->
+                                <!--size="small"-->
+                                <!--@click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>-->
                         <el-button
                                 size="small"
-                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
-                        <el-button
-                                size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -327,7 +327,7 @@
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -420,7 +420,7 @@
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -496,7 +496,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="7"/>
+        <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1"  :propsPageSize="7"/>
             <div class="MessageBox1" v-show="shows6">
                 <div style="border-bottom:1px solid #ccc;box-sizing: border-box;padding:2px 0px;">
                     <h1>是否确认撤销?</h1>
@@ -505,8 +505,8 @@
                 <p style="margin-top:10px;"><span>{{hosname}}</span><span style="margin-left:20px;"     >{{deptname}}</span><span style="margin-left:20px;">{{patname}}</span></p>
                 <p style="margin-top:20px;"><span>{{qrtime}}</span><span style="margin-left:20px;">{{qrclock}}</span></p>
                 <el-button  class="btn success1" type="text" style="padding:6px 8px;position:absolute;
-right:80px;bottom:20px;" @click="SendAppoint">关闭</el-button>
-                <el-button class="btn" type="primary" size="small" @click="arranges1" style="position:absolute;bottom:20px;right:20px;"> 确认</el-button>
+right:100px;bottom:20px;" @click="SendAppoint">再想想</el-button>
+                <el-button class="btn" type="primary" size="small" @click="arranges1" style="position:absolute;bottom:20px;right:20px;"> 确认撤销</el-button>
             </div>
             <div class="MessageBack" v-show="shows6">
             </div>
@@ -531,6 +531,7 @@ right:80px;bottom:20px;" @click="SendAppoint">关闭</el-button>
         data (){
             return{
                 hosname:"",
+                ywlx:"0",
                 deptname:"",
                 patname:"",
                 qrtime:"",
@@ -579,20 +580,38 @@ right:80px;bottom:20px;" @click="SendAppoint">关闭</el-button>
                 });
             },
             examineBill(index,row){
-                axiosUtil('smarthos.sxzz.byddid.list',{
-                    "jgid": "59411511191ce23575a63218",
-                    "yyr": "595d05b0f19b9c898a58cc70",
-                    "ywlx": "0",
-                    "ddid":row.ddid
-                }).then(res=>{
-                    console.log(res,66666)
-                    this.$router.push({
-                        name:"examineBill",
-                        params:{
-                            applyDetail:res.obj
-                        }
-                    })
-                });
+                if(row.zzzt!="0"){
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "0",
+                        "ddid":row.ddid
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"examineBill",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+                }else{
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "0",
+                        "ddid":this.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"reappointment",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+                }
+
             },
             SendAppoint(){
                 this.shows6=false;
@@ -679,7 +698,6 @@ right:80px;bottom:20px;" @click="SendAppoint">关闭</el-button>
                 this.getData(pageNum,this.type);
             }
         },
-
     }
 </script>
 

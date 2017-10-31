@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="deal-content marginP remote-consultation-wrap content-bg-color">
-        <AllHeader @getSelect="getSelect">
+        <AllHeader @getSelect="getSelect" :ywlx="ywlx">
             <div slot="selOffice"></div>
         </AllHeader>
         <div class="Header-add" v-show="shzt=='0'">
@@ -43,7 +43,7 @@
                         </el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -135,14 +135,14 @@
                 <el-table-column
                         prop="date"
                         label="操作"
-                        width="120">
+                        width="80">
                     <template scope="scope">
+                        <!--<el-button-->
+                                <!--size="small"-->
+                                <!--@click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>-->
                         <el-button
                                 size="small"
-                                @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
-                        <el-button
-                                size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -243,7 +243,7 @@
                                 @click="audit(scope.$index, scope.row)">审核</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -345,7 +345,7 @@
                                 @click="handleEdit(scope.$index, scope.row)">'确认单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -443,7 +443,7 @@
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -542,7 +542,7 @@
                                 @click="goTransferBill(scope.$index, scope.row)">转诊单</el-button>
                         <el-button
                                 size="small"
-                                @click="examineBill(scope.$index, scope.row)">查看</el-button>
+                                @click="examineBill(scope.$index, scope.row)">{{scope.row.zzzt=='0'?'编辑':'查看'}}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -626,6 +626,20 @@
             </el-table>
         </div>
         <FooterCmp :propsTotalCols="propsTotalCols"  @changePage="changePage1" :clientH="clientH" :propsPageSize="7"/>
+            <div class="MessageBox1" v-show="shows6">
+                <div style="border-bottom:1px solid #ccc;box-sizing: border-box;padding:2px 0px;">
+                    <h1>是否确认撤销?</h1>
+                </div>
+                <br style="background:#ccc;">
+                <p style="margin-top:10px;"><span>您要撤销患者</span><span style="margin-left:20px;color:#00B2B1;">{{patname}}</span>
+                    <span style="color:#00B2B1;margin-left:10px;">{{qrtime}}</span><span style="margin-left:10px;color:#00B2B1;">{{qrclock}}</span><span style="margin-left:10px;">本次的检查转诊申请，</span></p>
+                <p style="margin-top:10px;">是否继续？</p>
+                <el-button  class="btn success1" type="text" style="padding:6px 8px;position:absolute;
+right:110px;bottom:20px;" @click="SendAppoint">再想想</el-button>
+                <el-button class="btn" type="primary" size="small" @click="arranges1" style="position:absolute;bottom:20px;right:20px;"> 确认取消</el-button>
+            </div>
+            <div class="MessageBack" v-show="shows6">
+            </div>
         </div>
     </div>
 </template>
@@ -652,7 +666,9 @@
                 tableData: [],
                 propsTotalCols:0,
                 type:'',
-                selectObj:{}
+                shows6:false,
+                selectObj:{},
+                ywlx:"1"
             }
         },
         components:{
@@ -709,30 +725,32 @@
                 }
 
             },
-            handleEdit(index,row){
-                console.log(row.zzzt,'改约111')
-                this.$set(this.$data,'ddid',row.ddid);
-                if(row.zzzt==0){
-                    MessageBox.confirm('是否确认撤销？', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        closeOnPressEscape:true,
-                        type: 'warning'
-                    }).then(() => {
-                        axiosUtil('smarthos.sxzz.qxzzsq.info',{
-                        "jgid": "59411511191ce23575a63218",
-                            "yyr": "595d05b0f19b9c898a58cc70",
-                            "ysmc":"陈升华",
-                            "ddid":row.ddid,
-                    }).then(res=>{
-                        console.log(res,55555);
+            arranges1(){
+                this.shows6=false;
+                axiosUtil('smarthos.sxzz.qxzzsq.info',{
+                    "jgid": "59411511191ce23575a63218",
+                    "yyr": "595d05b0f19b9c898a58cc70",
+                    "ysmc":"陈升华",
+                    "ddid":this.ddid,
+                }).then(res=>{
+                    console.log(res,55555);
                     if(res.succ){
                         this.getData(1,this.type);
                     }else {
-                        alert(res.msg)
+                        alert(res.msg);
                     }
                 });
-                    })
+            },
+            handleEdit(index,row){
+                console.log(row,'改约111')
+                this.ddid=row.ddid;
+                if(row.zzzt==0){
+                    this.hosname=row.sqyymc;
+                    this.deptname=row.sqksmc;
+                    this.patname=row.yhxm;
+                    this.qrtime=row.xb;
+                    this.qrclock=row.age;
+                    this.shows6=true;
                     //取消转诊
                 }else if(row.zzzt==2){
                     //重新预约
@@ -771,21 +789,40 @@
             },
             examineBill(index,row){
                 //查看
-                axiosUtil('smarthos.sxzz.byddid.list',{
-                    "jgid": "59411511191ce23575a63218",
-                    "yyr": "595d05b0f19b9c898a58cc70",
-                    "ywlx": "1",
-                    "ddid":row.ddid,
-                }).then(res=>{
-                    console.log(res,66666)
-                    this.$router.push({
-                        name:"examineBill",
-                        params:{
-                            applyDetail:res.obj,
-                            type:'1'
-                        }
-                    })
-                });
+                if(row.zzzt!="0"){
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "1",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"examineBill",
+                            params:{
+                                applyDetail:res.obj,
+                                type:'1'
+                            }
+                        })
+                    });
+                }else{/* 待审核需要重新预约*/
+                    axiosUtil('smarthos.sxzz.byddid.list',{
+                        "jgid": "59411511191ce23575a63218",
+                        "yyr": "595d05b0f19b9c898a58cc70",
+                        "ywlx": "1",
+                        "ddid":row.ddid,
+                    }).then(res=>{
+                        console.log(res,66666)
+                        this.$router.push({
+                            name:"JczzExamine",
+                            params:{
+                                applyDetail:res.obj
+                            }
+                        })
+                    });
+
+                }
+
             },
             goTransferBill(index,row){
                 //转诊单
@@ -803,6 +840,9 @@
                         }
                     })
                 });
+            },
+            SendAppoint(){
+                this.shows6=false;
             },
             arranges:function(){
                 this.$router.push("videoConsultation/jczz");

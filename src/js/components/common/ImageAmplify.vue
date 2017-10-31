@@ -3,10 +3,10 @@
         <div class="popImage" @click="handleCloseImg"></div>
         <img src="" class="popDisplayPicture" @mousewheel="bigImg" ref="wheelImg"/>
         <i class="el-icon-close my-unique-close" @click="handleCloseImg"></i>
-        <div class="director-image marginB5" v-if="isShow">
-            <span class="director-span hover-cursor" @click="preImg">&lt;</span>
-            <span class="director-span marginL20 hover-cursor" @click="nextImg">&gt;</span>
-        </div>
+        <!--<div class="director-image marginB5" v-if="isShow">-->
+            <!--<span class="director-span hover-cursor" @click="preImg">&lt;</span>-->
+            <!--<span class="director-span marginL20 hover-cursor" @click="nextImg">&gt;</span>-->
+        <!--</div>-->
     </div>
 </template>
 <style>

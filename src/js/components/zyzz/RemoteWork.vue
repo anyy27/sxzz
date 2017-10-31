@@ -172,7 +172,7 @@
                     tjrq:this.tjrq,
                     sqyymc: "特扬医院",
                     sqysxm: "陈刚",
-                    sqysdh: "18358023268",
+                    sqysdh: dataForm.sqysdh,
                     sqksbh: "59193cddca72a7bbbbe86c1c",
                     sqksmc: "骨科",
                 };
@@ -207,8 +207,7 @@
             },
             getHospital(){
                 axiosUtil('smarthos.sxzz.hos.list',{
-                    "qyid":"0",
-                    "ywlx":"0"
+                    "ywlx":"2"
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){

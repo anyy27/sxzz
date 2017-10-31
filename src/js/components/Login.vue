@@ -50,11 +50,10 @@
     export default {
         data() {
             return {
-                docMobile: "13641984192",//用户身份证
-                docPassword: "123456zxc",//用户密码
+                docMobile: "",//用户身份证
                 captcha: "", //验证码
                 isSuccess: false,
-                oauthKey: Number
+                oauthKey: ""
             }
         },
         mounted: function () {
@@ -67,28 +66,28 @@
         },
         components: {},
         methods: {
-            enterKeyUpHandler: function (ev) {// 回车事件
+            enterKeyUpHandler(ev) {// 回车事件
                 let e = ev || event;
                 if (e.keyCode === 13 || e.which == 13) {
                     this.login();//调用登录函数
                 }
             },
-            login: function () {//点击按钮登录
+            async login() {//点击按钮登录
                 let _this = this;
                 let options = {
-                    oauthKey: this.oauthKey
+                    dlzh: this.docMobile,
+                    dlmm: this.oauthKey
                 }
-                ajax("smarthos.sxzz.userExist.info", options).then(function (res) {
-                    if (res.succ) {
-                        docCache.set(res.obj);
-                        shztCache.set(res.obj.shzt);
-                        localStorage.setItem('docObj', JSON.stringify(res.obj));
-                        localStorage.setItem('shzt', JSON.stringify(res.obj.shzt));
-                        _this.$router.push("/main");
-                    } else {
-                        alert(res.msg)
-                    }
-                })
+                let res = await ajax("smarthos.sxzz.login.info", options);
+                if (res.succ) {
+                    docCache.set(res.obj)
+                    shztCache.set(res.obj.shzt);
+                    localStorage.setItem('docObj', JSON.stringify(res.obj));
+                    localStorage.setItem('shzt', JSON.stringify(res.obj.shzt));
+                    _this.$router.push("/main");
+                } else {
+                    alert(res.msg)
+                }
             },
         }
     }

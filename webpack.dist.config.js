@@ -1,11 +1,12 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 
 module.exports = {
     devtool: false,
     entry: {
         index: __dirname + "/src/index.js",
+
         vendors: ["vue", "vue-router", "axios"]
     },
     output: {
@@ -67,7 +68,6 @@ module.exports = {
         tls: "empty"
     },
     plugins: [
-		new BundleAnalyzerPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env': {

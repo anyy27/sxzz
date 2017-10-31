@@ -22,12 +22,14 @@
                             width="50">
                     </el-table-column>
                     <el-table-column
+                            show-overflow-tooltip
                             label="预约状态">
                         <template scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.zzzt==0?'预约成功':'预约成功'}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
+                            show-overflow-tooltip
                             label="详情">
                         <template scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.sqyymc }}</span>
@@ -59,10 +61,12 @@
                     <el-table-column
                             prop="ywlx"
                             label="项目"
+                            show-overflow-tooltip
                             width="60">
                     </el-table-column>
                     <el-table-column
                             prop="address"
+                            show-overflow-tooltip
                             label="详情">
                         <template scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.sqyymc }}</span>
@@ -88,9 +92,7 @@
                 <div  id="mains" class="rwzx-tj">
                 </div>
                 <!--<div v-show="activeName == 'second'" style="width:100px;height:100px;background: red;">-->
-
                 <!--</div>-->
-
             </div>
             <div class="rwzx-picture" style="margin-left:2%;">
                 <el-tabs v-model="activeName2" @tab-click="shiftTo1">

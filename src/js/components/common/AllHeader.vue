@@ -83,7 +83,8 @@
                value3:'',
                activeName:'first',
         }
-    },
+        },
+        props:["ywlx"],
         mounted(){
             this.getHospital()
         },
@@ -91,7 +92,7 @@
            getHospital(){
                 axiosUtil('smarthos.sxzz.hos.list',{
                     "qyid":"0",
-                    "ywlx":"0"
+                    "ywlx":this.ywlx
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){
