@@ -16,6 +16,24 @@ class cache {
     }
 }
 
+class sessionCache {
+    constructor(key) {
+        this.key = PREFIX + key;
+    }
+
+    get() {
+        return storage.session.get(this.key, null)
+    }
+
+    set(value) {
+        storage.session.set(this.key, value);
+    }
+}
+
 const docCache = new cache("docObj");
 const shztCache = new cache("shzt");
-export {docCache, shztCache};
+
+const mzzzTabCache = new sessionCache("mzzzTab");
+
+
+export {docCache, shztCache,mzzzTabCache};

@@ -20,31 +20,31 @@
             <h1 v-show="zyzzList.zzzt==1||zyzzList.zzzt==2">{{zyzzList.zzzt==1?'成功':'失败'}}</h1>
             <h1 v-show="zyzzList.zzzt==3||zyzzList.zzzt==0">{{zyzzList.zzzt==3?'已取消':'待审核'}}</h1>
             </div>
-            <p style="font-weight: bold;font-size: 16px;text-align: center;margin-top:30px;" v-show="shows2">西湖区西溪街道社区卫生服务中心转诊单</p>
+            <p  v-show="shows2">{{zyzzList.yymc}}转诊单</p>
             <div style="width:100%;height:100px;" v-show="shows2"></div>
-            <p style="text-align: center;" v-show="shows1">西湖区西溪街道社区卫生服务中心转诊单</p>
+            <h1 style="text-align: center;" v-show="shows1">{{zyzzList.yymc}}转诊单</h1>
             <div class="commonbox-con">
                 <div class="commonbox-news">
-                    <div><span>预约号码:</span><span> {{zyzzList.yyh}}</span></div>
-                    <div><span>预约医院:</span><span> {{zyzzList.yymc}}</span></div>
+                    <div><span>预约号:</span><span> {{zyzzList.yyh}}</span></div>
+                    <div><span>预约医院:</span><span :title="zyzzList.yymc"> {{zyzzList.yymc.substring(0,10)}}</span></div>
                     <div><span>预约专家:</span><span> {{zyzzList.qrysxm}}</span></div>
                     <div><span>就诊序号:</span><span> {{zyzzList.yyxh}}</span></div>
                     <div><span>申请科室:</span><span> {{zyzzList.sqksmc}}</span></div>
-                    <!--<div><span>门办电话:</span><span> {{zyzzList.qryymc}}</span></div>-->
                     <div style="margin-top:30px;"><span>患者姓名:</span><span> {{zyzzList.yhxm}}</span></div>
                     <div><span>身份证号:</span><span> {{zyzzList.zjhm}}</span></div>
                     <div><span>联系方式:</span><span> {{zyzzList.sjhm}}</span></div>
+                    <div><span>门办电话:</span><span> {{zyzzList.sjhm}}</span></div>
                 </div>
                 <div class="commonbox-news" style="margin-left:1%;">
                     <div><span>挂号费用:</span><span> {{zyzzList.zlf}}</span></div>
                     <div><span>预约科室:</span><span> {{zyzzList.qrksmc}}</span></div>
-                    <div><span>就诊时间:</span><span> {{zyzzList.yyrq}}</span><span style="margin-left:20px;">{{ampm}}</span><span style="margin-left:20px;">{{zyzzList.jzsj}}</span></div>
+                    <div><span>就诊时间:</span><span> {{zyzzList.yyrq}}</span><span style="margin-left:5px;">{{ampm}}</span><span style="margin-left:5px;">{{zyzzList.jzsj}}</span></div>
                     <div><span>申请医院:</span><span> {{zyzzList.sqyymc}}</span></div>
                     <div><span>申请人电话:</span><span> {{zyzzList.sqysxm}}</span><span style="margin-left:20px;">{{zyzzList.sqysdh}}</span></div>
-                    <!--<div><span>门办地址:</span><span> {{zyzzList.lxdz}}</span></div>-->
                     <div style="margin-top:30px;"><span>患者性别:</span><span> {{zyzzList.xb}}</span></div>
                     <div><span>患者年龄:</span><span> {{zyzzList.age}}</span></div>
-                    <div><span>联系地址:</span><span> {{zyzzList.lxdz}}</span></div>
+                    <div><span>联系地址:</span><span>{{zyzzList.province}}{{zyzzList.city}}{{zyzzList.region}} {{zyzzList.lxdz}}</span></div>
+                    <div><span>门办地址:</span><span> {{zyzzList.sjhm}}</span></div>
                 </div>
             </div>
             <div class="commonbox-btn">
@@ -70,7 +70,8 @@
                 success:false,
                 defaults:false,
                 waiting:false,
-                ampm:""
+                ampm:"",
+                actionName:""
             }
         },
         mounted:function(){
@@ -93,11 +94,13 @@
                 this.defaults=false;
                 this.waiting=true;
             }
+            this.actionName=this.$route.params.actionName;
             console.log("zzzzzz",this.zyzzList);
         },
         methods:{
             open(){
                 let _this=this;
+                console.log("name===",_this.actionName);
                 _this.$router.go(-1);
             },
             open1(){

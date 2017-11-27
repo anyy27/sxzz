@@ -22,9 +22,7 @@
 <script>
     import SideBarCmp from "./common/SideBarCmp.vue";
     import HeaderCmp from "./common/HeaderCmp.vue";
-    import { SOCKET_URL } from "../data/Url";
     import { Notification } from "element-ui";
-    import pushEvent from "../utils/PushEventUtils.js";
     import axiosUtil from "../utils/AxiosUtils.js";
     export default{
 
@@ -47,29 +45,7 @@
         created: function () {
             let _this = this;
             //上报推送ID
-            let socket = io(SOCKET_URL);
-            console.log(socket,'推送666')
-            socket.on('connect', function(){
-                if(socket.id){
-                    let options = {
-                        deviceId: socket.id,
-                        token: localStorage.getItem("token"),
-                        Service: "nethos.push.deviceid.register"
-                    };
-                    /*axiosUtil(options, function(){
-                    });*/
-                }
-            });
-            socket.on("reconnect", function () {
-                if(socket.id){
-                    console.log("重新连接");
-                }
-            });
-            socket.on("pushevent", function (data) {
-                console.log("收到推送");
-                console.log(data);
-                pushEvent(_this, data);
-            })
+
         },
         methods: {
             toggleSideBar: function(){//监听更改侧边栏宽度按钮

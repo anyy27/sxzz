@@ -240,8 +240,7 @@
             },
             getHospital(){
                 axiosUtil('smarthos.sxzz.hos.list',{
-                    "qyid":"0",
-                    "ywlx":"0"
+                    "ywlx":"1"
                 }).then(res=>{
                     console.log(res,9999)
                     if(res.succ){

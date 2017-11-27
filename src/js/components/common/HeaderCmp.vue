@@ -19,10 +19,6 @@
                     <button class="router-btn h47" @click="preClick">&lt;</button>
                     <button class="router-btn h47" @click="nextClick">&gt;</button>
                 </div>
-                <div class="fl marginL10">
-                    <img src="../../../images/zb-icon.png" class="marginR10 header-logo" >
-                    <img src="../../../images/zdff-icon.png" class="header-logo"/>
-                </div>
                 <!--搜索按钮-->
                 <!--<div class="header-search-wrap clearfix marginL10 fl">
                     <input

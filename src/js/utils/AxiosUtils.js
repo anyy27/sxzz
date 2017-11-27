@@ -44,9 +44,9 @@ export default function axiosUtil(service, options) {
         if (res.data.succ) {
             return res.data
         } else {
-            Message({
+            Message({//
                 showClose: true,
-                message: res.data.msg,
+                message: res.data.msg||"操作失败!",
                 type: "warning"
             });
         }

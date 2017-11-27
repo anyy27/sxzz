@@ -25,7 +25,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -55,6 +55,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -89,14 +90,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -109,6 +113,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -130,7 +135,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -153,6 +158,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -187,14 +193,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -207,6 +216,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -228,7 +238,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -254,6 +264,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -288,14 +299,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -308,6 +322,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -329,7 +344,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -356,6 +371,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -390,14 +406,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -410,6 +429,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -431,7 +451,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -455,6 +475,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -489,14 +510,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -509,6 +533,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -530,7 +555,7 @@
             <el-table
                     :data="tableData"
                     stripe
-                    height="400"
+                    :height="tableHeight"
                     style="width:100%;">
                 <el-table-column
                         prop="date"
@@ -554,6 +579,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yyh"
                         label="预约号">
                 </el-table-column>
@@ -588,14 +614,17 @@
                         label="年龄">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="lxdh"
                         label="联系方式">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="zjhm"
                         label="身份证号">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="sqyymc"
                         label="申请医院">
                 </el-table-column>
@@ -608,6 +637,7 @@
                         label="申请医生">
                 </el-table-column>
                 <el-table-column
+                        show-overflow-tooltip
                         prop="yymc"
                         label="预约医院">
                 </el-table-column>
@@ -657,6 +687,7 @@ right:110px;bottom:20px;" @click="SendAppoint">再想想</el-button>
     import AllHeader from "../common/AllHeader.vue";
     import axiosUtil from "../../utils/AxiosUtils.js"
     import FooterCmp from "../common/FooterCmp.vue";
+    import {tableHeightMixin} from "../../lib/mixin"
     export default{
         data (){
             return{
@@ -671,6 +702,7 @@ right:110px;bottom:20px;" @click="SendAppoint">再想想</el-button>
                 ywlx:"1"
             }
         },
+        mixins: [tableHeightMixin],
         components:{
             AllHeader,
             FooterCmp

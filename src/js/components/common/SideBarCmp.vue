@@ -14,7 +14,7 @@
                     <img class="personal-icon" src="../../../images/doctor-pic.png" >
                     <!--<img class="personal-icon" :src="docAvatar?docAvatar:require('../../../images/doc-default-icon.png')" >-->
                 </div>
-                <p class="side-bar-personal-info center marginT10" :class="{ hidden: isToggle }">{{docObj.sqyymc}}</p>
+                <p class="side-bar-personal-info center marginT10" :class="{ hidden: isToggle }" :title="docObj.sqyymc">{{docObj.sqyymc.substring(0,10)}}</p>
                 <p class="side-bar-personal-title center marginT10 green-color" :class="{ hidden: isToggle }">{{docObj.sqksmc}}</p>
                 <p class="side-bar-personal-title center marginT5 green-color" :class="{ hidden: isToggle }">{{docObj.sqysxm}}</p>
             </div>

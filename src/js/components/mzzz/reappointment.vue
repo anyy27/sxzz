@@ -3,9 +3,13 @@
         <el-form   label-width="100px" class="demo-ruleForm">
             <BaseMessage :applyDetail="applyDetail" :index="watchNum" @getDetail="getDetail"></BaseMessage>
         </el-form>
+        <div class=" marginP remote-consultation-wrap content-bg-color">
         <div class="news-con">
-            <p style="line-height: 40px;">预约信息</p>
-            <div class="base-con">
+            <div
+                    style="box-sizing:border-box;margin-top:10px;padding:0px 20px;width:100%;background: #F9F9F9;border:1px solid #E3E1E2;">
+                <p style="line-height: 40px;font-size: 14px;">预约信息</p>
+            </div>
+            <div class="base-con" style="padding:20px 20px 0px 20px;">
                 <span style="font-size: 14px;color: #48576a;">接诊医院:</span>
                 <el-select v-model="somedata.hospital" filterable placeholder="请选择" style="height:24px;margin-left:5px;" @change="selectHospital">
                     <el-option
@@ -28,43 +32,44 @@
                 </el-select>
 
             </div>
-            <div>
+            <!--<div>
                 <el-button :disabled="disabled" @click="lastDate" type="primary" style="padding:5px 20px;" >上周</el-button>
                 <el-button  type="primary" @click="nextDate" style="padding:5px 20px;" >下周</el-button>
-            </div>
-            <div class="news-table">
+            </div>-->
+            <div class="news-table" ref='showTable' style="width:100%;overflow:hidden;box-sizing: border-box">
                 <el-table
                         :data="arrangeList"
                         height="280"
+                        stripe
                         border
                         @cell-click="and"
                 >
-                    <el-table-column
+                    <el-table-column :width="columnWidth"
                             prop="name"
                             label="医生"
-                            width="130">
+                            >
                         <template scope="scope">
                             <div>{{scope.row.name==''?'普通医生':scope.row.name}}</div>
                         </template>
                     </el-table-column>
 
-                    <el-table-column :label="dateList[0].date" prop="monday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth" :label="dateList[0].date" prop="monday">
+                        <el-table-column :width="weekWidth"
                                 :label="dateList[0].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="monday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.am=='0'?'':scope.row.monday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="monday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.monday.pm=='0'?'':scope.row.monday.pm}}</div>
@@ -72,23 +77,23 @@
                             </el-table-column>
                         </el-table-column>
                     </el-table-column>
-                    <el-table-column :label="dateList[1].date" props="tuesday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth" :label="dateList[1].date" props="tuesday">
+                        <el-table-column :width="weekWidth"
                                 :label="dateList[1].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="tuesday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.am=='0'?'':scope.row.tuesday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="tuesday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.tuesday.pm=='0'?'':scope.row.tuesday.pm}}</div>
@@ -96,24 +101,24 @@
                             </el-table-column>
                         </el-table-column>
                     </el-table-column>
-                    <el-table-column :label="dateList[2].date" props="wednesday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth" :label="dateList[2].date" props="wednesday">
+                        <el-table-column  :width="weekWidth"
                                 prop="name"
                                 :label="dateList[2].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="wednesday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.am=='0'?'':scope.row.wednesday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="wednesday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.wednesday.pm=='0'?'':scope.row.wednesday.pm}}</div>
@@ -121,24 +126,24 @@
                             </el-table-column>
                         </el-table-column>
                     </el-table-column>
-                    <el-table-column :label="dateList[3].date" props="thursday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth" :label="dateList[3].date" props="thursday">
+                        <el-table-column :width="weekWidth"
                                 prop="name"
                                 :label="dateList[3].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="thursday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.am=='0'?'':scope.row.thursday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="thursday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.thursday.pm=='0'?'':scope.row.thursday.pm}}</div>
@@ -146,8 +151,8 @@
                             </el-table-column>
                         </el-table-column>
                     </el-table-column>
-                    <el-table-column :label="dateList[4].date" props="friday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth" :label="dateList[4].date" props="friday">
+                        <el-table-column :width="weekWidth"
                                 prop="name"
                                 :label="dateList[4].week"
                         >
@@ -155,41 +160,39 @@
                                     prop="friday.am"
                                     label="上午"
                                     :data="dateList[4].date"
-                                    width="50"
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.am=='0'?'':scope.row.friday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="friday.pm"
                                     label="下午"
-                                    width="50"
-                            >
+                                >
                                 <template scope="scope">
                                     <div>{{scope.row.friday.pm=='0'?'':scope.row.friday.pm}}</div>
                                 </template>
                             </el-table-column>
                         </el-table-column>
                     </el-table-column>
-                    <el-table-column :label="dateList[5].date" props="saturday">
-                        <el-table-column
+                    <el-table-column  :width="weekWidth"        :label="dateList[5].date" props="saturday">
+                        <el-table-column :width="weekWidth"
                                 prop="name"
                                 :label="dateList[5].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="saturday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.am=='0'?'':scope.row.saturday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="saturday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.saturday.pm=='0'?'':scope.row.saturday.pm}}</div>
@@ -198,24 +201,24 @@
                         </el-table-column>
                     </el-table-column>
 
-                    <el-table-column :label="dateList[6].date" props="sunday">
-                        <el-table-column
+                    <el-table-column :width="weekWidth"   :label="dateList[6].date" props="sunday">
+                        <el-table-column :width="weekWidth"
                                 prop="name"
                                 :label="dateList[6].week"
                         >
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="sunday.am"
                                     label="上午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.am=='0'?'':scope.row.sunday.am}}</div>
                                 </template>
                             </el-table-column>
-                            <el-table-column
+                            <el-table-column :width="columnWidth"
                                     prop="sunday.pm"
                                     label="下午"
-                                    width="50"
+                                    
                             >
                                 <template scope="scope">
                                     <div>{{scope.row.sunday.pm=='0'?'':scope.row.sunday.pm}}</div>
@@ -226,7 +229,8 @@
                 </el-table>
             </div>
         </div>
-        <div class="dialog" v-show="dialogVisible">
+            </div>
+            <div class="dialog" v-show="dialogVisible">
             <div style="width:100%;height:50px;line-height: 50px;border:1px solid #ccc;color:#848484;box-sizing: border-box;padding:0px 20px;">
                 <p>预约信息</p>
             </div>
@@ -270,7 +274,7 @@
                     @current-change="handleCurrentChange"
                     height="330"
                     style="width:90%;margin-left:5%;">
-                <el-table-column
+                <el-table-column label="序号"
                         type="index"
                 >
                 </el-table-column>
@@ -308,8 +312,9 @@
     //    import  'element-ui';
 
     import BaseMessage from  "../common/BaseMessage.vue";
-    import axiosUtil from "../../utils/AxiosUtils.js"
+    import axiosUtil from "../../utils/AxiosUtils.js";
     import { Button, Radio, RadioGroup, Select, Option, DatePicker, Input, Message, Loading, Popover , Dialog,MessageBox } from "element-ui";
+    import {columnWidthMixin} from "../../lib/mixin";
 
     Vue.use(Button);
     Vue.use(Radio);
@@ -358,6 +363,7 @@
 
             }
         },
+        mixins: [columnWidthMixin],
         components:{
             BaseMessage
         },
@@ -450,8 +456,7 @@
                 this.getData(val)
             },
             getHospital(){
-                axiosUtil('smarthos.sxzz.mzhos.list',{
-                    "qyid":"0",
+                axiosUtil('smarthos.sxzz.hos.list',{
                     "ywlx":"0"
                 }).then(res=>{
                     if(res.succ){
@@ -531,7 +536,7 @@
 //                date = this.addDate(date,week*-1);
                 this.currentFirstDate = new Date(date);
                 var arr = [];
-                for(var i = 0;i<7;i++){
+                for(var i = 1;i<8;i++){
                     arr.push(this.formatDate(i==0 ? date : this.addDate(date,1)))
                 };
                 this.$set(this.$data,'dateList',arr)

@@ -29,7 +29,7 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                loader: "vue"
+                loader: "vue",
             },
             {
                 test: /\.css$/,
@@ -45,6 +45,11 @@ module.exports = {
             }
         ]
     },
+    vue: {
+        loaders:{
+            scss: 'vue-style-loader!css-loader!sass-loader'
+        }
+    },
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.js'
@@ -54,7 +59,7 @@ module.exports = {
         require("autoprefixer")
     ],
     babel: {
-        presets: [ "stage-0", "es2015"],
+        presets: ["stage-0", "es2015"],
         plugins: [["component", [
             {
                 "libraryName": "element-ui",
@@ -95,5 +100,10 @@ module.exports = {
         hot: true,
         color: true,
         historyApiFallback: true
+    },
+    vue:{
+        loaders: {
+            scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
+        }
     }
 };
